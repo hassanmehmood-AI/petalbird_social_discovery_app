@@ -1,0 +1,438 @@
+<!DOCTYPE html><html class="light" lang="en" style="--vh: 10.24px; width: 1280px; height: 1024px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PetalBird - Messages</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#004493",
+                      "on-surface-variant": "#414755",
+                      "on-tertiary": "#ffffff",
+                      "on-surface": "#1a1c1c",
+                      "on-secondary-container": "#43677a",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#fefcff",
+                      "secondary-fixed-dim": "#a6cce1",
+                      "tertiary-fixed": "#ffdbcc",
+                      "primary-fixed-dim": "#adc6ff",
+                      "primary": "#0058bc",
+                      "inverse-surface": "#2f3131",
+                      "secondary-container": "#bfe5fb",
+                      "on-secondary-fixed-variant": "#254b5d",
+                      "accent-gradient-end": "#00C6FF",
+                      "on-tertiary-fixed-variant": "#7c2e00",
+                      "surface-bright": "#f9f9f9",
+                      "surface": "#f9f9f9",
+                      "on-tertiary-container": "#fffbff",
+                      "outline": "#717786",
+                      "surface-gray": "#F4F7FA",
+                      "accent-gradient-start": "#007AFF",
+                      "on-secondary-fixed": "#001e2b",
+                      "surface-tint": "#005bc1",
+                      "inverse-on-surface": "#f0f1f1",
+                      "surface-container-highest": "#e2e2e2",
+                      "surface-container-low": "#f3f3f4",
+                      "secondary": "#3e6376",
+                      "on-background": "#1a1c1c",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#c64f00",
+                      "primary-container": "#0070eb",
+                      "outline-variant": "#c1c6d7",
+                      "background": "#f9f9f9",
+                      "on-secondary": "#ffffff",
+                      "surface-container-high": "#e8e8e8",
+                      "tertiary": "#9e3d00",
+                      "on-tertiary-fixed": "#351000",
+                      "deep-onyx": "#111111",
+                      "glass-border": "rgba(255, 255, 255, 0.4)",
+                      "surface-dim": "#dadada",
+                      "error": "#ba1a1a",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-container": "#eeeeee",
+                      "on-primary-fixed": "#001a41",
+                      "tertiary-fixed-dim": "#ffb595",
+                      "on-primary": "#ffffff",
+                      "surface-variant": "#e2e2e2",
+                      "secondary-fixed": "#c2e8fe",
+                      "inverse-primary": "#adc6ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "base": "8px",
+                      "gutter": "16px",
+                      "card-gap": "20px"
+              },
+              "fontFamily": {
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Montserrat"
+                      ],
+                      "headline-lg-mobile": [
+                              "Montserrat"
+                      ],
+                      "display-lg": [
+                              "Montserrat"
+                      ],
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #f9f9f9;
+            background-image: radial-gradient(circle at top right, rgba(0, 198, 255, 0.05), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(0, 122, 255, 0.05), transparent 40%);
+            background-attachment: fixed;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 122, 255, 0.1);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-lg h-screen overflow-hidden flex selection:bg-primary selection:text-on-primary">
+<!-- Desktop Side Navigation -->
+<nav class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col border-r border-glass-border bg-white/70 dark:bg-deep-onyx/70 backdrop-blur-xl backdrop-blur-lg border-r border-glass-border shadow-[0_20px_40px_rgba(0,122,255,0.1)] shadow-[0_20px_40px_rgba(0,122,255,0.1)] z-50">
+<div class="flex flex-col py-8 px-4 h-full">
+<div class="mb-10 px-4">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim">PetalBird</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">Premium Social</p>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-title-md text-title-md">Home</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-title-md text-title-md">Discover</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-title-md text-title-md">My Profile</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="font-title-md text-title-md">Messages</span>
+</a>
+</li>
+
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+<span class="font-title-md text-title-md">Ratings</span>
+</a>
+</li>
+<li class="">
+
+</li>
+<li class="">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-title-md text-title-md">Settings</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto px-2">
+<button class="w-full py-3 rounded-xl bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end text-on-primary font-title-md text-title-md shadow-[0_4px_14px_0_rgba(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] hover:opacity-90 transition-all duration-300 scale-95 active:scale-90 transition-transform">
+                    Upload Photo
+                </button>
+</div>
+</div>
+</nav>
+<!-- Top Navigation Area (Mobile Only Brand, Desktop Search/Profile) -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-20 z-40 bg-white/70 dark:bg-deep-onyx/70 backdrop-blur-xl backdrop-blur-lg border-b border-glass-border shadow-[0_4px_30px_rgba(0,122,255,0.05)] shadow-sm">
+<div class="flex items-center justify-between px-6 h-full max-w-full">
+<div class="md:hidden">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim">PetalBird</h1>
+</div>
+<div class="hidden md:flex items-center flex-1 max-w-md mx-4">
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-outline hover:opacity-80 transition-opacity p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</button>
+<button class="hidden md:block py-2 px-4 rounded-xl bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end text-on-primary font-body-sm text-body-sm shadow-[0_4px_14px_0_rgba(0,118,255,0.39)] hover:opacity-90 transition-all">
+                    Upload Photo
+                </button>
+<div class="relative cursor-pointer">
+<img alt="User Avatar with status dot" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="A portrait of a young woman with a clear complexion and subtle makeup, looking directly at the camera. The lighting is soft and natural, creating a clean, modern aesthetic suitable for a premium social app profile picture. The background is slightly blurred, focusing attention on the subject." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEeMo9VbxKL5uIkqvcTWYIc6PgmHdjGTEulcXbpFhK3_8WnREKMfzIJRApdnMP2Qa4R3YqZr8kRv9UA1OSVoYbsbwH4r-C8WmeM381EttuVtYa-5c-41P9HKEXjwAE-SrnzQx0F1dckn45mmXgsh4oliorsM8t4Atxl180Uw4X3RoEbawMQ5h8tXdoyvMi7Y1-A4cvgcec6IKsbu0bdI_5PjSpJgBVOkorikHh_wQNW21XPc31vW86oMXcXxQ-QEojNbrlFGUR_lc">
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 mt-20 flex h-[calc(100vh-80px)] overflow-hidden bg-surface-gray">
+<!-- Chat List Column -->
+<div class="w-full md:w-80 lg:w-96 flex flex-col border-r border-glass-border bg-surface-container-lowest glass-card z-10 relative hidden md:flex">
+<div class="p-4 border-b border-glass-border">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-4">Messages</h2>
+<div class="relative focus-within:ring-2 focus-within:ring-primary rounded-full transition-all">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low text-on-surface border-none rounded-full py-3 pl-12 pr-4 font-body-sm text-body-sm focus:ring-0 placeholder:text-outline focus:bg-white transition-colors" placeholder="Search messages..." type="text">
+</div>
+</div>
+<div class="flex-1 overflow-y-auto hide-scrollbar p-2">
+<!-- Chat Item 1 (Active) -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-primary-container/10 border border-primary/20 cursor-pointer mb-2 relative">
+<div class="relative">
+<img alt="Profile" class="w-12 h-12 rounded-full object-cover" data-alt="A portrait of a young man with a slight smile, outdoors in natural light. The styling is casual yet polished, fitting for a modern social networking profile. The image is bright and clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8nUIqbxrEPMI8K1l84ZqOLn8Mqg2wRDUpDZtgDhInw9aheHRe2QISogqfGEoo6qkRaL5Phr8Y-WSIcUyStFDhucKC3eNOlEnqCl2IvdSsIvMrKD9Xp4a55K6HPCkLl1URgjjKWvKIf6jJIYzZwMciLIvK8sHEE8bS-4Y_ZD_GU4KvUnaEJuBeAiFNAtYQAfIuLWKV45Wc2qBwVvf-7_zhhPjxfUpcXUs_i-DyeWBEWQgZdC9PBxxrmqjZz_oEDDMQIxih13Sm_No">
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-title-md text-title-md text-on-surface truncate">Julian Rossi</h3>
+<span class="font-label-caps text-label-caps text-primary">10:42 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">That sounds like a great plan! See you then. ✨</p>
+</div>
+</div>
+<!-- Chat Item 2 -->
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer mb-2">
+<div class="relative">
+<img alt="Profile" class="w-12 h-12 rounded-full object-cover" data-alt="A close-up portrait of a woman smiling warmly, bathed in golden hour light. The mood is friendly and approachable, typical of a high-end lifestyle app avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb2RAHHbbqXp29TMz4aVnLz2Dsxm57bmjVgBDeBz17aCxQYj2EPOewn-LMCGsia4xN8XvHI9mHGLTSPzTPtcjYJwi9uf2Byrp78P0VcwAOvWmKnUo3UF4i5igkuEZfjHFq9rH5rtvAlPcdePVQMk-neSe8kPCzuBdsZAVr77zLQ3GB7mDbbG2XJuc7iXNRsLk-u7JzAhcq6OmGwTaZXIrXOIHi-2E5hdY7T0QKK2YK-3baGbWg1PpDryaSUjVa9kEzBJhzF3ubHwI">
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-title-md text-title-md text-on-surface truncate">Elena Vance</h3>
+<span class="font-label-caps text-label-caps text-outline">Yesterday</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline truncate">Did you see the new art exhibit downtown?</p>
+</div>
+</div>
+<!-- Chat Item 3 -->
+<div class="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer mb-2">
+<div class="relative">
+<img alt="Profile" class="w-12 h-12 rounded-full object-cover" data-alt="A male model looking off-camera, set against an urban background. The aesthetic is cool and modern, fitting the glassmorphism theme's sophisticated tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCXBQOAuVqWL89bTY2sA30lREzryKxaV_HUGyLEF_lvxUM6QEpcRl-fFtTi_6bXUCt34-XUk7JdU1gpIEZmLSxUGS1SVICuT_4f7vsd95npIO16l8kyDJrxzVpcH0BxBVp5PGQjQWUSeqvSUfFnc7CqGTZUrtzpODh5tUdl62wVUw3TVw8PdLCZTvZXTi38vV-ZAYaJhMVRf5zQF5VwSCjS57HIPDTLz4TIcAbnCtetsVww_KWZIwSFV4c7NN2dyz_6kAq8u4QUCE">
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-yellow-500 border-2 border-white rounded-full"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-1">
+<h3 class="font-title-md text-title-md text-on-surface truncate">Marcus Chen</h3>
+<span class="font-label-caps text-label-caps text-outline">Tue</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline truncate">Sent a photo</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Chat Window -->
+<div class="flex-1 flex flex-col bg-surface-container-lowest/50 backdrop-blur-sm relative w-full pb-safe md:pb-0">
+<!-- Chat Header -->
+<div class="h-20 px-6 flex items-center justify-between border-b border-glass-border glass-card sticky top-0 z-20">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="relative">
+<img alt="Active Chat Profile" class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a young man with a slight smile, outdoors in natural light. The styling is casual yet polished, fitting for a modern social networking profile. The image is bright and clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6Rz5k8nmgAt83R1SHDuVLqytRT-0o6bi0FupNGEu9HYH4l0eQW31mM3RhApoQILBr1DtjSY5B7j3P-ikG-J1XlFf2ZV63zbeQYGpXs0d943GDa6eyaXhsHi0mcfCbeReCIiKZ7kq9yx8UL1mcqGwZiTx0tL3h_lPmoueJ7jW8FPGRDGTJuQgSHdBZrEPMtONKdRnzQQwq_cFUNrOKR3PtEHQQXovHkp2uKt6_eBpdsNI7YVpdN2YCVBVokQKHZHAYuXwIGCL_-EA">
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+</div>
+<div>
+<h2 class="font-title-md text-title-md text-on-surface">Julian Rossi</h2>
+<p class="font-body-sm text-body-sm text-outline text-xs">Active now</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Messages Area -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6 hide-scrollbar flex flex-col">
+<div class="text-center my-4">
+<span class="font-label-caps text-label-caps text-outline bg-surface-container-low px-3 py-1 rounded-full">Today</span>
+</div>
+<!-- Receiver Message -->
+<div class="flex items-end gap-2">
+<img alt="Receiver" class="w-8 h-8 rounded-full object-cover mb-1" data-alt="A portrait of a young man with a slight smile, outdoors in natural light. The styling is casual yet polished, fitting for a modern social networking profile. The image is bright and clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8xKOVIC5jUnnceYFeKL9NReg7DCtJTcBSTltCiLAUOnPcxXPLxPSolZpcTiT7FXURCvWcSFs4vN1LDvwzrGsM7RQuxK7DCwMY31gkf8t2h2QbjwZ_yIvtmQJvF9X0jcfIHuzCypr9N3sdmogHgK5GE1JzoX1lJw-2CWyly1jr173F5-U3gT2r1PodMIiiC5SQQ6vSX46c1jvryFz-SZWUXQ0rsCrXo5IeJR0mi6CWkcRrxr4lBihcjGKSWlSQy8gImWiziGVANGU">
+<div class="max-w-[70%] bg-surface-container-low text-on-surface font-body-sm text-body-sm px-4 py-3 rounded-2xl rounded-bl-sm">
+<p class="">Hey! Are we still on for coffee later?</p>
+</div>
+<span class="font-label-caps text-[10px] text-outline mb-1">10:30 AM</span>
+</div>
+<!-- Sender Message -->
+<div class="flex items-end justify-end gap-2">
+<span class="font-label-caps text-[10px] text-outline mb-1">10:35 AM</span>
+<div class="max-w-[70%] bg-gradient-to-br from-accent-gradient-start to-primary text-on-primary font-body-sm text-body-sm px-4 py-3 rounded-2xl rounded-br-sm shadow-md">
+<p class="">Yes! I was thinking about checking out that new place in the Arts District. ☕️</p>
+</div>
+</div>
+<!-- Receiver Message -->
+<div class="flex items-end gap-2">
+<img alt="Receiver" class="w-8 h-8 rounded-full object-cover mb-1" data-alt="A portrait of a young man with a slight smile, outdoors in natural light. The styling is casual yet polished, fitting for a modern social networking profile. The image is bright and clear." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlrZ1ioJm5Ei5kzaoYx6ZL5F7gJN83FvH-_KWXZtyWJQxrotfyCkiryLROnLDAFD5DhHEOK8pN6YifdfDQxJfrSdSMj-72Ei22oCVTUKUsYKT0-Z6IQI8f-BXsGrlx1uoYKcSo4Mgj0AbTahdH3AefPO0OQ9bX7SrQJy21aLUaCiz3GP5rtPZoYE1ImESLDCIj1u5I82uymNsswoOCiYWoq8qCc5fjEce2DraJZvAQfBXXw9eFXYerxRsQawMNSUMeXSvawt_u_JQ">
+<div class="max-w-[70%] bg-surface-container-low text-on-surface font-body-sm text-body-sm px-4 py-3 rounded-2xl rounded-bl-sm">
+<p class="">That sounds like a great plan! See you then. ✨</p>
+</div>
+<span class="font-label-caps text-[10px] text-outline mb-1">10:42 AM</span>
+</div>
+</div>
+<!-- Chat Footer Input -->
+<div class="p-4 bg-surface-container-lowest/80 backdrop-blur-xl border-t border-glass-border">
+<div class="flex items-center gap-2 bg-surface-container-low rounded-full p-1 border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 font-body-sm text-body-sm py-2 px-2 text-on-surface placeholder:text-outline" placeholder="Type a message..." type="text">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="sentiment_satisfied">sentiment_satisfied</span>
+</button>
+<button class="p-2 bg-primary text-on-primary rounded-full hover:opacity-90 transition-opacity mr-1">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden rounded-t-xl border-t border-glass-border bg-white/80 dark:bg-deep-onyx/80 backdrop-blur-2xl backdrop-blur-2xl border-t border-glass-border shadow-[0_-10px_30px_rgba(0,122,255,0.1)] shadow-lg">
+<div class="flex justify-around items-center px-4 py-2 pb-safe w-full h-[60px]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="explore">explore</span>
+<span class="font-label-caps text-label-caps">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:bg-surface-container-high transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="chat" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="font-label-caps text-label-caps">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="group">group</span>
+<span class="font-label-caps text-label-caps">Friends</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Adjust main content height for mobile safe area and bottom nav
+        const setMobileHeight = () => {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+        window.addEventListener('resize', setMobileHeight);
+        setMobileHeight();
+    </script>
+
+
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

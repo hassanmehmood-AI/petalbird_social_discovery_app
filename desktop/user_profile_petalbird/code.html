@@ -1,0 +1,429 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>User Profile | PetalBird</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-surface-variant": "#414755",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-container": "#43677a",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#fefcff",
+                        "secondary-fixed-dim": "#a6cce1",
+                        "tertiary-fixed": "#ffdbcc",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#0058bc",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#bfe5fb",
+                        "on-secondary-fixed-variant": "#254b5d",
+                        "accent-gradient-end": "#00C6FF",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-bright": "#f9f9f9",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "outline": "#717786",
+                        "surface-gray": "#F4F7FA",
+                        "accent-gradient-start": "#007AFF",
+                        "on-secondary-fixed": "#001e2b",
+                        "surface-tint": "#005bc1",
+                        "inverse-on-surface": "#f0f1f1",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container-low": "#f3f3f4",
+                        "secondary": "#3e6376",
+                        "on-background": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#c64f00",
+                        "primary-container": "#0070eb",
+                        "outline-variant": "#c1c6d7",
+                        "background": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary": "#9e3d00",
+                        "on-tertiary-fixed": "#351000",
+                        "deep-onyx": "#111111",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "surface-dim": "#dadada",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container": "#eeeeee",
+                        "on-primary-fixed": "#001a41",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "secondary-fixed": "#c2e8fe",
+                        "inverse-primary": "#adc6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0, 122, 255, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #007AFF, #00C6FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary-gradient {
+            background: linear-gradient(135deg, #007AFF, #00C6FF);
+            box-shadow: 0 4px 14px 0 rgba(0, 122, 255, 0.39);
+        }
+        .rating-btn.active {
+            background: linear-gradient(135deg, #007AFF, #00C6FF);
+            color: white;
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-sm overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-20 z-40 bg-white/70 dark:bg-deep-onyx/70 backdrop-blur-xl border-b border-glass-border shadow-sm flex items-center justify-between px-6 max-w-full">
+<!-- Mobile Logo -->
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary md:hidden">PetalBird</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-1 max-w-md items-center bg-surface-container-low rounded-full px-4 py-2 focus-within:ring-2 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="bg-transparent border-none focus:outline-none w-full text-body-sm font-body-sm text-on-surface" placeholder="Search..." type="text">
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex btn-primary-gradient text-white rounded-xl px-4 py-2 font-body-sm text-body-sm hover:opacity-80 transition-opacity">Upload Photo</button>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">mail</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high relative border border-glass-border cursor-pointer overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A close-up portrait of a stylish young woman with soft natural makeup, looking confidently into the camera. She is in a bright, modern setting with soft, diffused sunlight highlighting her features, fitting a high-end premium social app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7Jl2MvHvlWTsYSdBE3pKwjbHw_FwKi6gqHCn6gFfIEZK5P00C1zfSFt7txF7-zdXWM1HFhlPUbUuxQQZwUCyaC2p4Myq5bqKsNHNPoIY6wtSJZkHutYcDkhDN5zzqvTvrrww-bs9IbIb0i5tUUfxTeVLrlw--n01LCJOEqw_UOr0aSjd7KDyPOPJgus58x8pS53W9N_iv5eGen7sfTItcVP2EzA69O5jaXfxqTnw-3D6sK8sZP8qOrORDn7PhKdCOvPPPx3gAfnI">
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col border-r border-glass-border bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,122,255,0.1)] py-8 px-4 z-50">
+<div class="mb-10 px-4">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">PetalBird</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Premium Social</p>
+</div>
+<div class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="">Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="">Discover</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-primary font-bold border-r-4 border-primary bg-primary-container/10 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="">My Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chat</span>
+<span class="">Messages</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="">Friends</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+<span class="">Ratings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">visibility</span>
+<span class="">Visitors</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:text-primary hover:bg-primary-container/20 transition-all duration-300 font-title-md text-title-md mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 pb-24 md:pb-8 min-h-screen">
+<!-- Hero Section -->
+<div class="relative w-full h-64 md:h-80 bg-surface-container-high overflow-hidden">
+<img alt="Cover Image" class="w-full h-full object-cover" data-alt="A stunning, modern architectural space with large glass windows letting in bright, soft daylight. The scene is elegant and minimalist, featuring clean lines, light wood textures, and a subtle light blue tint in the shadows, perfectly matching a premium lifestyle aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2D8JHF5T5XBavlEcYJJKJ_VyFsAi4NUnEwy5pr-bHsCI-lr-9aRXc1UJISLtlni9UbiLrTekumg_CrqgCXcUaU_mbPmohIURp3KRvgjiCa4ZKL8CCOyrtaP_A3FBcYbFd3nwblX-RuS70VQPXdvU28e3O215_xUe8vGVmTKUEEPZe-T-4zlSeA4krAOVsrTrudbyQhsK558hs7QePd7uifuz4gql4CYyeqVDfMwvA17_sR0jW3pR2oG6L5E7zlwBlTPISjrMw13U">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
+</div>
+<div class="px-4 md:px-10 max-w-7xl mx-auto -mt-20 relative z-10">
+<!-- Header Details & Action Bar -->
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-end mb-10">
+<!-- Profile Image -->
+<div class="relative flex-shrink-0">
+<div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-xl overflow-hidden bg-surface-container">
+<img alt="Profile Image" class="w-full h-full object-cover" data-alt="A close-up portrait of a stylish young woman with soft natural makeup, looking confidently into the camera. She is in a bright, modern setting with soft, diffused sunlight highlighting her features, fitting a high-end premium social app aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1pqCyvaCV3hManp2Nyy7bGibvq6fAoG09ANjd0Pzg5jMM33Fha41rv_cf-vyw9_G3O3r8F4MLDV0lYWlBWw2ZzcL-Rddirj_8BgLJ3Tl8zgJn9Hnt1LMO4I_EhDwwdrYcJLKEpwRTqiOU86B8nvy7kC5KsO5tM2S0AvgfdyocJTVSN_WFi9ZwHWWfeMBuzL2X-eaF6QJALpcl3tojnRe7uCMiFXplk8lUp2pSKwnubERk4IWUsYB6XWfBE9MyhgrBJwaxcDs7HSM">
+</div>
+<div class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center"></div>
+</div>
+<!-- Info -->
+<div class="flex-1">
+<h1 class="font-display-lg text-display-lg text-on-surface">Elena Vance</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant flex items-center gap-2">
+                        @elenav_style <span class="text-green-600 text-sm flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span> Online</span>
+</p>
+<!-- Stats -->
+<div class="flex flex-wrap gap-4 mt-4">
+<div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">9.2</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">APPEAL RATING</div>
+</div>
+</div>
+
+<div class="glass-panel px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 0;">group</span>
+<div>
+<div class="font-title-md text-title-md text-on-surface">842</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">FRIENDS</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-3 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none btn-primary-gradient text-white rounded-xl px-6 py-3 font-title-md text-title-md hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star_rate</span>
+                        Rate Appeal
+                    </button>
+<button class="w-12 h-12 flex-shrink-0 glass-panel rounded-xl flex items-center justify-center text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chat</span>
+</button>
+<button class="w-12 h-12 flex-shrink-0 glass-panel rounded-xl flex items-center justify-center text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person_add</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column (Ratings & Music) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Rating Widget -->
+<div class="glass-panel rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-md text-title-md text-on-surface">Appeal Rating</h2>
+<span class="font-label-caps text-label-caps px-3 py-1 bg-surface-container rounded-full text-primary">AVERAGE: 9.2</span>
+</div>
+<div class="flex justify-between gap-1 mb-6">
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">1</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">2</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">3</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">4</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">5</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">6</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">7</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">8</button>
+<button class="rating-btn active w-8 h-10 rounded-lg border flex items-center justify-center font-body-sm shadow-md scale-110">9</button>
+<button class="rating-btn w-8 h-10 rounded-lg border border-outline-variant text-on-surface-variant flex items-center justify-center font-body-sm hover:border-primary transition-colors">10</button>
+</div>
+<p class="text-center font-body-sm text-body-sm text-on-surface-variant">Tap a number to rate Elena's appeal.</p>
+</div>
+<!-- Visitors List -->
+<div class="glass-panel rounded-xl p-6">
+<h2 class="font-title-md text-title-md text-on-surface mb-4">Recent Ratings</h2>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover border border-glass-border" data-alt="A small profile picture of a young man smiling warmly in a well-lit indoor environment, styled for a modern social media app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2JBKbVDUjDonZ6ki4ZQ5rVJqZWhaeYwGXAG5p-2-1SVhRfNT6uR_8-WURvC6UR2rsmlqe1VBhsREBcIMcdksEb1HZ9JqlYuNr1dcI1Q1e1LxA6L7gK_4ZefF-YWgwUgufeuor0CmjLGc2siL4RON-MwTP0q_8p8mfuNNMh_KcaXsXNNoL2hczO-Abuh7s21Uuovfaqp2chdrCyEEsOaxtfXfUeHz6r3bOy5Q6FdO2Y9P0DTp770XBgCJOM-ObpVQLXwKjxI5aawU">
+<div class="flex-1">
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Mark D.</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">Rated 1 hour ago</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-primary flex items-center justify-center font-title-md font-bold text-sm">9</div>
+</div>
+<div class="flex items-center gap-3">
+<img alt="User" class="w-10 h-10 rounded-full object-cover border border-glass-border" data-alt="A small profile picture of a young woman with a gentle expression, soft lighting, suitable for a premium social application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7FgH1E7DVLQ47WZ-xjGTdouQwGvkVl4KzZsfqfeqHzTarZ6dziB_IDHPn-sbbVc38OEgr9-5woja6kGR3Mt_UenPxMYghMclI1ho6Bp2B5nLy0hUzC9dNVr8dzqXoQeFYYSXfrcgGJOpMA7FtMlOH0dQq0eLpuXNfQe-IrKKD2FRCF080ihpWgvynTJlDXmgmMOauwRm2JuNg46CbpnQ_mgsMmb61tdbsqR1-a2SLCjrpUHS7TK3EtSWNwYyZxbeXEAamKZ-KvXQ">
+<div class="flex-1">
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Sarah K.</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">Rated 3 hours ago</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-primary flex items-center justify-center font-title-md font-bold text-sm">10</div>
+</div>
+<button class="w-full py-2 mt-2 font-label-caps text-label-caps text-primary hover:bg-surface-container-low rounded-lg transition-colors">VIEW ALL</button>
+</div>
+</div>
+<!-- Music Player Widget -->
+<div class="relative rounded-xl overflow-hidden shadow-lg h-32 flex items-center p-4">
+
+<div class="absolute inset-0 bg-white/40 backdrop-blur-md"></div>
+
+</div>
+</div>
+<!-- Right Column (Gallery & Comments) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Photo Gallery -->
+<div class="glass-panel rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-md text-title-md text-on-surface">Photos <span class="text-on-surface-variant text-body-sm font-normal ml-2">(42)</span></h2>
+<button class="font-label-caps text-label-caps text-primary flex items-center gap-1 hover:bg-surface-container-low px-3 py-1 rounded-full transition-colors">
+                                VIEW ALL <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Upload Placeholder -->
+<div class="aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:border-primary cursor-pointer transition-all group">
+<span class="material-symbols-outlined text-3xl mb-2 group-hover:text-primary" style="font-variation-settings: 'FILL' 0;">add_photo_alternate</span>
+<span class="font-body-sm text-body-sm font-semibold group-hover:text-primary">Add Photo</span>
+</div>
+<!-- Photos -->
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer group relative">
+<img alt="Gallery Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A stylish lifestyle photograph of a person holding a coffee cup in a brightly lit, modern cafe with glass windows and greenery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmx5LKetCcL7tcofghNhLeWq_jDU9DmroOTkTA2vhvR7E3goC_mb5rbHipCnWxs5wjx5r5mFhBwwtqQOkFe13P5k7phP8Wa8GF72PTdUi90P9iZKtYxikLx67gB7cv7RFN1ybdUMu1EfG_OLmzzz8NktP-19gU__o_D0FOXo5MF_fVnRUQnKF_OriQBVcM1wTRf_jEpT_hcqI_9I4b2FL2-RvLCiUj6kaTpb4wnrq9OCeveWr0j0Tj39S6FjNocd9ZJvJC31ENcxc">
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer group relative">
+<img alt="Gallery Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality group photo of friends smiling and laughing together outdoors on a sunny day, representing social connection in a premium app context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM1XBGvdoO5SlI59PTGIiPwTPdSMJ0g7OLpSH52wiIi8kJ1nMekoibAGMRS2EBJ4Emu5QSQ2AC4m0TmWA9h1R7FU0QP4z0BCqyF70AJH1C2LHxz0SkNho1saS-Dt1j5y9RxjJ7RzvZdYFvtFkyRz9tTvtZ2kP1cyaGCFzlj9vOM1j2eAAOiLN9z9NLFGyAKvwofe_PNyVB44KrO8EMTb-EeujkZQZlv4lIMeqD1NeBl186l5ARa8eNkCIPkk9bTp3OOeGGAmrHx3A">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden cursor-pointer group relative hidden md:block">
+<img alt="Gallery Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An aesthetic landscape photograph of a scenic beach at sunset with soft pastel skies, fitting the lifestyle theme of the application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDekVQgyDSxYT5_jYuJYguzF9idInNjhkWqyYubFTmlOM4AxrZqcOuhW1B4jmXbryrw1RhYc3Q5kDDSw10GNWmDir7qHruM6SD8iG2jOcsHMpGP3kKvB7tNAwPEnrNFuXRW9M9n1kMLCSsZgheZlMdQpL8U9OfRHPQD7kOY6AHvodMx_-crCFrAI2e1t66SVQK9Hz9IeGd6F0MMtGS03NILWQdZu_lC_gggED0lNvanSo428tYMh_yE2YfhywSKp5P5R10cFdIBNNw">
+</div>
+</div>
+</div>
+<!-- Comments Section -->
+<div class="glass-panel rounded-xl p-6">
+<h2 class="font-title-md text-title-md text-on-surface mb-6">Wall <span class="text-on-surface-variant text-body-sm font-normal ml-2">(128)</span></h2>
+<!-- Input -->
+<div class="flex gap-4 mb-8">
+<img alt="Your Avatar" class="w-10 h-10 rounded-full object-cover border border-glass-border" data-alt="A small profile picture of the current user." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeDAPC4f-w5Rdbvzb1jQTGuBqyDowSflwHWvhv7dutbYw6_ATTxGbbrAu8qEVdkME7QMq1p0ypv_gZP2LaV2zC1KH7FkFeY161_UboXx19UWjUvMAb_Il7G94NeTG-hCLzOjETMJLAFE6GjZerxAssU98QzBPectbljp29UIzGGKZHE041atsjLyLMvXAWtCvJn8FvdBitBSRTuVRtLxal2OnrH7KMXlycrBhBdp621yDvEI2ws6A6jVimWZ5QKqSikVIUGTm0cz8">
+<div class="flex-1 relative">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3 font-body-sm text-body-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Write something on Elena's wall..." type="text">
+<button class="absolute right-2 top-2 w-8 h-8 flex items-center justify-center text-primary hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- Comment List -->
+<div class="flex flex-col gap-6">
+<!-- Comment Item -->
+<div class="flex gap-4">
+<img alt="User" class="w-10 h-10 rounded-full object-cover border border-glass-border" data-alt="A portrait of a young man with a casual style, looking thoughtful in a bright outdoor setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0UX64w7fnGf0PcUbQ2b6l2u6ik8tTfaD9JcZmENkNr6o7hcMttpwLmvwdfrp6DmcnFdYrvj956--eCyo5YW4f3FZaLZe54-h-f-adC7tGHlFo-Cm3Yok6tl9loZkPTqAzwlxYgZpMb9bfm3pgWi3fTUe2u7ItDXXMxPB2Ef_3NdJw5NREMhWtDKB3xkgIrbPhSDkDsFJhk1-sEjBYXhX0MU4NwJPn0vaUg18xpU0C9_9ZF-_ERbYi0G5ymMQNPS0uy0SkE00P9G4">
+<div class="flex-1 bg-surface-container-low rounded-2xl rounded-tl-none p-4">
+<div class="flex justify-between items-start mb-1">
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Alex Mercer</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">2h ago</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Love the new cover photo! Looks like an amazing place. Where was it taken?</p>
+<div class="flex gap-4 mt-3">
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">favorite</span> 12
+                                        </button>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">REPLY</button>
+</div>
+</div>
+</div>
+<!-- Comment Item -->
+<div class="flex gap-4">
+<img alt="User" class="w-10 h-10 rounded-full object-cover border border-glass-border" data-alt="A portrait of a middle-aged woman with a warm smile, wearing a casual sweater in a softly lit room." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6CZ51zB77M2NOwGLtEESGOqGSdLMhHbFv2DnpqWNxjKza6VEKaWbiR1qFz8PzlEv53qCuxWbYlxqppPMY3wiyEpO5FO5nkxiQ0TkMM_sC3_BK_Fmrr8OetlERvt3eHUFzR_BcPh2tQbM1L7EGhX16zDtXeiEPFSqfmRy66Og-PtSqtsge7VUBNAcAKQid6XvzKTdOpw3GAd8pvKb-07ciEo47bszM5BLOoakGVKGf20WUrHJDV8xNvdJKndq_SOcOYUh526QqiL0">
+<div class="flex-1 bg-surface-container-low rounded-2xl rounded-tl-none p-4">
+<div class="flex justify-between items-start mb-1">
+<div class="font-body-sm text-body-sm font-semibold text-on-surface">Jessica Chen</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-xs">5h ago</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">10/10 as always! Hope you're doing well, let's catch up soon. ✨</p>
+<div class="flex gap-4 mt-3">
+<button class="font-label-caps text-label-caps text-primary flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span> 4
+                                        </button>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors">REPLY</button>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-outline-variant rounded-xl font-body-sm text-body-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">Load More Comments</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden rounded-t-xl border-t border-glass-border bg-white/80 dark:bg-deep-onyx/80 backdrop-blur-2xl shadow-[0_-10px_30px_rgba(0,122,255,0.1)] flex justify-around items-center px-4 py-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline scale-95 duration-200 active:bg-surface-container-high transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline scale-95 duration-200 active:bg-surface-container-high transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-caps text-label-caps mt-1">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline scale-95 duration-200 active:bg-surface-container-high transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">chat</span>
+<span class="font-label-caps text-label-caps mt-1">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline scale-95 duration-200 active:bg-surface-container-high transition-colors p-2 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-label-caps text-label-caps mt-1">Friends</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 scale-95 duration-200 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple rating button interaction
+        const ratingBtns = document.querySelectorAll('.rating-btn');
+        ratingBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                ratingBtns.forEach(b => {
+                    b.classList.remove('active', 'border-transparent', 'text-white', 'shadow-md', 'scale-110');
+                    b.classList.add('border-outline-variant', 'text-on-surface-variant');
+                    b.style.background = '';
+                });
+                btn.classList.add('active', 'shadow-md', 'scale-110');
+                btn.classList.remove('border-outline-variant', 'text-on-surface-variant');
+            });
+        });
+    </script>
+
+
+</body></html>

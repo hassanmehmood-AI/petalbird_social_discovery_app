@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PetalBird - Premium Social Discovery</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#9e3d00",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "surface-dim": "#dadada",
+                        "secondary": "#006685",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "secondary-container": "#00c4fd",
+                        "success-green": "#22c55e",
+                        "inverse-surface": "#2f3131",
+                        "on-primary-fixed-variant": "#004493",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#c64f00",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#fffbff",
+                        "surface": "#f9f9f9",
+                        "primary": "#0058bc",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#adc6ff",
+                        "on-tertiary-fixed": "#351000",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001a41",
+                        "outline": "#717786",
+                        "accent-gradient-end": "#00C6FF",
+                        "surface-tint": "#005bc1",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-container": "#004d66",
+                        "background": "#f9f9f9",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-container-low": "#f3f3f3",
+                        "deep-onyx": "#111111",
+                        "on-surface-variant": "#414755",
+                        "secondary-fixed-dim": "#6dd2ff",
+                        "on-secondary-fixed": "#001f2a",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-container": "#fefcff",
+                        "on-secondary": "#ffffff",
+                        "error-red": "#ba1a1a",
+                        "on-surface": "#1a1c1c",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "surface-container-highest": "#e2e2e2",
+                        "accent-gradient-start": "#007AFF",
+                        "primary-container": "#0070eb",
+                        "secondary-fixed": "#bfe9ff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c1c6d7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "container-padding": "24px",
+                        "card-gap": "20px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased flex flex-col min-h-screen relative overflow-x-hidden">
+<!-- Ambient Background Blurs -->
+<div class="fixed top-0 left-0 w-[800px] h-[800px] bg-accent-gradient-start opacity-5 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0"></div>
+<div class="fixed bottom-0 right-0 w-[600px] h-[600px] bg-accent-gradient-end opacity-[0.03] rounded-full blur-[100px] pointer-events-none translate-x-1/3 translate-y-1/3 z-0"></div>
+<!-- TopNavBar (Generated from JSON) -->
+<nav class="fixed top-0 w-full h-20 bg-surface-glass dark:bg-surface-glass backdrop-blur-xl border-b border-glass-border shadow-[0_8px_32px_0_rgba(0,122,255,0.08)] z-50">
+<div class="flex justify-between items-center px-container-padding max-w-7xl mx-auto w-full h-full">
+<!-- Brand -->
+<a class="font-display-lg text-headline-lg-mobile md:text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end cursor-pointer active:scale-95 transition-transform" href="#">
+                PetalBird
+            </a>
+<!-- Navigation Links (Hidden on Mobile, Flex on MD) -->
+<ul class="hidden md:flex items-center gap-card-gap">
+<li><a class="font-body-lg text-body-lg md:font-title-md md:text-title-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors cursor-pointer active:scale-95" href="#features">Features</a></li>
+<li><a class="font-body-lg text-body-lg md:font-title-md md:text-title-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors cursor-pointer active:scale-95" href="#about">About</a></li>
+<li><a class="font-body-lg text-body-lg md:font-title-md md:text-title-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors cursor-pointer active:scale-95" href="#gallery">Gallery</a></li>
+<li><a class="font-body-lg text-body-lg md:font-title-md md:text-title-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors cursor-pointer active:scale-95" href="#trending">Trending</a></li>
+</ul>
+<!-- Actions -->
+<div class="flex items-center gap-gutter">
+<button class="hidden md:block font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:scale-95">Login</button>
+<button class="bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end text-on-primary px-6 py-2 rounded-full font-title-md text-title-md hover:scale-105 transition-transform duration-200 cursor-pointer active:scale-95 shadow-[0_4px_16px_rgba(0,122,255,0.2)]">
+                    Join Now
+                </button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 relative z-10">
+<!-- Hero Section -->
+<section class="w-full px-container-padding max-w-7xl mx-auto py-16 md:py-32 flex flex-col md:flex-row items-center gap-8 md:gap-16">
+<!-- Text Content -->
+<div class="flex-1 flex flex-col items-start gap-8 z-10">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-glass backdrop-blur-md border border-glass-border rounded-full shadow-sm">
+<span class="material-symbols-outlined text-accent-gradient-start text-[18px]">verified</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Premium Social Discovery</span>
+</div>
+<h1 class="font-display-lg text-[40px] leading-[48px] md:text-display-lg text-on-background">
+                    Get Ratings On Your <br class="hidden md:block"/>
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end">Appeal</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Step into a curated digital gallery where style meets discovery. Connect with an aspirational community, receive nuanced aesthetic feedback, and elevate your social presence.
+                </p>
+<div class="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
+<button class="w-full sm:w-auto bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end text-on-primary px-8 py-4 rounded-full font-title-md text-title-md hover:scale-105 transition-transform duration-200 shadow-[0_8px_32px_rgba(0,122,255,0.25)]">
+                        Join Now
+                    </button>
+<button class="w-full sm:w-auto bg-surface-lowest border border-glass-border text-on-surface px-8 py-4 rounded-full font-title-md text-title-md hover:bg-surface-container-low transition-colors duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                        How it works
+                    </button>
+</div>
+</div>
+<!-- Imagery -->
+<div class="flex-1 relative w-full h-[500px] md:h-[600px] flex items-center justify-center">
+<!-- Main Image Card -->
+<div class="absolute w-[80%] h-[90%] left-[10%] top-[5%] bg-surface-container-low rounded-xl overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.05)] border border-glass-border z-10 transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+<img class="w-full h-full object-cover" data-alt="A striking, high-fashion portrait of a stylish young woman posing in a minimalist, bright studio setting. She wears chic, modern attire that reflects a premium social aesthetic. The lighting is soft, high-key, and airy, emphasizing the pristine white and soft blue ambient tones of the PetalBird brand identity. The mood is confident, polished, and aspirational, capturing the essence of a high-end social discovery platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf_Tp20S0igou6ygYbpPG302b4bfVME3knpjP8Wl_XoF3qyH5u7PwoMeb-wvrN1YarEsSwiwZNowqcnOu_H67-dvBx85I2VEa5jFvwaU20-bm2jupFVyMUUBZcehGJgRgLHmT26HapyvntyeQUmNkl3zvuMnJyU02gTJR4tCKb39TdAU77melOfvKFqhD7yJtmjylJZu9Ui1RNJEBcRDhMv3uORVTfqlyPavX5BUDcjTlPgmcNfP8josPhnOyPZ3AK6vP4uZF2z_g"/>
+<!-- Floating Rating Widget -->
+<div class="absolute bottom-6 right-6 bg-surface-glass backdrop-blur-xl border border-glass-border rounded-xl p-4 flex items-center gap-4 shadow-[0_8px_32px_rgba(0,122,255,0.15)]">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-accent-gradient-start to-accent-gradient-end flex items-center justify-center text-on-primary font-title-md text-title-md">
+                            9.4
+                        </div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Style Score</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-success-green">trending_up</span>
+                                Top 5% this week
+                            </span>
+</div>
+</div>
+</div>
+<!-- Secondary Background Image Card -->
+<div class="absolute w-[70%] h-[80%] right-0 bottom-0 bg-surface-container-highest rounded-xl overflow-hidden shadow-sm border border-glass-border z-0 transform rotate-[4deg] opacity-60">
+<img class="w-full h-full object-cover" data-alt="A sophisticated portrait of a stylish young man in a well-lit, contemporary architectural space. The environment features clean lines and a modern minimalist design, bathed in natural light. The color palette leans heavily into pristine whites, subtle grays, and delicate blue accents, mirroring the premium, airy brand aesthetic. The overall composition is polished, editorial, and highly aspirational." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAqw8SI7p0GqthBkU_sO_cKKDFgRPtrAi2ML4qKp2QlxtZCKzhEIGZ_bLwjDnHwWHjav8Jqmu6nsge53gjmLaQR6lsNpQOwMkOU8pFqpqdAazVNJ-osHvwtApCS44iI_f69Syy3nopOAH24fPokfcjze4gPt2jz7eXudOgzDwe8gxwp4FhFtMt7acqJUSreBzwUrxeQ0kXxMbz4hIo9E15jfoRCJc8BvL52dGSrwvFrgeOdIuqyAq7wfeSsDvRJjHwOxwbFZjUJdY"/>
+</div>
+</div>
+</section>
+<!-- Features Section (Bento Grid) -->
+<section class="w-full px-container-padding max-w-7xl mx-auto py-16 md:py-24" id="features">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background mb-4">Elevate Your Aesthetic</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Discover a new tier of social interaction driven by genuine visual appreciation and sophisticated analytics.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-card-gap">
+<!-- Feature 1: Social Discovery (Wide Card) -->
+<div class="md:col-span-8 bg-surface-glass backdrop-blur-xl border border-glass-border rounded-xl p-8 flex flex-col md:flex-row gap-8 items-center shadow-[0_8px_32px_0_rgba(0,122,255,0.06)] hover:shadow-[0_12px_48px_0_rgba(0,122,255,0.1)] transition-shadow duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-accent-gradient-end opacity-5 rounded-full blur-[60px] pointer-events-none"></div>
+<div class="flex-1 z-10">
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-[28px]">explore</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-3">Premium Social Discovery</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Connect with tastemakers and style icons. Our algorithm curates high-quality profiles tailored to your aesthetic preferences, fostering a community of visual excellence.</p>
+</div>
+<div class="flex-1 w-full h-48 bg-surface rounded-lg border border-glass-border relative overflow-hidden flex items-center justify-center z-10">
+<!-- Abstract representation of discovery grid -->
+<div class="grid grid-cols-3 gap-2 p-4 w-full h-full opacity-80">
+<div class="bg-surface-container-low rounded-md h-full w-full animate-pulse" style="animation-delay: 0s;"></div>
+<div class="bg-primary/10 rounded-md h-full w-full animate-pulse" style="animation-delay: 0.2s;"></div>
+<div class="bg-surface-container-low rounded-md h-full w-full animate-pulse" style="animation-delay: 0.4s;"></div>
+<div class="bg-accent-gradient-start/10 rounded-md h-full w-full animate-pulse" style="animation-delay: 0.1s;"></div>
+<div class="bg-surface-container-low rounded-md h-full w-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary opacity-50">favorite</span>
+</div>
+<div class="bg-accent-gradient-end/10 rounded-md h-full w-full animate-pulse" style="animation-delay: 0.3s;"></div>
+</div>
+</div>
+</div>
+<!-- Feature 2: Analytics (Square Card) -->
+<div class="md:col-span-4 bg-surface-glass backdrop-blur-xl border border-glass-border rounded-xl p-8 flex flex-col shadow-[0_8px_32px_0_rgba(0,122,255,0.06)] hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-[28px]">insights</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-3">Profile Analytics</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 flex-grow">Track your appeal over time. Understand which looks resonate most with comprehensive demographic and stylistic breakdowns.</p>
+<!-- Mini Chart Visual -->
+<div class="w-full h-24 flex items-end gap-2 px-2">
+<div class="w-1/5 bg-surface-container-high h-[40%] rounded-t-sm"></div>
+<div class="w-1/5 bg-surface-container-high h-[60%] rounded-t-sm"></div>
+<div class="w-1/5 bg-primary/40 h-[75%] rounded-t-sm relative"></div>
+<div class="w-1/5 bg-gradient-to-t from-accent-gradient-start to-accent-gradient-end h-[95%] rounded-t-sm relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] px-2 py-1 rounded font-bold">Peak</div>
+</div>
+<div class="w-1/5 bg-surface-container-high h-[80%] rounded-t-sm"></div>
+</div>
+</div>
+<!-- Feature 3: Rating Scale (Square Card) -->
+<div class="md:col-span-4 bg-surface-glass backdrop-blur-xl border border-glass-border rounded-xl p-8 flex flex-col shadow-[0_8px_32px_0_rgba(0,122,255,0.06)] hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-[28px]">star_rate</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface mb-3">1-10 Scale Visuals</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 flex-grow">Experience feedback through beautifully crafted, immersive rating sliders that make rating an engaging aesthetic experience.</p>
+<!-- Slider Visual -->
+<div class="w-full h-12 relative flex items-center mt-auto">
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="w-[75%] h-full bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end"></div>
+</div>
+<div class="absolute left-[75%] -translate-x-1/2 w-6 h-6 bg-surface border-2 border-primary rounded-full shadow-md flex items-center justify-center">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<div class="absolute right-0 -bottom-6 font-label-caps text-label-caps text-primary">7.5 / 10</div>
+</div>
+</div>
+<!-- Feature 4: High-Quality Imagery Banner (Wide Card) -->
+<div class="md:col-span-8 bg-surface-container-low rounded-xl overflow-hidden relative shadow-[0_8px_32px_0_rgba(0,0,0,0.04)] group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A dynamic, candid lifestyle shot of a group of attractive, stylish young adults walking together in a modern urban environment. They are laughing and interacting naturally, exuding a sense of exclusive community and high-end social connection. The lighting is bright and sunny, creating a high-key, optimistic atmosphere. The color palette focuses on crisp whites, light denims, and soft blue accents, perfectly aligning with the premium PetalBird aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0lhjTgjNjO0OjQlg6SfYgSxVs5fPQAU411k5iETIEADNBQJ_YYf5A_7amb_QuT_rBLdyH_AuGZEB2pL2te_4Xya0rY8u3vWsBgBIqJiz57SyNuhDJKkGa7s9WwhXnQDR6TopP7XcXRxrV98CuMIJfxye0APiDEklZztS24i_hWYZuNCiMlKE0O2y20Hz_Fz6jGTgssTMkFHCGrHAQGwUMsAlV6btKKzH8hJ8t8jeIg0vZvg4opcQr0gC1EVOB2F81phBoLyqXVE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-onyx/80 via-transparent to-transparent flex items-end p-8">
+<div>
+<h3 class="font-title-md text-title-md text-on-primary mb-2">A Curated Gallery of You</h3>
+<p class="font-body-sm text-body-sm text-on-primary/80 max-w-md">Your profile is more than just photos; it's an editorial spread. Present yourself in the best light.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Generated from JSON) -->
+<footer class="w-full py-12 px-container-padding bg-surface dark:bg-deep-onyx border-t border-glass-border flex flex-col md:flex-row justify-between items-center gap-card-gap max-w-7xl mx-auto z-10 relative">
+<div class="font-headline-lg-mobile text-primary font-bold">
+            PetalBird
+        </div>
+<ul class="flex flex-wrap justify-center gap-6">
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Privacy Policy</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Terms of Service</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Help Center</a></li>
+<li><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary hover:opacity-80 transition-opacity" href="#">Contact Us</a></li>
+</ul>
+<div class="font-body-sm text-body-sm text-on-surface dark:text-on-surface-variant text-center md:text-right">
+            © 2024 PetalBird. Premium Social Discovery.
+        </div>
+</footer>
+</body></html>

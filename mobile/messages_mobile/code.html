@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>PetalBird | Messages</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .glass-border {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .bg-surface-glass {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .active-scale:active {
+            transform: scale(0.95);
+        }
+        body {
+            background-color: #f9f9f9;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .safe-pb {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#351000",
+                        "outline": "#717786",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#adc6ff",
+                        "primary": "#0058bc",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-container": "#c64f00",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "success-green": "#22c55e",
+                        "secondary-container": "#00c4fd",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#f9f9f9",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-dim": "#dadada",
+                        "secondary": "#006685",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#9e3d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c1c6d7",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0070eb",
+                        "accent-gradient-start": "#007AFF",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#bfe9ff",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "on-primary-container": "#fefcff",
+                        "error-red": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#6dd2ff",
+                        "on-surface-variant": "#414755",
+                        "deep-onyx": "#111111",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-fixed": "#001f2a",
+                        "surface-container-low": "#f3f3f3",
+                        "accent-gradient-end": "#00C6FF",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-container": "#004d66",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#005bc1",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "card-gap": "20px",
+                        "base": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-lg text-on-surface bg-surface overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-glass dark:bg-surface-glass fixed top-0 w-full z-50 backdrop-blur-xl border-b border-glass-border shadow-[0_8px_32px_0_rgba(0,122,255,0.08)] flex justify-between items-center h-20 px-container-padding w-full">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform hover:opacity-80 transition-opacity text-primary">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<h1 class="font-display-lg text-headline-lg-mobile bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end">PetalBird</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="active:scale-95 transition-transform hover:opacity-80 transition-opacity text-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-24 pb-32 px-container-padding min-h-screen">
+<!-- Search & Filter Area -->
+<section class="mb-gutter">
+<div class="relative w-full">
+<input class="w-full h-12 bg-surface-container-low border-none rounded-full px-12 py-3 text-body-lg focus:ring-2 focus:ring-primary-container outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Search conversations..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/60" data-icon="search">search</span>
+</div>
+</section>
+<!-- Active Now Stories Row -->
+<section class="mb-8 overflow-x-auto no-scrollbar flex gap-4 -mx-container-padding px-container-padding pb-2">
+<div class="flex flex-col items-center gap-1 flex-shrink-0">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 relative active:scale-95 transition-transform">
+<img alt="User Profile" class="w-full h-full object-cover rounded-full" data-alt="A professional headshot of a stylish young woman with a warm smile, set against a high-key studio background with soft pink and blue ambient lighting. She has a modern fashion aesthetic, wearing minimalist jewelry. The overall mood is optimistic, premium, and sophisticated, perfectly matching a high-end social network UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2hiZk5la8RNaaYOqIu5_ykAE0sJPIJVmeyYnodJsI44UJfO36IkEbomcA9EU28Var23EjUofJ_misqXT5LVanriATnR6dCwlJEpzv8P2eglgmKKhaj_fTBwqfP3-KETgLowh0plqdV68eEgub65skHN9za4S5GgAFlY78dz0v_sdoSxDQxp6rOzCebiAbJfPqgs-eBab-aOE8HzT-GPvfHfLzLsb6HgITIZLhqsdbXDf3HUgIapxWhkrN_BPvzhMeSJ5LwGvHn74"/>
+<div class="absolute bottom-0 right-1 w-4 h-4 bg-success-green border-2 border-surface rounded-full"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">You</span>
+</div>
+<!-- Story Item -->
+<div class="flex flex-col items-center gap-1 flex-shrink-0">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 active:scale-95 transition-transform">
+<img alt="Julian" class="w-full h-full object-cover rounded-full" data-alt="A close-up portrait of a man with a groomed beard and stylish glasses, looking directly into the camera with a confident expression. The background is a blurred metropolitan street at golden hour, creating a warm, premium atmosphere. The lighting is bright and clear, emphasizing high-quality digital photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8VecbsYh_DtzRQ_FlCUhDNgR4RHMC6haCHdZ5VOxN9-oyUJZ9k3zgG1IwNh_GDpcb5RH3WrfEeGIFrAbVja7nSIe9tHQBLU11KRi_6o5ezXnYi3m27Ge3GqYiNAdnxjbJcjX00_zpcK19FElUbkR2aG9t1-xjbttFDqKtb7YIUkrHQ71wZ88OBcLXS5QzwM3bbPDejk1qVxVlsDNArKoyW6S2u5hg1Otc9TDbSJdLhAv-gGpZelvPJYx8OL5EjXv2Ve0R6ezh0XE"/>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Julian</span>
+</div>
+<!-- Story Item -->
+<div class="flex flex-col items-center gap-1 flex-shrink-0">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 active:scale-95 transition-transform">
+<img alt="Elena" class="w-full h-full object-cover rounded-full" data-alt="A high-fashion portrait of a woman with vibrant hair and elegant makeup. She is posed against a minimalist white wall with soft, diffused sunlight casting gentle shadows. The image has an airy, editorial feel with a focus on luxury and modern social connectivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnSZn0bPeokuENu6hvJjwYELX8SJ9qOyPn3obKdgKofV5DxeCWL8rJCEpG9IvrNVDCggGYHw3efpmln2HuJU27UxnWyq2C-Acf1XYNdXmlTztU_JOF91XLLgnnVQUVIihl7hiXXrSVx794A1rRQWV9rWNX55W5Qc6qhono71BVkynmvKIXdPrNe31SnvD473EPoJlnCOGadPD8ALTo5ig6Xwrkj2UvHMFET70U3f4JEWQ12V3plAmGKUSHMHEYC3DO5vO5aW73Fvk"/>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Elena</span>
+</div>
+<!-- Story Item -->
+<div class="flex flex-col items-center gap-1 flex-shrink-0">
+<div class="w-16 h-16 rounded-full border-2 border-primary p-0.5 active:scale-95 transition-transform">
+<img alt="Marcus" class="w-full h-full object-cover rounded-full" data-alt="A portrait of a young man in a minimalist grey sweater, standing in a brightly lit architectural space with glass and steel elements. The lighting is high-key and clean, suggesting a professional and premium social environment. The mood is calm and aspirational." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv9Tlu7nV1pfEw9Vc63mn9QBCflHCf7LzRwAIflHe0W5H2E9FqgNDIyBwd-Rf_STGm6nLXJ219qypnUeaffIzK7AjPmUCYgKP_7kc5H-j56lmwp5leFcOQlMBd8oDim5RLBW8KtKQhL1EJiu39KaxGgRsfP5T1pgJHMyc4WmWi_z2J96uZMAObrahKHQQYUkZGiWXqxeLVGiMO3MwWEi437LaG3e1ubtIURqDjLhhE1mrs-GZlJsPZIVwgYj7Dp-59RjbQ4qACjJE"/>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Marcus</span>
+</div>
+<!-- Story Item -->
+<div class="flex flex-col items-center gap-1 flex-shrink-0">
+<div class="w-16 h-16 rounded-full border-2 border-outline-variant p-0.5 active:scale-95 transition-transform">
+<img alt="Sienna" class="w-full h-full object-cover rounded-full" data-alt="An editorial style portrait of a woman with long wavy hair, wearing a white silk blouse. The setting is a bright, modern interior with lush green plants in the background. The lighting is soft and natural, creating a sophisticated and welcoming digital presence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbwq7RpwuW51YEKvDlZuZXrIVM79SMTKrUl2k1GKd7yv_iYaMeCyDVOk-tcMElSEKIT4UejoUZzKmF6R56PZdidjv-x405BDNGKJSAwCGgJ6BG3NFZCJUP0IrzlSZc3UDF_nUwRnErrm7lyEJsWC_QJPHWJQlGSYXqR8pPbhofy_2HNM45IEfbDiO1xBzWFyvElH03z8ZAQonMqZCT8fN_vfRYstkljuDh9VV_5lrGJnQfLcgM8y3flvun0ahg0zNfxwqo1PZXaOg"/>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Sienna</span>
+</div>
+</section>
+<!-- Message List -->
+<section class="space-y-4">
+<h2 class="font-title-md text-title-md text-on-surface px-1">Recent Messages</h2>
+<div class="space-y-2">
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer shadow-[0_4px_20px_0_rgba(0,122,255,0.04)]">
+<div class="relative flex-shrink-0">
+<img alt="Julian" class="w-14 h-14 rounded-full object-cover" data-alt="A portrait of a young professional man in a bright, modern office space. He is looking off-camera with a thoughtful smile. The environment is filled with soft, natural light and clean lines, embodying a high-end social network aesthetic with vibrant, optimistic energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEKXdvsjyiD6VWswkwMKkcjGsAI1FhajKZr77U3hds-si0wGVUXtVJ1l2OTsKdiqXv3yytEylIcwAJYc90mNTKvHERooAkO1Zu3m2PyyAC2N5h9h5mfvf9DzK6Q7vK1uixdas2u_zxT9EKZcFNNr8SiLhwyXRz-mQC61fIHnXnruWbIyBCfP_Xx966xqO1nMHo2XQIAcZ9afQ0It-OWlKIZaH1HwU3YFN8KeFJNICzMRY5vZLtC_CehyY5SfuElfbLBLcZU6faneY"/>
+<div class="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-success-green border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">Julian Rossi</h3>
+<span class="font-label-caps text-label-caps text-primary">2m ago</span>
+</div>
+<p class="text-body-sm text-on-surface font-semibold truncate">Hey! Did you see the new gallery opening tonight?</p>
+</div>
+<div class="w-2.5 h-2.5 bg-primary rounded-full flex-shrink-0"></div>
+</div>
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer">
+<div class="relative flex-shrink-0">
+<img alt="Elena" class="w-14 h-14 rounded-full object-cover" data-alt="A high-key, professional headshot of a creative woman against a minimalist studio background with soft blue accents. The lighting is bright and airy, reflecting a premium digital experience. Her expression is friendly and engaging, typical of a modern social networking platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9AIgkjm20AKKEtT8y08ALgf39AOIbHIP_1-7EDPyBMiu41-9Co71eCp9_MfYX7Xuik8sv6owmQAaaJyBkh3REeXN2bN4Q35QhxKbDihYaza_3aYUGn4LQ4aQzj2T6sCjVhn8EsD5Q4eo7yFXQ6E3OYvMUthxjGSCVCcgRwOnZTxH91xet8kJG4Y4uURN8w5pnqFvFuz7MIpONx2HLzM8Eu2qDcxIT49tKV92BzdBneA74paqBWWUS9AdTALOzhiAjxp74QJcIVjk"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">Elena Vance</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">1h ago</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">The photos from the shoot look incredible, thanks again!</p>
+</div>
+</div>
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer">
+<div class="relative flex-shrink-0">
+<img alt="Marcus" class="w-14 h-14 rounded-full object-cover" data-alt="A stylish portrait of a young man in a minimalist urban setting. The image is captured with shallow depth of field, highlighting his focused expression against a backdrop of modern glass architecture. The aesthetic is clean, sophisticated, and optimistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkj_F-Ce_B6lcp51IrBghdl47i_eLqyuQUt7KNlWPNido_oNXPVk3JxiHJuKik-RLMphxHK0cQ6IuMLzOzL7ulrREutEObljoznibO6o0gvjvLGC03UYLNXtIAuFSQYZNB6DqRx9isIOUb_EBwEs5hKjfguTb-iaiEl4BTMO964nzItku3Y0Cir0q4zcpcWMxwxBVkQ9MOZNzYIWsaccGGC2lDSTFXuKaOQhfxRMzEn1V82zxVOf0tn1UhmSy_t60JxSmN8iczcD0"/>
+<div class="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-success-green border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">Marcus Thorne</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">3h ago</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Let's grab a coffee later to discuss the project.</p>
+</div>
+</div>
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer">
+<div class="relative flex-shrink-0">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-title-md">PB</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">PetalBird Support</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Your account verification is complete. Welcome!</p>
+</div>
+</div>
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer">
+<div class="relative flex-shrink-0">
+<img alt="Sienna" class="w-14 h-14 rounded-full object-cover" data-alt="A sophisticated portrait of a young woman in a high-end fashion setting. The background features blurred architectural lights and a clean white aesthetic. The lighting is soft and flattering, creating a polished, gallery-focused atmosphere for a premium social network." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0WyuXH0RglQ_EV9L_L39YWPJBc9aapoG24mKFIryrfxeDng1GtCeGvz4zPre8LxISl-A9YTQgUpJjRBbLbMSuZb9EI1pB_n96PNxk2CHnR17n6QtkG3zl9wYqnad5wpxmnZGAATr4WTi1kUWMswoY2PF5yovtEZoKsW9fli-1vIYfZjBNg1apc9GCWKsk3iCC2rwFo8j68I_FYi3ChFSwFUtq_jB3HIgWJS2503nLUut_e8cnBA7Xt8KxPrgx_8TUR79hFfhNbKE"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">Sienna Miller</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Sent you a link to the moodboard.</p>
+</div>
+</div>
+<!-- Message Thread Card -->
+<div class="card-glass rounded-xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer">
+<div class="relative flex-shrink-0">
+<img alt="Leo" class="w-14 h-14 rounded-full object-cover" data-alt="A professional portrait of a man with a friendly, aspirational look. He is set in a high-key office environment with soft shadows and bright highlights. The overall feeling is one of modern success and social connectivity in a polished digital space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUK-Tjh9lPYnATNtSDT8qpZ16fI2PEpowvoT_8aimS3CvdJWaLhjXTvwfWBYyDWgpV0t9pRnB79lOIzE7pPFZYdTtqMlnMxaVamDxRR0QYkGR3-xlHGdqn2wEJtNqrInDQwg7f-xSve2FOP0V_MQe-8b8OlromI6vtU3I6Igne4rJ2wY7ADYFSDEq5Jk9Z7mg3vofF3ZtFezgL69NI3pPVWFd-xDT4PJbF44wlNPSYz2xPnclZncw7XISLUtbLCeyiAltt9WFrZxU"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<h3 class="font-title-md text-body-lg font-semibold text-on-surface truncate">Leo Thompson</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant">2d ago</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">That sounds like a great plan. Let's do it.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB for New Message -->
+<button class="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-accent-gradient-start to-accent-gradient-end text-white shadow-[0_8px_24px_rgba(0,122,255,0.3)] flex items-center justify-center z-[60] active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined text-3xl" data-icon="edit_square">edit_square</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-glass dark:bg-surface-glass backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_0_rgba(0,122,255,0.08)] safe-pb">
+<div class="flex justify-around items-center h-20 px-4 pb-2 w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full w-12 h-12 active:scale-90 duration-200 shadow-lg shadow-primary/20" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</a>
+</div>
+</nav>
+<script>
+        // Micro-interactions for message threads
+        document.querySelectorAll('.card-glass').forEach(card => {
+            card.addEventListener('click', () => {
+                // Simulate ripple or navigation feedback
+                card.style.opacity = '0.7';
+                setTimeout(() => { card.style.opacity = '1'; }, 150);
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+            searchInput.parentElement.style.transition = 'transform 0.3s ease';
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+    </script>
+</body></html>

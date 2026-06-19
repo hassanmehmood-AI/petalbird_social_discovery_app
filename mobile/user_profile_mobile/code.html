@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>PetalBird | Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .safe-pb { padding-bottom: env(safe-area-inset-bottom); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating-element { animation: float 3s ease-in-out infinite; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#351000",
+                        "outline": "#717786",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#adc6ff",
+                        "primary": "#0058bc",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-container": "#c64f00",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "success-green": "#22c55e",
+                        "secondary-container": "#00c4fd",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#f9f9f9",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-dim": "#dadada",
+                        "secondary": "#006685",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#9e3d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c1c6d7",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0070eb",
+                        "accent-gradient-start": "#007AFF",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#bfe9ff",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "on-primary-container": "#fefcff",
+                        "error-red": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#6dd2ff",
+                        "on-surface-variant": "#414755",
+                        "deep-onyx": "#111111",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-fixed": "#001f2a",
+                        "surface-container-low": "#f3f3f3",
+                        "accent-gradient-end": "#00C6FF",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-container": "#004d66",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#005bc1",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-lg text-on-surface antialiased overflow-x-hidden">
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-glass dark:bg-surface-glass backdrop-blur-xl border-b border-glass-border shadow-[0_8px_32px_0_rgba(0,122,255,0.08)] flex justify-between items-center h-20 px-container-padding">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">search</span>
+</button>
+</div>
+<h1 class="font-display-lg text-headline-lg-mobile bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end">PetalBird</h1>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-32">
+<!-- Hero Section -->
+<div class="relative w-full h-72 overflow-hidden">
+<img alt="Profile Cover" class="w-full h-full object-cover" data-alt="A high-fashion editorial cover photo featuring a sunset over a minimalist architectural structure in Mykonos. The lighting is golden-hour soft, casting long elegant shadows across clean white surfaces. The aesthetic is premium and aspirational, reflecting a luxury lifestyle brand with vibrant blue accents from the sky and pool water." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAauBVLPlgjZlWT1o_hDxl_xlqynouLLoikIdLANrpjdyIekzwLrIYMxRx7Lb41df4tQo2Xj8NNQplo3o6CRzS4ZRGXHfsuYO7KLIILhiEWARxnb9Z_v6nwO-odykchiWWYjcDRjVgZ8TlCEkr0f6NajUiqNOkLC7fRdZv1yo3u-JC0fdlTuKAeoN1Lput_DHQGG0QqOlS5EP7GVCC2VclPS8sJR04mhPYFRZzAcFDvSe3T3lD50xr3U9rfG2MXhAxuuWcSHCf4rp4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<!-- Profile Info -->
+<div class="px-container-padding -mt-16 relative z-10">
+<div class="flex items-end justify-between mb-6">
+<div class="relative group">
+<div class="w-32 h-32 rounded-full border-4 border-surface shadow-xl overflow-hidden glass-card">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A professional, high-key studio portrait of a sophisticated woman with a friendly smile. She is wearing a modern blue linen blazer that matches the brand's primary color. The lighting is bright and even, creating a clean, modern aesthetic suitable for a premium social networking profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAflpkqD-FTl4yYzkqv0Ne3M_6FjGCgQOnIbJi_FMz7VtP-dUhoRbCZ5ne9cX7arJt013d1HeI1H9BTnrgl4ZGXLjHVJSkGzQ_WltkGtoNjuMKdQMmWRd4Vd_cnK5fnna2IUvbDJ1ogOoPOyfv0dfRTpWQuZiwbflItjU9f5J_0vOPwtto3fk0INsODsykC5IrP9hxsIOmKE7Jb2OPXoACfhXAOwX6-qcSE17RgTpXxEj8t2e4Ji-x-Id2Cypo3Fb2l-eBsThe_xB4"/>
+</div>
+<div class="absolute bottom-1 right-1 w-8 h-8 bg-success-green border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex gap-2 mb-2">
+<button class="px-6 h-11 rounded-full bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end text-on-primary font-title-md flex items-center justify-center shadow-[0_4px_12px_rgba(0,122,255,0.2)] active:scale-95 transition-transform">
+                        Follow
+                    </button>
+<button class="w-11 h-11 rounded-full bg-surface-glass border border-glass-border backdrop-blur-md flex items-center justify-center text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined">mail</span>
+</button>
+</div>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Sienna Rivers</h2>
+<p class="text-on-surface-variant font-body-sm tracking-wide">@sienna_creative • Creative Director</p>
+<p class="pt-3 font-body-lg text-on-surface max-w-md">Capturing the intersection of minimalist architecture and high-street fashion. Always seeking the light. ✨</p>
+</div>
+<!-- Profile Stats -->
+<div class="grid grid-cols-3 gap-4 mt-8">
+<div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center">
+<span class="font-headline-lg-mobile text-primary">12.4k</span>
+<span class="font-label-caps text-on-surface-variant">FRIENDS</span>
+</div>
+<div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center">
+<span class="font-headline-lg-mobile text-primary">4.9</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-caps text-on-surface-variant">RATING</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center">
+<span class="font-headline-lg-mobile text-primary">850k</span>
+<span class="font-label-caps text-on-surface-variant">VIEWS</span>
+</div>
+</div>
+<!-- Rating Selector -->
+<section class="mt-10">
+<h3 class="font-label-caps text-on-surface-variant mb-4">RATE SIENNA'S PORTFOLIO</h3>
+<div class="glass-card rounded-2xl p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<span class="font-title-md text-primary" id="rating-value">Select score</span>
+<span class="text-body-sm text-on-surface-variant">1 to 10</span>
+</div>
+<div class="flex justify-between items-center no-scrollbar overflow-x-auto gap-3 pb-2" id="rating-container">
+<!-- JS generated rating bubbles -->
+</div>
+</div>
+</section>
+<!-- Gallery Masonry -->
+<section class="mt-12">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-label-caps text-on-surface-variant">FEATURED GALLERY</h3>
+<button class="text-primary font-label-caps">VIEW ALL</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-4">
+<div class="glass-card rounded-2xl overflow-hidden aspect-[3/4] group">
+<img alt="Gallery Item 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A fashion portrait featuring a model in a vibrant yellow dress standing against a minimalist white concrete wall. The shadow play is dramatic and clean, following the brand's high-key aesthetic. The colors are crisp and saturated, creating a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6LluTTUxdaj_1XrPd_nDsHMzpYGkfULwxtciRcSVQhpoJ9DJ6ls-xTq4bFKkWrzufLb-dD6wVDZBFOVKOvk2NVvUUrashRifqJT5F8vRqdOlFcyoz5uuX4_K0uijWxpncNTsIpIlXZ-dCoMUZ8AK6pQP0wezsP25e1jSae6WTr8ym0KKdFxmV5zW-hxtgW6R-TLr-m9zw72MqetlTTRJbtkSbVA6nWxA9hK1wiOHwiiHwZbCfrEMnzvUcZXVumyTVKR_SOOoeII4"/>
+</div>
+<div class="glass-card rounded-2xl overflow-hidden aspect-square group">
+<img alt="Gallery Item 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A top-down aesthetic flat lay of modern tech and designer accessories on a white marble surface. Includes a sleek smartphone, a pair of designer sunglasses, and a minimalist watch. The composition is airy and balanced, emphasizing luxury and order." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZyKiBF9jWRh64NTF5AUwGywwA5MPRBAjncwuucwsCgluwm8mstBIVpLqZmvchBeAbjSvMR1F13Q8IYH9ysw7CtIveZsgcDC_9V6P4coeq6K9i-Bc7vv4bJJx0QEVervcKlmM3sXMacpl_UCViev9k1btr_Xpdu_fQhPRte5xaxfagE3QulMPg4bJWeBx1Hcf3nXLOBBGoWPiQdNS6VRpZUfsqIesbBYKNdzfkB3sCvpg0rL6BJpOPGhAaD_zLSOA_Eae6H_YQpgU"/>
+</div>
+</div>
+<div class="space-y-4 mt-8">
+<div class="glass-card rounded-2xl overflow-hidden aspect-square group">
+<img alt="Gallery Item 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A stunning shot of a modern infinity pool overlooking a crystal-clear ocean. The water in the pool is a vibrant turquoise blue, matching the brand's primary color palette. The setting is luxurious and peaceful, under a bright midday sun." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBe_UwSzEXEnzpg6WwvYV6Hlzo8h-OhkpFx_QWaGioP1nrZAzupb3amt4MWpOdzgZLNGVEfZKL67hurGCPqnfun8XkuZPZEaH4IavsqpmiN5MENAD1u6Crb5Y-rhbO4xJ-vddQifzqnt4mEL1lCVl_zS7d-zCIODykM_MBefYAO9Sap0fLEFO3SWJYR5NmvmA3EpCxWVkmRs5M-HpTEjV-7Ro7kz3WFbYV-D_ZFxQbWgLexdvqDnoA8oSeIniL3m2m11PveBtgMcRg"/>
+</div>
+<div class="glass-card rounded-2xl overflow-hidden aspect-[3/4] group">
+<img alt="Gallery Item 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An abstract architectural shot featuring the repeating geometric patterns of a modern skyscraper in glass and steel. The sky reflected in the windows is a brilliant blue. The image is clean, sharp, and emphasizes modern design principles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsXNUXTo31f4KiP2V5S4E-b4BJwZWShglRbwdEaCsmLl2s_R7zbgWnO4EasgEsw5NH7q3CCvkCKerqZ-khd9QEy2YFWOBlzBFOj1IZeJeT9qC2kjREAZlqExL8qxpQCTia7hparViX4gSwOZbs-YXnKTZob2QLG1Qoypm3Iz0BZoIIW4pFUL1FQOqwUzaqz9HDYRt8F5uTnq7pRL-xRUZwzuWd5iaOB_scZFEQB3oggApydR4T0iSE4oMap3hai7QOpiYJYq4Ry-8"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Wall -->
+<section class="mt-12 mb-8">
+<h3 class="font-label-caps text-on-surface-variant mb-6">SOCIAL WALL</h3>
+<div class="space-y-6">
+<!-- Comment 1 -->
+<div class="flex gap-4">
+<img alt="User 1" class="w-10 h-10 rounded-full object-cover" data-alt="A close-up portrait of a man with a beard, wearing high-end spectacles and a minimalist grey sweater. He looks thoughtful and professional. The background is a soft-focus modern office space with natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVUceD7Xr5nwOiAQlMqm6d-PHEwVY78Rt44X3Yo2cp62y08FTFoRvRk2m0xT5OEkzEi8WupHSxALwZAUsnT6majeDHaZOOUU36wCjXWWj8D0h71A9_nYoV2b577M-sG9v1nWoeHObITCpbfSBYvJIhV-Ls0Yean4dyUczb0nY7c0ZJWqROBml2RhONhJXeTWgoWeMMqYMlvDEawLMJK9zX2UffhoFllrvueMs-GYC5_DiaseeYE-TSOV9Q9EbLhTUJ0ei3s5u6_Zk"/>
+<div class="flex-1">
+<div class="glass-card rounded-2xl p-4">
+<div class="flex justify-between mb-1">
+<span class="font-title-md text-[14px]">Marcus Thorne</span>
+<span class="text-body-sm text-on-surface-variant">2h ago</span>
+</div>
+<p class="text-body-sm">Your latest gallery series is breathtaking! The way you use light in architectural shots is unmatched. 🔥</p>
+</div>
+<div class="flex gap-4 mt-2 px-2">
+<button class="flex items-center gap-1 text-on-surface-variant font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[16px]">favorite</span> 24
+                                </button>
+<button class="flex items-center gap-1 text-on-surface-variant font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[16px]">reply</span> Reply
+                                </button>
+</div>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex gap-4">
+<img alt="User 2" class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a creative professional man with short hair and a black turtleneck. He has a warm expression and is set against a clean, light-colored studio background. The lighting is sophisticated and minimal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDShTEJ_Y8wRC30wRX64hgi_MrDJ4AWEgmyUGEd43eKBpyOSump1zuPnKOwLlTiMbiUuyRxjgQgt1QKkeZRRUkM4hHnOEiInHIKdoUDzctQnM2a-nBWOH_iOCO6JhoapG4IoqjOgV5hbTQQabcv2Rl3VCR6y2JMRT6NuRQ-yJrEGTsjGqDbZmbmoLugkVLafad2l0eWaq5vHrkj-HrqmO75eroCSUmdSdaYPDv07siribokO7uh3EJjRvNyBfL91VletdhpFsOMITo"/>
+<div class="flex-1">
+<div class="glass-card rounded-2xl p-4">
+<div class="flex justify-between mb-1">
+<span class="font-title-md text-[14px]">Liam Chen</span>
+<span class="text-body-sm text-on-surface-variant">5h ago</span>
+</div>
+<p class="text-body-sm">Are you doing a workshop soon? Would love to learn your editing flow.</p>
+</div>
+<div class="flex gap-4 mt-2 px-2">
+<button class="flex items-center gap-1 text-on-surface-variant font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[16px]">favorite</span> 12
+                                </button>
+<button class="flex items-center gap-1 text-on-surface-variant font-label-caps text-[10px]">
+<span class="material-symbols-outlined text-[16px]">reply</span> Reply
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Comment Input -->
+<div class="mt-8 flex items-center gap-3">
+<img alt="Me" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0-68QFyBPm0SAcn2pJTkpp1AhlcvI8_fgCeFEYjwNOai3s_MmHDothhlOz4ybP2auDjQ4I0ODhNiCNFgSd8LTLABTsslWvNwn3l53jFWZTHV9fffUBFW5DV9BWjt9XGkzQNxwaCKswoyI55rvXc3aMkSlqelHF0EN4P13Q7Amfc234xjPRMyYwb7kvwzd36iqdRilN0ITTLBGHuVDs9KlCb5WAallI6IBXoaEBqZZf0QOaKAsQkSfAKRfGFEl7riZQrynCyArpXU"/>
+<div class="flex-1 glass-card rounded-full flex items-center px-4 py-2 border border-glass-border">
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full" placeholder="Add a comment..." type="text"/>
+<button class="text-primary font-title-md text-[14px]">Post</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-glass dark:bg-surface-glass backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_0_rgba(0,122,255,0.08)] flex justify-around items-center h-20 px-4 pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">group</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</button>
+</nav>
+<script>
+        // Rating Selector Logic
+        const ratingContainer = document.getElementById('rating-container');
+        const ratingValueDisplay = document.getElementById('rating-value');
+        let selectedRating = null;
+
+        for (let i = 1; i <= 10; i++) {
+            const bubble = document.createElement('button');
+            bubble.className = 'min-w-[44px] h-[44px] rounded-full border border-glass-border flex items-center justify-center font-title-md transition-all duration-300 active:scale-90 flex-shrink-0';
+            bubble.innerText = i;
+            
+            bubble.addEventListener('click', () => {
+                // Reset all
+                document.querySelectorAll('#rating-container button').forEach(b => {
+                    b.classList.remove('bg-primary-container', 'text-on-primary-container', 'scale-110');
+                    b.classList.add('bg-transparent', 'text-on-surface');
+                });
+                
+                // Select current
+                bubble.classList.remove('bg-transparent', 'text-on-surface');
+                bubble.classList.add('bg-primary-container', 'text-on-primary-container', 'scale-110');
+                
+                ratingValueDisplay.innerText = `Score: ${i}/10`;
+                selectedRating = i;
+            });
+            
+            ratingContainer.appendChild(bubble);
+        }
+
+        // Micro-interaction for gallery hover (for mouse users on mobile emulators)
+        const images = document.querySelectorAll('.group img');
+        images.forEach(img => {
+            img.addEventListener('touchstart', () => {
+                img.style.transform = 'scale(1.05)';
+            });
+            img.addEventListener('touchend', () => {
+                img.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

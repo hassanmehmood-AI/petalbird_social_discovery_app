@@ -1,0 +1,463 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PetalBird - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-surface-variant": "#414755",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-container": "#43677a",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#fefcff",
+                        "secondary-fixed-dim": "#a6cce1",
+                        "tertiary-fixed": "#ffdbcc",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#0058bc",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#bfe5fb",
+                        "on-secondary-fixed-variant": "#254b5d",
+                        "accent-gradient-end": "#00C6FF",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-bright": "#f9f9f9",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "outline": "#717786",
+                        "surface-gray": "#F4F7FA",
+                        "accent-gradient-start": "#007AFF",
+                        "on-secondary-fixed": "#001e2b",
+                        "surface-tint": "#005bc1",
+                        "inverse-on-surface": "#f0f1f1",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container-low": "#f3f3f4",
+                        "secondary": "#3e6376",
+                        "on-background": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#c64f00",
+                        "primary-container": "#0070eb",
+                        "outline-variant": "#c1c6d7",
+                        "background": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary": "#9e3d00",
+                        "on-tertiary-fixed": "#351000",
+                        "deep-onyx": "#111111",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "surface-dim": "#dadada",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container": "#eeeeee",
+                        "on-primary-fixed": "#001a41",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "secondary-fixed": "#c2e8fe",
+                        "inverse-primary": "#adc6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "card-gap": "20px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9f9;
+            background-image: radial-gradient(at 0% 0%, hsla(212,100%,75%,0.15) 0px, transparent 50%),
+                              radial-gradient(at 100% 0%, hsla(212,100%,75%,0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        /* Ambient shadows for cards */
+        .ambient-shadow {
+            box-shadow: 0 20px 40px rgba(0, 122, 255, 0.08);
+        }
+        
+        .card-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .gradient-btn {
+            background: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            box-shadow: 0 12px 25px rgba(0, 122, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Hide scrollbar for feeds */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 right-0 left-0 md:left-64 h-20 z-40 bg-white/70 dark:bg-deep-onyx/70 backdrop-blur-xl backdrop-blur-lg border-b border-glass-border shadow-[0_4px_30px_rgba(0,122,255,0.05)] shadow-sm flex items-center justify-between px-6 max-w-full">
+<!-- Mobile Logo -->
+<div class="flex items-center gap-2 md:hidden">
+<span class="material-symbols-outlined text-primary text-3xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">PetalBird</span>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex items-center w-full max-w-md ml-4">
+<div class="relative w-full focus-within:ring-2 focus-within:ring-primary rounded-full transition-all">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-low/50 border border-glass-border rounded-full focus:outline-none focus:bg-white text-body-lg font-body-lg placeholder-outline backdrop-blur-md" placeholder="Search profiles..." type="text">
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="hidden lg:flex gradient-btn text-on-primary font-title-md text-title-md px-6 py-2 rounded-xl items-center gap-2 hover:opacity-90">
+                Upload Photo
+            </button>
+<!-- Profile Dropdown Trigger -->
+<button class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed-dim hover:opacity-80 transition-opacity">
+<img alt="User Avatar with status dot" class="w-full h-full object-cover" data-alt="A bright, high-key portrait of a stylish young woman smiling subtly, wearing trendy minimalist clothing. The background is a soft, out-of-focus light gray studio setting, emphasizing a clean, modern aesthetic. Lighting is even and flattering, typical of high-end lifestyle profile imagery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeRgq5pMcfMC3mE_gIXZj1AP5KAn6tU-3A3jsfQmYPnfB1PAzMpxQ61StXm8LO0i2O_4Gh6eTUC561Qlxa3zgA8Gj7YvyatOmGFZery7tnZ7g-wwM3XCNVvi8gQMaIBqJYev-b-2UGvkX7zFznOAMNWHvDGUij0E2hLWdv-4hpxkOA249GxF8tfZ8Y8yoe6E623l6GLFJ9Cy_9fQyuoI-YJth_1rPS7xzu_mCVMrtRG9Bycz1mA-H8SOpulZdL5t4ULpX5cm7NTQM">
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="h-screen w-64 fixed left-0 top-0 hidden md:flex flex-col border-r border-glass-border bg-white/70 dark:bg-deep-onyx/70 backdrop-blur-xl backdrop-blur-lg shadow-[0_20px_40px_rgba(0,122,255,0.1)] z-50">
+<div class="flex flex-col py-8 px-4 h-full">
+<!-- Brand Anchor -->
+<div class="flex items-center gap-3 px-4 mb-10">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-white text-2xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed-dim leading-none">PetalBird</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Premium Social</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-2">
+<!-- Home (Active) -->
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl bg-primary-container/10 text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary scale-95 transition-transform duration-300" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-title-md text-title-md">Home</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-body-lg text-body-lg">Discover</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-body-lg text-body-lg">My Profile</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined relative">
+                        chat
+                        <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary rounded-full border-2 border-white"></span>
+</span>
+<span class="font-body-lg text-body-lg flex-1">Messages</span>
+</a>
+
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-body-lg text-body-lg">Ratings</span>
+</a>
+
+<a class="flex items-center gap-4 px-4 py-3 rounded-xl text-on-surface-variant dark:text-outline hover:text-primary dark:hover:text-primary-fixed-dim hover:bg-primary-container/20 transition-all duration-300 active:scale-90" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg text-body-lg">Settings</span>
+</a>
+</nav>
+<!-- Bottom CTA (Sidebar) -->
+<div class="mt-auto pt-6">
+<button class="w-full gradient-btn text-on-primary font-title-md text-title-md py-3 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+                    Upload Photo
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 pt-20 pb-24 md:pb-8 min-h-screen">
+<div class="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-8 py-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+<!-- Center Feed (Cards) -->
+<div class="col-span-1 lg:col-span-8 space-y-6">
+<!-- Feed Header -->
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Discover</h2>
+<div class="flex gap-2">
+<button class="px-4 py-1.5 rounded-full bg-primary/10 text-primary font-title-md text-title-md text-sm border border-primary/20">Trending</button>
+<button class="px-4 py-1.5 rounded-full bg-white border border-glass-border text-on-surface-variant font-title-md text-title-md text-sm hover:bg-surface-container-low transition-colors shadow-sm">New</button>
+</div>
+</div>
+<!-- Profile Card 1 -->
+<article class="card-glass rounded-2xl overflow-hidden ambient-shadow flex flex-col md:flex-row group">
+<!-- Image Section -->
+<div class="w-full md:w-[40%] relative aspect-square md:aspect-auto">
+<img alt="Profile picture of @alexis_j" class="w-full h-full object-cover" data-alt="A beautifully lit portrait of an attractive young individual in an urban cafe setting, looking slightly off-camera. Soft, natural sunlight filters through a window, creating gentle highlights on their face. The image has a clean, high-contrast, premium aesthetic typical of a professional social media portfolio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkEvQGflkaYcmNRkhlQnnCPvoRK6N-1Qb4dbU--UgZAeU5QkKaY9qNkyATdfoYc9rh1Udn_1gGFT84TYp_cuTpmwyhATDU9117WqpIPyV88KUL8GCdcd4MkFNF_3XQSHVvjid7HcrjWcTmH-BGXv2gWIYtNhgrrVgpvxYJ5WDjTvJcPI8CMWIW0sWkCblQrtjNHYYfdjJU_ydli7-sNRl_AEVJsjzDNQQssSVuUJfzpFBYpAXbY5QqTJ-4GQh7m42bfxggz3qr8GU">
+<!-- Online Badge Overlay -->
+<div class="absolute top-4 left-4 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm border border-white/50">
+<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-[10px] text-on-surface">Online Now</span>
+</div>
+<!-- Rating Overlay -->
+<div class="absolute bottom-4 right-4 bg-deep-onyx/70 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-white/20">
+<span class="material-symbols-outlined text-accent-gradient-end text-sm" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-title-md text-title-md text-white">8.5</span>
+</div>
+</div>
+<!-- Content Section -->
+<div class="p-6 md:p-8 flex-1 flex flex-col justify-between relative bg-white/40">
+<div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-display-lg text-[28px] md:text-[32px] leading-tight text-on-surface">Alexis J.</h3>
+<p class="font-body-lg text-body-lg text-primary mt-1">petlb.com/alexis</p>
+</div>
+<button class="w-10 h-10 rounded-full bg-white/60 hover:bg-white flex items-center justify-center text-on-surface-variant transition-colors border border-glass-border shadow-sm">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-4 line-clamp-2">
+                                    NYC based creative. Always looking for new inspiration and aesthetic spots around the city. Love genuine feedback.
+                                </p>
+<div class="flex items-center gap-6 mt-6">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">visibility</span>
+<span class="font-title-md text-title-md text-sm">1.2k views</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">groups</span>
+<span class="font-title-md text-title-md text-sm">342 friends</span>
+</div>
+</div>
+</div>
+<!-- Interactive Rating Preview -->
+<div class="mt-8 pt-6 border-t border-glass-border">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-3">YOUR RATING</p>
+<div class="flex items-center gap-1 w-full justify-between mb-6">
+<!-- 1-10 Scale -->
+<div class="flex-1 flex gap-1 h-3 rounded-full overflow-hidden bg-surface-container-high relative">
+<!-- Simulated fill -->
+<div class="absolute left-0 top-0 bottom-0 w-[85%] bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end opacity-20"></div>
+</div>
+<span class="font-body-sm text-body-sm text-outline ml-3">Slide to rate</span>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 gradient-btn text-on-primary font-title-md text-title-md py-3 rounded-xl">
+                                        Rate Appeal
+                                    </button>
+<button class="flex-1 bg-white border border-primary/20 text-primary font-title-md text-title-md py-3 rounded-xl hover:bg-primary/5 transition-colors shadow-sm">
+                                        View Profile
+                                    </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Profile Card 2 -->
+<article class="card-glass rounded-2xl overflow-hidden ambient-shadow flex flex-col md:flex-row group">
+<div class="w-full md:w-[40%] relative aspect-square md:aspect-auto">
+<img alt="Profile picture of @marcus_t" class="w-full h-full object-cover" data-alt="A sharp, clear portrait of an athletic young man in an outdoor, sunny environment. The background features slightly blurred greenery and blue sky. He has a confident expression, styled hair, and is wearing casual, premium streetwear. The lighting is bright and summery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_moj6qti-YvFRzPaVtYZnrnbEsFnXLfZ90KIRtnQzltiAryKo2w1dsK1ejy9WfH2MZnZdhQs09APakXGx9NA7ArEVrwBgIAI5lLTzjryP3RgOhhsHiWviFFMYi7VtyMf2OG-fNBq2mc0tkt9y68NHgNHkd0HMT8Ys7TU3iqAaSqaCdYQwH2b06vTqgooV6Wyks__zdvG-3SjaiV2xu4AgjKlZPuC8Lab_4rG5h5nLfClGJReNRpod-G4s_gKf7KpbijYHpK6kuhg">
+<div class="absolute bottom-4 right-4 bg-deep-onyx/70 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-white/20">
+<span class="material-symbols-outlined text-accent-gradient-end text-sm" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-title-md text-title-md text-white">9.1</span>
+</div>
+</div>
+<div class="p-6 md:p-8 flex-1 flex flex-col justify-between relative bg-white/40">
+<div>
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-display-lg text-[28px] md:text-[32px] leading-tight text-on-surface">Marcus T.</h3>
+<p class="font-body-lg text-body-lg text-primary mt-1">petlb.com/marcust</p>
+</div>
+<button class="w-10 h-10 rounded-full bg-white/60 hover:bg-white flex items-center justify-center text-on-surface-variant transition-colors border border-glass-border shadow-sm">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-4 line-clamp-2">
+                                    Fitness, tech, and travel. Just looking for honest ratings to improve my aesthetic. Let me know what you think!
+                                </p>
+<div class="flex items-center gap-6 mt-6">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">visibility</span>
+<span class="font-title-md text-title-md text-sm">2.4k views</span>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-glass-border">
+<div class="flex gap-3 mt-4">
+<button class="flex-1 gradient-btn text-on-primary font-title-md text-title-md py-3 rounded-xl">
+                                        Rate Appeal
+                                    </button>
+<button class="flex-1 bg-white border border-primary/20 text-primary font-title-md text-title-md py-3 rounded-xl hover:bg-primary/5 transition-colors shadow-sm">
+                                        View Profile
+                                    </button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Right Sidebar (Widgets) -->
+<aside class="col-span-1 lg:col-span-4 space-y-6 hidden lg:block">
+<!-- Top Rated Widget -->
+<div class="card-glass rounded-2xl p-6 ambient-shadow bg-white/60">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-title-md text-title-md text-on-surface">Top Rated This Week</h3>
+<span class="material-symbols-outlined text-accent-gradient-end">trending_up</span>
+</div>
+<div class="space-y-4">
+<!-- List Item 1 -->
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/80 transition-colors cursor-pointer border border-transparent hover:border-glass-border">
+<img alt="Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Close up face shot of an elegant woman with flawless makeup and dramatic lighting against a dark background, looking confident." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoB_9KSHX6dtLp_Sa4xKHVqzu033U0XKNZ9ow15QY1gabirPfi63iJ5Um6tcUhGpI_KZg646O18UA_bCLz1feJl0homay00AwylnwCqRXCnUbTZnmQmeyXUAlxn61iBKJ9v1Dnq-SH1WzDLE4ptI3PxUr_lSPe0kkr0hE6SCzrczS4U_CmZqPWLGbK58o6XvJKxlrDK8jI4Itwv4WrZ4pRQN7hfSKIYS4Psb24wcgElG6nn0wfmjihBmxUAVdhwdUu1HvHcwzC9I0">
+<div class="flex-1">
+<h4 class="font-title-md text-title-md text-sm text-on-surface">Sarah Connor</h4>
+<p class="font-body-sm text-body-sm text-primary text-xs">@sarahc</p>
+</div>
+<div class="bg-primary-container/20 px-3 py-1 rounded-lg">
+<span class="font-title-md text-title-md text-primary text-sm">9.8</span>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/80 transition-colors cursor-pointer border border-transparent hover:border-glass-border">
+<img alt="Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Moody, high-fashion portrait of a rugged man in a dark turtleneck, soft studio lighting emphasizing facial features." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNqcZJp5UeyXx2lnxYmwSNM9ZGtdEOwmNBe1achNfAfH_VyxcGNZLv1Rhywq1KGGYY_qpjoDZTbhlQbFiwv1m02X9xxmKS4ElE_LfCHKUHldin-rTlb5jSr9SA3dFW-wc27Esz-8Z0oIa2pNbfB3wnQWBJhfsk1wELQmeHtpbRbxZ4pBsQ70v01ON6ZpfPJf6LWYsNEeQr5noSkgY50alDbI0o3oZ7HsPfFswsnJohrwr3R8Gho8HWJ4cU8TJSDGi8oAkKxN0ewvI">
+<div class="flex-1">
+<h4 class="font-title-md text-title-md text-sm text-on-surface">David Chen</h4>
+<p class="font-body-sm text-body-sm text-primary text-xs">@dchen</p>
+</div>
+<div class="bg-primary-container/20 px-3 py-1 rounded-lg">
+<span class="font-title-md text-title-md text-primary text-sm">9.6</span>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/80 transition-colors cursor-pointer border border-transparent hover:border-glass-border">
+<img alt="Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Bright and airy headshot of a smiling young woman with curly hair, pastel colored background, soft friendly lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiLQkHkP2ZrWMYkDDq_Xu0vvukgTDPYp7evCNl8RK46g1tQn374yUNbXawIynjh8vRbAUgdPvYfPvMBxOsbd4e9QrQ0hY52aEhho6roNSrCB0nRrBR8A3cQpvugxMDIvA4KhJ6wSxDYr9RA7SM_MGF9LfwT1jxgT2b8ozt0DH6CJx_tzSKXjbZf-cqaSf4gNAg2zM_lNruoNfFk19g03U-v_mlKZShzQ6tbxxRJTeJJWdjvGlnkr8CI8pui4dj5UKtJmxZudmW-G4">
+<div class="flex-1">
+<h4 class="font-title-md text-title-md text-sm text-on-surface">Elena R.</h4>
+<p class="font-body-sm text-body-sm text-primary text-xs">@elena_rose</p>
+</div>
+<div class="bg-primary-container/20 px-3 py-1 rounded-lg">
+<span class="font-title-md text-title-md text-primary text-sm">9.4</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 text-primary font-title-md text-title-md text-sm hover:bg-primary/5 rounded-lg transition-colors">
+                            View All Leaderboards
+                        </button>
+</div>
+<!-- Trending Profiles Widget -->
+<div class="card-glass rounded-2xl p-6 ambient-shadow bg-gradient-to-br from-surface-container-lowest/80 to-surface-container-low/40">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">local_fire_department</span>
+<h3 class="font-title-md text-title-md text-on-surface">Trending Now</h3>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer">
+<img alt="Trending" class="w-full h-full object-cover transition-transform group-hover:scale-110" data-alt="Artistic close up of a woman's face with dramatic neon pink and blue lighting casting shadows, modern synthwave aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxq-1yUmZuLWocktn4U0ShNsLNOOZXzsFT2ehSXLZzWmvEdkesgQ2ZOizlquozEA8c_IOcsKTJwaRDIEcjsc3IYO1Ddn0HYG0RZqEbhRuEn7icCXZMtqwhN7YZBhIka8ic1yqMNMvmUw7huxpygNDhR3NljtOK2t8pknxD5umgXD__uWf1RizE6HLQ9nIyULJRvwFkOHJLF-X49JzueprrbR1NBScM99dr8rshA9zDo_mmyUjT-92kZMPsOlNNT8YAa4BzVtKEOUA">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer">
+<img alt="Trending" class="w-full h-full object-cover transition-transform group-hover:scale-110" data-alt="Sun-drenched portrait of a surfer looking out to sea, warm golden hour lighting, lens flare, relaxed beach vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3YqXwxbNRIR6hr5sR3DMuh_Nx2qmb3jC7A0eQzdgFhEZNDOWZdRKHGc6g__EbVPoVbpaPINPjWA1cxLU8wU4Sgrv4fXkMdcdpKaFa6IhdKQXLEloNQeH0h_ZcUjLpNBNSOae1V8fJXy2IUx3Xd9S2nEd3-lzw_Ybt6M9uzsLG3mjlulKBlyufTLgJMiDQ1SoC02t1swsC593F9vDCMovsmVyx6TzCZMDvRQS-CbUIAjx203blwLZrbS4JiJVdFX94t6IghAYwvE0">
+</div>
+<div class="aspect-square rounded-xl overflow-hidden relative group cursor-pointer">
+<img alt="Trending" class="w-full h-full object-cover transition-transform group-hover:scale-110" data-alt="Minimalist fashion portrait of a model against a stark white wall, high fashion styling, sharp clear lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXFgRihl23W21OL0z0_oKFbfrevAS0X10vNjZBMBdz5NbodHSo6DEts952kS44ulyUpSMkW7ZVsYMHN8AhfM-i5ok0cZToBsHbkzjEMWHtPtuBiR4DWKqvXob-otPuTZ2JT2Gv-xFENAZvkVZKrLcH4FUP6LWc652fjx2YJYWyp1BikYB9NnYPJ9hTs3ZUTrWRdNDL7CnDfQP4KU49tGO_hwrbQ-C6-7G6ZdkBqfva8ey59YFO1GMBNnIY68chGIbOPKLAziTohXU">
+</div>
+</div>
+</div>
+<!-- Promo Card -->
+<div class="rounded-2xl p-6 bg-gradient-to-br from-primary to-accent-gradient-end text-on-primary ambient-shadow relative overflow-hidden">
+<!-- Decorative bg circle -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-2 relative z-10">Want more ratings?</h3>
+<p class="font-body-sm text-body-sm text-white/90 mb-4 relative z-10">Boost your profile to reach 10x more reviewers this week.</p>
+<button class="w-full bg-white text-primary font-title-md text-title-md py-2.5 rounded-xl hover:bg-surface-bright transition-colors shadow-lg relative z-10">
+                            Boost Profile
+                        </button>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden rounded-t-xl border-t border-glass-border bg-white/80 dark:bg-deep-onyx/80 backdrop-blur-2xl border-t border-glass-border shadow-[0_-10px_30px_rgba(0,122,255,0.1)] shadow-lg flex justify-around items-center px-4 py-2 pb-safe w-full">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-[10px] mt-1 font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-caps text-[10px] mt-1">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200 px-3 py-1 rounded-xl relative" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="absolute top-1 right-2 w-2 h-2 bg-error rounded-full"></span>
+<span class="font-label-caps text-[10px] mt-1">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-caps text-[10px] mt-1">Friends</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:bg-surface-container-high transition-colors scale-95 duration-200 px-3 py-1 rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+<!-- Support for safe area on modern mobile browsers -->
+<style>
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom, 16px);
+        }
+    </style>
+
+
+</body></html>

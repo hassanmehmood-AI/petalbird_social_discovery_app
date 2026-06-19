@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>PetalBird - Get Ratings On Your Appeal</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#351000",
+                        "outline": "#717786",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#adc6ff",
+                        "primary": "#0058bc",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-container": "#c64f00",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "success-green": "#22c55e",
+                        "secondary-container": "#00c4fd",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#f9f9f9",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-dim": "#dadada",
+                        "secondary": "#006685",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#9e3d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c1c6d7",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0070eb",
+                        "accent-gradient-start": "#007AFF",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#bfe9ff",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "on-primary-container": "#fefcff",
+                        "error-red": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#6dd2ff",
+                        "on-surface-variant": "#414755",
+                        "deep-onyx": "#111111",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-fixed": "#001f2a",
+                        "surface-container-low": "#f3f3f3",
+                        "accent-gradient-end": "#00C6FF",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-container": "#004d66",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#005bc1",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "card-gap": "20px",
+                        "base": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+        }
+        body {
+            background-color: #f9f9f9;
+            color: #1a1c1c;
+            overflow-x: hidden;
+        }
+        /* Custom micro-interactions */
+        .btn-hover-lift:active {
+            transform: scale(0.95);
+        }
+        .shadow-glow {
+            box-shadow: 0 8px 32px 0 rgba(0, 122, 255, 0.15);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-lg text-body-lg">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-xl border-b border-glass-border shadow-[0_8px_32px_0_rgba(0,122,255,0.08)]">
+<div class="flex justify-between items-center h-20 px-container-padding w-full">
+<div class="flex items-center gap-3">
+<span class="font-display-lg text-headline-lg-mobile bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end">PetalBird</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform p-2 text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="active:scale-95 transition-transform p-2 text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-20 pb-10">
+<!-- Hero Section -->
+<section class="relative px-container-padding pt-10 pb-16 overflow-hidden">
+<!-- Background Ambient Glow -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-[80px]"></div>
+<div class="absolute top-1/2 -left-32 w-80 h-80 bg-secondary-container/10 rounded-full blur-[100px]"></div>
+<div class="relative z-10 space-y-6">
+<div class="inline-block px-4 py-1.5 rounded-full bg-primary-container/10 text-primary border border-primary/20">
+<span class="font-label-caps text-label-caps">PREMIUM SOCIAL NETWORK</span>
+</div>
+<h1 class="font-display-lg text-[42px] leading-tight tracking-tight">
+                    Get Ratings On Your <br/>
+<span class="bg-clip-text text-transparent bg-gradient-to-r from-accent-gradient-start to-accent-gradient-end">Appeal</span>
+</h1>
+<p class="text-on-surface-variant font-body-lg max-w-[85%]">
+                    Experience the digital gallery of human connection. Polished, premium, and focused on your best self.
+                </p>
+<div class="flex flex-col gap-4 pt-4">
+<button class="primary-gradient text-white h-14 rounded-xl font-title-md shadow-glow flex items-center justify-center gap-2 active:scale-95 transition-all">
+                        Join Now
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="bg-white/50 backdrop-blur-md border border-glass-border h-14 rounded-xl font-title-md text-on-surface active:scale-95 transition-all">
+                        Explore Gallery
+                    </button>
+</div>
+</div>
+<!-- Hero High-Impact Image Widget -->
+<div class="mt-12 relative">
+<div class="card-glass rounded-3xl overflow-hidden aspect-[4/5] shadow-glow">
+<img alt="Premium Portrait" class="w-full h-full object-cover" data-alt="A high-fashion editorial portrait of a woman with a confident expression, set against a clean, minimalist architectural background. The lighting is bright and high-key, emphasizing soft shadows and a pristine, modern light-mode aesthetic. The color palette features cool whites and soft blues, aligning with the premium social brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwLXl6_gykrSuqnGRueKLIPDqRWVU6xAIl9L8AX0qNvrj8bjmJBxVVTQqxeMWuB5UwItOTWnJi_R9_p3Y7QaIJjs0RrGT-gyN7Jkaf1JuXgzpDzt6hnSyL7sDF8Tc1icAS_m4_IQvSxmfp3-CObuzMvMqe9DXfCM2ITwQTzV04TXsJI9UXwwrkC6Wg0nVhrWt6bV2qumYMjoKyu27IcUtWPqPiurNNYrwgQaJzXph528nuEhPpW4eBJfgu1gEC2GgD7K5clNZFP5E"/>
+<!-- Floating Rating Indicator -->
+<div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+<div class="card-glass p-4 rounded-2xl flex flex-col gap-1">
+<span class="font-label-caps text-label-caps opacity-60">APPEAL SCORE</span>
+<div class="flex items-center gap-2">
+<span class="font-display-lg text-headline-lg-mobile text-primary">9.8</span>
+<div class="flex gap-0.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Bento Grid (Mobile Adaptation) -->
+<section class="px-container-padding py-10 space-y-8">
+<div class="space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Curated Experiences</h2>
+<p class="text-on-surface-variant font-body-sm">Designed for those who value quality over quantity.</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Large Card -->
+<div class="card-glass col-span-2 p-6 rounded-3xl space-y-4">
+<div class="w-12 h-12 rounded-xl primary-gradient flex items-center justify-center text-white">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Precision Ratings</h3>
+<p class="text-on-surface-variant font-body-sm">Our community provides thoughtful feedback that goes beyond simple likes.</p>
+</div>
+<!-- Small Card 1 -->
+<div class="card-glass p-5 rounded-3xl space-y-3">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<h4 class="font-title-md text-[16px] text-on-surface">Elite Circle</h4>
+<p class="text-on-surface-variant text-[12px] leading-tight">Verified premium profiles.</p>
+</div>
+<!-- Small Card 2 -->
+<div class="card-glass p-5 rounded-3xl space-y-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<h4 class="font-title-md text-[16px] text-on-surface">Discovery</h4>
+<p class="text-on-surface-variant text-[12px] leading-tight">AI-curated feed for you.</p>
+</div>
+</div>
+</section>
+<!-- Social Proof Section -->
+<section class="py-12 bg-surface-container-low">
+<div class="px-container-padding space-y-6">
+<div class="text-center space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile">Trending Appeal</h2>
+<p class="text-on-surface-variant font-body-sm">Join the top 1% of digital influencers</p>
+</div>
+<div class="flex overflow-x-auto pb-4 gap-4 snap-x snap-mandatory no-scrollbar">
+<!-- User 1 -->
+<div class="flex-none w-64 snap-start">
+<div class="card-glass rounded-2xl overflow-hidden shadow-sm">
+<img alt="User Portrait" class="w-full h-48 object-cover" data-alt="A professional male model with a stylish haircut, wearing a premium knit sweater in a sophisticated cream color. The setting is a bright, sun-drenched modern apartment with high-key lighting. The overall mood is aspirational and clean, reflecting a high-end social networking platform vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAKRAqbxyOe09AAZ0_ol0ygmrv2KaQXM9HrxEw6e9cddVdK9o3K6QH4xlBfwK2Sp0eWFpou8R5dPZYUrRY02U3WzPm9HXnB_V4AbbF2Y0MAwYbmb_1vGQENCT4-9wa5zE5rkW2Wj8w9Zw9Mgj2SZeyLUDSt8auDREhWXD5SyBHWBhQs2RomP6wNXAH1q8Z4NMvzmMKP3X5W0abOwJm1TPb71tPatxNHEkKgr2h71bBEfqGkNuDxxFjeVtP1EezfOcLR53QovbAGsw"/>
+<div class="p-4 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-title-md text-[16px]">Julian Ross</span>
+<span class="text-on-surface-variant text-[12px]">Fashion Designer</span>
+</div>
+<div class="bg-primary/10 px-3 py-1 rounded-full">
+<span class="text-primary font-bold">9.2</span>
+</div>
+</div>
+</div>
+</div>
+<!-- User 2 -->
+<div class="flex-none w-64 snap-start">
+<div class="card-glass rounded-2xl overflow-hidden shadow-sm">
+<img alt="User Portrait" class="w-full h-48 object-cover" data-alt="A smiling woman with elegant jewelry and a high-end silk blouse, looking directly into the camera. The background is a blurred, high-end boutique interior with soft, warm light-mode lighting. The aesthetic is polished, sophisticated, and optimistic, capturing a moment of premium human connection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcndwJ8f1qF2SWT-MFYgplxSX7_RaakUt5xY2heoSCu-voAT27pTvRAE5YBkqA_iB-uY1LBBx7HvMyWHwCP4eK-HBdnViM2eNpERlQmbc0kP793GNP07lB9VxVyrzyhgNL1OO0FuOmsVAZHB1eiWGRGbd3cB-WuWEXoStW8FrdeAfiefbkxtbfLZxXajWuW-mUSoEDyEN8PuW_p1hQDis93_yGPBBWOodA3SddIxCvDggWDgFwbwnyMZip83-mRru0qiR7pMWbaBA"/>
+<div class="p-4 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-title-md text-[16px]">Elena Vance</span>
+<span class="text-on-surface-variant text-[12px]">Curator</span>
+</div>
+<div class="bg-primary/10 px-3 py-1 rounded-full">
+<span class="text-primary font-bold">9.5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="px-container-padding py-20 text-center space-y-8 relative overflow-hidden">
+
+<div class="relative z-10 space-y-6">
+<h2 class="font-display-lg text-[36px] leading-tight">Ready to elevate your digital presence?</h2>
+<p class="text-on-surface-variant font-body-lg">The world's most sophisticated social rating platform is waiting for you.</p>
+<button class="primary-gradient text-white w-full h-16 rounded-2xl font-title-md shadow-glow active:scale-95 transition-all">
+                    Get Started Now
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Hidden for Landing, but included per logic check for top-level screens) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-glass backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_0_rgba(0,122,255,0.08)]">
+<div class="flex justify-around items-center h-20 px-4 pb-safe w-full">
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full w-12 h-12 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">chat_bubble</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant w-12 h-12 hover:bg-surface-variant/50 transition-colors active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">person</span>
+</div>
+</div>
+</nav>
+<script>
+        // Micro-interaction for scroll effects
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Simple observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-glass').forEach(card => {
+            card.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-700');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

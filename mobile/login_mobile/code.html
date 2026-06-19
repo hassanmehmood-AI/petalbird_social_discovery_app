@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PetalBird - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-tertiary-fixed": "#351000",
+                        "outline": "#717786",
+                        "on-primary-fixed": "#001a41",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "inverse-primary": "#adc6ff",
+                        "primary": "#0058bc",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-container": "#fffbff",
+                        "tertiary-container": "#c64f00",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "success-green": "#22c55e",
+                        "secondary-container": "#00c4fd",
+                        "on-background": "#1a1c1c",
+                        "surface-bright": "#f9f9f9",
+                        "glass-border": "rgba(255, 255, 255, 0.4)",
+                        "on-primary-fixed-variant": "#004493",
+                        "on-tertiary-fixed-variant": "#7c2e00",
+                        "surface-dim": "#dadada",
+                        "secondary": "#006685",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#9e3d00",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c1c6d7",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0070eb",
+                        "accent-gradient-start": "#007AFF",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#bfe9ff",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-fixed-dim": "#ffb595",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                        "on-primary-container": "#fefcff",
+                        "error-red": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#6dd2ff",
+                        "on-surface-variant": "#414755",
+                        "deep-onyx": "#111111",
+                        "primary-fixed": "#d8e2ff",
+                        "on-secondary-fixed": "#001f2a",
+                        "surface-container-low": "#f3f3f3",
+                        "accent-gradient-end": "#00C6FF",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-container": "#004d66",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#005bc1",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "card-gap": "20px",
+                        "base": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .card-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 122, 255, 0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-petal-gradient {
+            background: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+        }
+        body {
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        .floating-orb {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.15;
+            border-radius: 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-lg text-on-background min-h-screen flex flex-col items-center">
+<!-- Atmospheric Background Effects -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden">
+<div class="floating-orb w-96 h-96 bg-primary -top-20 -left-20"></div>
+<div class="floating-orb w-80 h-80 bg-secondary-container bottom-20 -right-20"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[480px] px-container-padding py-12 flex flex-col min-h-screen">
+<!-- Brand Header Section -->
+<header class="flex flex-col items-center text-center mb-10 mt-8">
+<div class="w-20 h-20 mb-6 relative group">
+<div class="absolute inset-0 bg-petal-gradient rounded-3xl rotate-12 blur-md opacity-20 transition-transform group-hover:rotate-0"></div>
+<div class="relative w-full h-full card-glass rounded-3xl flex items-center justify-center border-glass-border">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">spa</span>
+</div>
+</div>
+<h1 class="font-display-lg text-headline-lg-mobile bg-clip-text text-transparent bg-petal-gradient tracking-tight mb-2">PetalBird</h1>
+<p class="font-body-lg text-on-surface-variant max-w-[280px]">Premium social curation for the sophisticated eye.</p>
+</header>
+<!-- Login Card -->
+<section class="card-glass rounded-[32px] p-8 flex flex-col space-y-6">
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center space-x-3 py-4 px-4 rounded-2xl bg-surface-container-low border border-outline-variant/30 active:scale-95 transition-all hover:bg-surface-container-high">
+<img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNY-60qf7R0KH8KDnU4o8MbQsPdztZsI-oWycdk5j7nyMw5drqDS5zOr8FopiVeQFiqCXSGuogbOXgAuYtkgC_arlKtCDP3Ds8oRZENhRjFjreZbsmcI8ntJLOAW_X3e_COJbw1-sY9xBbKYmBPbQFAh9nBC1jQ7offZjv0ca8OjSxc7gkqdm_3voMYjYsjScDySSvdL74mkOmufFxAZhKm9orr8XdsVqffL2Khfa3hAO1hc_ELZJHJ1G3Pi1okApjwS9Yb6mdKrQ"/>
+<span class="font-label-caps text-on-surface text-label-caps">Google</span>
+</button>
+<button class="flex items-center justify-center space-x-3 py-4 px-4 rounded-2xl bg-surface-container-low border border-outline-variant/30 active:scale-95 transition-all hover:bg-surface-container-high">
+<img alt="Apple" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh5ydpymPpmZAX5H3Hzv2ebCRU-U0CEvSbajYdSRoWt1CLm08IIt2jHmawGvEIeTyetbypovY0jCeSH-j9TdJlG28brEmJW-q5DQNI8ikrpAZbAfyKGn57yMMSwWz7HrzeQtJytY0MT4mQO6dxMdg2e5FtuGHJpAmrOwhInJgU3QJLrbjchmbfe3BxvkQO_WMqxwXplGhRN5ncRnZ0kbV_Vu3XtnZvxlZON8QS073ViVyitFRo5zub-leUodntt2sgJEBic70jnwY"/>
+<span class="font-label-caps text-on-surface text-label-caps">Apple</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="flex items-center space-x-4 px-2">
+<div class="h-[1px] flex-1 bg-outline-variant/40"></div>
+<span class="font-label-caps text-label-caps text-outline">OR</span>
+<div class="h-[1px] flex-1 bg-outline-variant/40"></div>
+</div>
+<!-- Form -->
+<form class="flex flex-col space-y-4" onsubmit="return false">
+<div class="space-y-1.5">
+<label class="font-label-caps text-label-caps text-on-surface-variant ml-1">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-low border-none rounded-2xl ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-primary transition-all outline-none text-on-surface placeholder:text-outline/60" placeholder="hello@petalbird.com" type="email"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-center px-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Password</label>
+<a class="font-label-caps text-label-caps text-primary hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-low border-none rounded-2xl ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-primary transition-all outline-none text-on-surface" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full h-14 bg-petal-gradient text-white font-title-md rounded-2xl shadow-[0_12px_24px_-8px_rgba(0,122,255,0.4)] active:scale-[0.98] transition-transform hover:opacity-95">
+                        Log In
+                    </button>
+</div>
+</form>
+</section>
+<!-- Signup Navigation -->
+<footer class="mt-auto py-8 text-center">
+<p class="font-body-sm text-on-surface-variant">
+                New to the gallery? 
+                <a class="text-primary font-bold ml-1 hover:underline" href="#">Create an account</a>
+</p>
+</footer>
+<!-- Bottom Visual Anchor -->
+<div class="relative w-full h-48 mt-4 rounded-[40px] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-fashion editorial close-up of delicate silk fabrics and flower petals caught in a soft, ethereal breeze. The lighting is high-key and bright, emphasizing textures and the premium light-mode aesthetic of the PetalBird brand. Soft shades of pastel blue and white dominate the frame, creating a sophisticated and airy mood that feels like a modern digital gallery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8PInNixy8TmD2d5t-2cVdvKEpUpyzu0NqEQZehEwFsWj3zgcVplA5AzpCNtS8ifmo5uyUypoovDylv6wKIX79ADN-URxPZ9xmxdY9AZKQ_QsgBHBLmYHI-D9DqAWQVm1FxYxxg2V01fOOBOjoHr3vuTadzeANJnfO88qD0xnmHxNHk2kvxlqIlDviHrqHkpm8SNam8aQrRfPD5NG5a3KcgXEXtXX5Jpg3JDRr3mGSKa1NvgjK5Cf3cQnH92pbj4-ynV_UJY0nemg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+</main>
+<script>
+        // Micro-interactions for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('.material-symbols-outlined').style.color = '#0058bc';
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('.material-symbols-outlined').style.color = '#717786';
+            });
+        });
+
+        // Simple floating animation logic for background orbs
+        const orbs = document.querySelectorAll('.floating-orb');
+        let tick = 0;
+        function animate() {
+            tick += 0.01;
+            orbs.forEach((orb, i) => {
+                const offset = i * 100;
+                const x = Math.sin(tick + offset) * 20;
+                const y = Math.cos(tick + offset) * 20;
+                orb.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body></html>

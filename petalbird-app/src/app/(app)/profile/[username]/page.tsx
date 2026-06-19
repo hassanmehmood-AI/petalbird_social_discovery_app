@@ -1,0 +1,700 @@
+"use client";
+
+import { useState, useEffect, useRef, use } from "react";
+import {
+  Star, MessageCircle, ImagePlus, PlusCircle,
+  X, ImageIcon, Edit2, Check, Award, Camera,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+
+/* ─── Types ──────────────────────────────────────────────────────────────── */
+interface ProfileData {
+  id: string;
+  username: string;
+  displayName: string;
+  avatarUrl: string | null;
+  coverUrl: string | null;
+  bio: string | null;
+  avgRating: number;
+  ratingCount: number;
+  postCount: number;
+}
+
+interface RecentRater {
+  raterName: string;
+  raterAvatar: string | null;
+  score: number;
+  createdAt: string;
+}
+
+/* ─── Helpers ────────────────────────────────────────────────────────────── */
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return `${Math.floor(h / 24)}d ago`;
+}
+
+function gradeLabel(score: number) {
+  if (score >= 9) return "Legendary";
+  if (score >= 8) return "Stunning";
+  if (score >= 7) return "Attractive";
+  if (score >= 6) return "Looking Good";
+  return "Rising Star";
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────────────────── */
+function Avatar({
+  avatarUrl,
+  initials,
+  className,
+  textClass,
+}: {
+  avatarUrl: string | null;
+  initials: string;
+  className?: string;
+  textClass?: string;
+}) {
+  return (
+    <div className={cn("bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold overflow-hidden", className)}>
+      {avatarUrl
+        // eslint-disable-next-line @next/next/no-img-element
+        ? <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+        : <span className={textClass}>{initials}</span>}
+    </div>
+  );
+}
+
+/* ─── Appeal Score card ──────────────────────────────────────────────────── */
+function AppealScore({ avgRating, ratingCount }: { avgRating: number; ratingCount: number }) {
+  return (
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+      <h2 className="text-sm font-semibold text-on-surface mb-5">Appeal Score</h2>
+      <div className="flex items-center gap-4">
+        <div className="relative shrink-0">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#007AFF] to-[#00C6FF] flex items-center justify-center shadow-[0_8px_24px_rgba(0,122,255,0.3)]">
+            <span className="text-xl font-bold text-white">{avgRating > 0 ? avgRating : "—"}</span>
+          </div>
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border border-white shadow-sm flex items-center justify-center">
+            <Award size={12} className="text-primary" />
+          </div>
+        </div>
+        <div>
+          <p className="text-base font-bold text-on-surface">
+            {avgRating > 0 ? gradeLabel(avgRating) : "No ratings yet"}
+          </p>
+          <p className="text-xs text-on-surface-variant mt-0.5">{ratingCount} community ratings</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Recent Raters ──────────────────────────────────────────────────────── */
+function RecentRaters({ profileId }: { profileId: string }) {
+  const [raters, setRaters] = useState<RecentRater[]>([]);
+
+  useEffect(() => {
+    if (!profileId) return;
+    const supabase = createClient();
+
+    supabase
+      .from("posts")
+      .select("id")
+      .eq("user_id", profileId)
+      .then(async ({ data: posts }) => {
+        if (!posts || posts.length === 0) return;
+        const postIds = posts.map((p: any) => p.id);
+
+        const { data } = await supabase
+          .from("ratings")
+          .select("score, created_at, rater:rater_id ( display_name, avatar_url )")
+          .in("post_id", postIds)
+          .order("created_at", { ascending: false })
+          .limit(5);
+
+        if (data) {
+          setRaters(data.map((r: any) => ({
+            raterName: r.rater?.display_name ?? "Anonymous",
+            raterAvatar: r.rater?.avatar_url ?? null,
+            score: r.score,
+            createdAt: r.created_at,
+          })));
+        }
+      });
+  }, [profileId]);
+
+  return (
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+      <h2 className="text-sm font-semibold text-on-surface mb-4">Recent Raters</h2>
+      <div className="space-y-4">
+        {raters.length === 0 ? (
+          <p className="text-sm text-on-surface-variant text-center py-4">No ratings yet.</p>
+        ) : raters.map((r, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <Avatar
+              avatarUrl={r.raterAvatar}
+              initials={r.raterName[0]}
+              className="w-9 h-9 rounded-full shrink-0 border-2 border-white shadow-sm"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-on-surface truncate">{r.raterName}</p>
+              <p className="text-xs text-on-surface-variant">{timeAgo(r.createdAt)}</p>
+            </div>
+            <div className={cn(
+              "px-2.5 py-1 rounded-lg text-sm font-bold shrink-0",
+              r.score >= 8 ? "bg-primary/10 text-primary" :
+              r.score < 5  ? "bg-red-50 text-red-500" :
+              "bg-surface-container text-on-surface-variant"
+            )}>
+              {r.score}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Edit Profile card ──────────────────────────────────────────────────── */
+function EditProfileCard({
+  profile,
+  onSaved,
+}: {
+  profile: ProfileData;
+  onSaved: (name: string, bio: string, avatarUrl: string | null, coverUrl: string | null) => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState(profile.displayName);
+  const [bio, setBio] = useState(profile.bio ?? "");
+  const [saving, setSaving] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(profile.avatarUrl);
+  const [coverUrl, setCoverUrl] = useState(profile.coverUrl);
+  const avatarFileRef = useRef<HTMLInputElement>(null);
+  const coverFileRef = useRef<HTMLInputElement>(null);
+
+  async function uploadAvatar(file: File) {
+    setUploadingAvatar(true);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `avatars/${profile.id}.${ext}`;
+    await supabase.storage.from("post-images").upload(path, file, { upsert: true });
+    const { data: { publicUrl } } = supabase.storage.from("post-images").getPublicUrl(path);
+    setAvatarUrl(publicUrl);
+    setUploadingAvatar(false);
+  }
+
+  async function uploadCover(file: File) {
+    setUploadingCover(true);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `covers/${profile.id}.${ext}`;
+    await supabase.storage.from("post-images").upload(path, file, { upsert: true });
+    const { data: { publicUrl } } = supabase.storage.from("post-images").getPublicUrl(path);
+    setCoverUrl(publicUrl);
+    setUploadingCover(false);
+  }
+
+  async function save() {
+    setSaving(true);
+    const supabase = createClient();
+    await supabase.from("profiles").update({
+      display_name: name.trim() || profile.displayName,
+      bio: bio.trim() || null,
+      avatar_url: avatarUrl,
+      cover_url: coverUrl,
+    }).eq("id", profile.id);
+    onSaved(name.trim() || profile.displayName, bio.trim(), avatarUrl, coverUrl);
+    setSaving(false);
+    setEditing(false);
+  }
+
+  return (
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-sm font-semibold text-on-surface">Edit Profile</h2>
+        {editing ? (
+          <div className="flex gap-2">
+            <button onClick={() => setEditing(false)} className="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors">
+              <X size={15} />
+            </button>
+            <button onClick={save} disabled={saving || uploadingAvatar || uploadingCover} className="p-1.5 rounded-lg text-primary hover:bg-primary/10 transition-colors disabled:opacity-40">
+              <Check size={15} />
+            </button>
+          </div>
+        ) : (
+          <button onClick={() => setEditing(true)} className="p-1.5 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+            <Edit2 size={15} />
+          </button>
+        )}
+      </div>
+
+      {editing ? (
+        <div className="space-y-4">
+          {/* Cover photo */}
+          <div>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-2 block">Cover Photo</label>
+            <div
+              className="relative w-full h-24 rounded-xl overflow-hidden cursor-pointer group mb-2"
+              onClick={() => !uploadingCover && coverFileRef.current?.click()}
+            >
+              {coverUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={coverUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]" />
+              )}
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                {uploadingCover ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <div className="flex items-center gap-2 text-white text-xs font-semibold">
+                    <Camera size={14} />
+                    Change Cover
+                  </div>
+                )}
+              </div>
+            </div>
+            <input ref={coverFileRef} type="file" accept="image/*" className="hidden"
+              onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadCover(f); e.target.value = ""; }} />
+          </div>
+
+          {/* Avatar */}
+          <div>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-2 block">Profile Photo</label>
+            <div className="flex items-center gap-3">
+              <Avatar
+                avatarUrl={avatarUrl}
+                initials={name[0] || "?"}
+                className="w-12 h-12 rounded-full shrink-0 border-2 border-white shadow-sm"
+              />
+              <button
+                onClick={() => avatarFileRef.current?.click()}
+                disabled={uploadingAvatar}
+                className="text-xs font-semibold text-primary hover:underline disabled:opacity-50"
+              >
+                {uploadingAvatar ? "Uploading…" : "Change photo"}
+              </button>
+              <input ref={avatarFileRef} type="file" accept="image/*" className="hidden"
+                onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadAvatar(f); e.target.value = ""; }} />
+            </div>
+          </div>
+
+          {/* Name */}
+          <div>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1 block">Display Name</label>
+            <input
+              className="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          {/* Bio */}
+          <div>
+            <label className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1 block">Bio</label>
+            <textarea
+              className="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors resize-none"
+              rows={3}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Tell the world about yourself…"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <Avatar avatarUrl={avatarUrl} initials={profile.displayName[0]} className="w-10 h-10 rounded-full shrink-0 border-2 border-white shadow-sm" />
+            <div>
+              <p className="text-sm font-semibold text-on-surface">{profile.displayName}</p>
+              <p className="text-xs text-on-surface-variant">@{profile.username}</p>
+            </div>
+          </div>
+          {profile.bio && <p className="text-sm text-on-surface-variant mt-2">{profile.bio}</p>}
+          {!profile.bio && <p className="text-xs text-outline italic">No bio yet — click edit to add one</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Photo Gallery ──────────────────────────────────────────────────────── */
+function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; isOwn: boolean; currentUserId: string | null }) {
+  const [posts, setPosts] = useState<{ id: string; image_url: string; avg_rating: number }[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!profileId) return;
+    const supabase = createClient();
+    supabase
+      .from("posts")
+      .select("id, image_url, avg_rating")
+      .eq("user_id", profileId)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => { if (data) setPosts(data); });
+  }, [profileId]);
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !currentUserId) return;
+    setUploading(true);
+    setUploadError(null);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `${currentUserId}/${Date.now()}.${ext}`;
+
+    const { error: uploadErr } = await supabase.storage.from("post-images").upload(path, file);
+    if (uploadErr) { setUploadError("Upload failed: " + uploadErr.message); setUploading(false); return; }
+
+    const { data: { publicUrl } } = supabase.storage.from("post-images").getPublicUrl(path);
+    const { data: post } = await supabase
+      .from("posts")
+      .insert({ user_id: currentUserId, image_url: publicUrl })
+      .select("id, image_url, avg_rating")
+      .single();
+
+    if (post) setPosts((prev) => [post, ...prev]);
+    setUploading(false);
+    if (fileRef.current) fileRef.current.value = "";
+  }
+
+  return (
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-sm font-semibold text-on-surface">
+          Photos <span className="text-on-surface-variant font-normal ml-1">({posts.length})</span>
+        </h2>
+      </div>
+
+      {uploadError && <p className="text-xs text-red-600 mb-4 px-3 py-2 bg-red-50 rounded-lg">{uploadError}</p>}
+      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {isOwn && (
+          <div
+            onClick={() => !uploading && fileRef.current?.click()}
+            className={cn(
+              "aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-on-surface-variant transition-all group",
+              uploading ? "opacity-60 cursor-wait" : "hover:bg-surface-container-low hover:border-primary cursor-pointer"
+            )}
+          >
+            {uploading ? (
+              <>
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mb-2" />
+                <span className="text-xs font-semibold">Uploading…</span>
+              </>
+            ) : (
+              <>
+                <ImagePlus size={24} className="mb-2 group-hover:text-primary transition-colors" />
+                <span className="text-xs font-semibold group-hover:text-primary transition-colors">Add Photo</span>
+              </>
+            )}
+          </div>
+        )}
+
+        {posts.map((post) => (
+          <div key={post.id} className="aspect-square rounded-xl overflow-hidden cursor-pointer group relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post.image_url} alt="" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" />
+            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+              <div className="flex items-center gap-1 bg-black/50 rounded-lg px-2 py-1">
+                <Star size={10} className="text-[#00C6FF] fill-[#00C6FF]" />
+                <span className="text-white text-[10px] font-bold">{post.avg_rating}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {posts.length === 0 && !isOwn && (
+          <div className="col-span-3 py-8 text-center text-sm text-on-surface-variant">
+            No posts yet.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Create Post Modal ──────────────────────────────────────────────────── */
+function CreatePostModal({ currentUserId, onClose, onCreated }: {
+  currentUserId: string; onClose: () => void; onCreated: () => void;
+}) {
+  const [caption, setCaption] = useState("");
+  const [preview, setPreview] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function handleSubmit() {
+    if (!file) { setError("Please select a photo first."); return; }
+    setError(null); setUploading(true);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `${currentUserId}/${Date.now()}.${ext}`;
+    const { error: uploadErr } = await supabase.storage.from("post-images").upload(path, file);
+    if (uploadErr) { setError("Upload failed: " + uploadErr.message); setUploading(false); return; }
+    const { data: { publicUrl } } = supabase.storage.from("post-images").getPublicUrl(path);
+    const { error: insertErr } = await supabase.from("posts").insert({
+      user_id: currentUserId, image_url: publicUrl, caption: caption.trim() || null,
+    });
+    if (insertErr) { setError("Failed: " + insertErr.message); setUploading(false); return; }
+    onCreated(); onClose();
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-xl border border-white/40 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30">
+          <h2 className="font-heading text-lg font-semibold text-on-surface">Create Post</h2>
+          <button onClick={onClose} className="p-1 text-on-surface-variant hover:text-on-surface"><X size={20} /></button>
+        </div>
+        <div className="p-6 space-y-4">
+          <input ref={fileRef} type="file" accept="image/*" className="hidden"
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) { setFile(f); setPreview(URL.createObjectURL(f)); } }} />
+          {preview ? (
+            <div className="relative aspect-video rounded-xl overflow-hidden bg-surface-container-low">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={preview} alt="" className="w-full h-full object-cover" />
+              <button onClick={() => { setPreview(null); setFile(null); }}
+                className="absolute top-2 right-2 w-7 h-7 bg-black/60 rounded-full flex items-center justify-center text-white">
+                <X size={14} />
+              </button>
+            </div>
+          ) : (
+            <div onClick={() => fileRef.current?.click()}
+              className="aspect-video rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+              <ImageIcon size={36} className="text-outline" />
+              <p className="text-sm font-semibold text-on-surface-variant">Click to select a photo</p>
+            </div>
+          )}
+          <textarea
+            className="w-full bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary resize-none"
+            placeholder="Write a caption… (optional)" rows={3} value={caption}
+            onChange={(e) => setCaption(e.target.value)} />
+          {error && <p className="text-xs text-red-600 px-3 py-2 bg-red-50 rounded-lg">{error}</p>}
+        </div>
+        <div className="px-6 pb-6 flex gap-3">
+          <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-outline-variant text-sm font-semibold text-on-surface-variant">Cancel</button>
+          <button onClick={handleSubmit} disabled={uploading || !file}
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold disabled:opacity-50">
+            {uploading ? "Posting…" : "Post"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Page ───────────────────────────────────────────────────────────────── */
+export default function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = use(params);
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [showCreate, setShowCreate] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const coverFileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    async function load() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) setCurrentUserId(user.id);
+
+      const query = username === "me" && user
+        ? supabase.from("profiles").select("*").eq("id", user.id).single()
+        : supabase.from("profiles").select("*").eq("username", username).single();
+
+      const { data: profileData } = await query;
+      if (!profileData) { setLoading(false); return; }
+
+      // Compute avg rating and post count from posts table
+      const { data: posts } = await supabase
+        .from("posts")
+        .select("avg_rating, rating_count")
+        .eq("user_id", profileData.id);
+
+      let avgRating = 0;
+      let ratingCount = 0;
+      if (posts && posts.length > 0) {
+        ratingCount = posts.reduce((sum: number, p: any) => sum + (p.rating_count ?? 0), 0);
+        const totalScore = posts.reduce((sum: number, p: any) => sum + (p.avg_rating ?? 0) * (p.rating_count ?? 0), 0);
+        avgRating = ratingCount > 0 ? +(totalScore / ratingCount).toFixed(1) : 0;
+      }
+
+      setProfile({
+        id: profileData.id,
+        username: profileData.username,
+        displayName: profileData.display_name,
+        avatarUrl: profileData.avatar_url ?? null,
+        coverUrl: profileData.cover_url ?? null,
+        bio: profileData.bio ?? null,
+        avgRating,
+        ratingCount,
+        postCount: posts?.length ?? 0,
+      });
+      setLoading(false);
+    }
+    load();
+  }, [username]);
+
+  async function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file || !profile) return;
+    setUploadingCover(true);
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `covers/${profile.id}.${ext}`;
+    await supabase.storage.from("post-images").upload(path, file, { upsert: true });
+    const { data: { publicUrl } } = supabase.storage.from("post-images").getPublicUrl(path);
+    await supabase.from("profiles").update({ cover_url: publicUrl }).eq("id", profile.id);
+    setProfile((prev) => prev ? { ...prev, coverUrl: publicUrl } : prev);
+    setUploadingCover(false);
+    e.target.value = "";
+  }
+
+  async function handleMessage() {
+    if (!profile || !currentUserId) return;
+    const supabase = createClient();
+    const { data: convId } = await supabase.rpc("create_or_get_conversation", {
+      other_user_id: profile.id,
+    });
+    window.location.href = convId ? `/messages/${convId}` : "/messages";
+  }
+
+  if (loading) {
+    return <div className="flex items-center justify-center min-h-[60vh] text-on-surface-variant">Loading profile…</div>;
+  }
+  if (!profile) {
+    return <div className="flex items-center justify-center min-h-[60vh] text-on-surface-variant">Profile not found.</div>;
+  }
+
+  const isOwn = currentUserId === profile.id;
+
+  return (
+    <>
+      {showCreate && currentUserId && (
+        <CreatePostModal
+          currentUserId={currentUserId}
+          onClose={() => setShowCreate(false)}
+          onCreated={() => setShowCreate(false)}
+        />
+      )}
+
+      <div className="-mx-4 md:-mx-6 lg:-mx-8 -my-6">
+        {/* Cover */}
+        <div className="relative w-full h-56 md:h-72 overflow-hidden">
+          {profile.coverUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={profile.coverUrl} alt="" className="w-full h-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent" />
+
+
+        </div>
+
+        <div className="px-4 md:px-10 max-w-7xl mx-auto relative z-10 pb-10 pt-4">
+          {/* Header */}
+          <div className="flex flex-col gap-4 md:flex-row md:gap-6 md:items-start mb-8">
+            {/* Top row on mobile: avatar + name side by side */}
+            <div className="flex items-end gap-4 md:contents">
+              {/* Avatar */}
+              <div className="relative shrink-0 -mt-16 md:-mt-24">
+                <Avatar
+                  avatarUrl={profile.avatarUrl}
+                  initials={profile.displayName[0]}
+                  className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-white shadow-xl text-3xl md:text-4xl"
+                />
+              </div>
+
+              {/* Name + bio — shown inline with avatar on mobile */}
+              <div className="flex-1 md:hidden pb-1">
+                <h1 className="font-heading text-2xl leading-tight font-bold text-on-surface">
+                  {profile.displayName}
+                </h1>
+                <p className="text-xs text-on-surface-variant">@{profile.username}</p>
+              </div>
+            </div>
+
+            {/* Info block — desktop layout */}
+            <div className="flex-1">
+              <h1 className="hidden md:block font-heading text-[46px] leading-tight font-bold text-on-surface">
+                {profile.displayName}
+              </h1>
+              {profile.bio && <p className="text-sm text-on-surface-variant mt-1 md:mt-2 max-w-md">{profile.bio}</p>}
+
+              {/* Stats chips */}
+              <div className="flex flex-wrap gap-2 md:gap-3 mt-3">
+                <div className="bg-white/70 backdrop-blur-xl border border-white/40 px-3 md:px-4 py-1.5 md:py-2 rounded-xl flex items-center gap-2 shadow-sm">
+                  <div className="w-3.5 h-3.5 md:w-4 md:h-4 rounded bg-primary/20 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-sm bg-primary" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-on-surface">{profile.postCount}</div>
+                    <div className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.08em] text-on-surface-variant">Posts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex gap-3 w-full md:w-auto">
+              {isOwn ? (
+                <button
+                  onClick={() => setShowCreate(true)}
+                  className="flex-1 md:flex-none bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all"
+                >
+                  <PlusCircle size={16} />
+                  Create Post
+                </button>
+              ) : (
+                <button
+                  onClick={handleMessage}
+                  className="flex-1 md:flex-none bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all"
+                >
+                  <MessageCircle size={16} />
+                  Message
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Bento grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-4 flex flex-col gap-6">
+              {isOwn ? (
+                <EditProfileCard
+                  profile={profile}
+                  onSaved={(name, bio, avatarUrl, coverUrl) =>
+                    setProfile((prev) => prev ? { ...prev, displayName: name, bio, avatarUrl, coverUrl } : prev)
+                  }
+                />
+              ) : (
+                <AppealScore avgRating={profile.avgRating} ratingCount={profile.ratingCount} />
+              )}
+              <RecentRaters profileId={profile.id} />
+            </div>
+            <div className="lg:col-span-8">
+              <PhotoGallery
+                profileId={profile.id}
+                isOwn={isOwn}
+                currentUserId={currentUserId}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

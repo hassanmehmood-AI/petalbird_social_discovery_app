@@ -1,0 +1,16 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    - cron: "0 9 */3 * *"   # runs every 3 days at 9:00 AM UTC
+  workflow_dispatch:          # allows manual trigger from GitHub UI
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: |
+          echo "Pinging health endpoint to keep Supabase active..."
+          curl -f https://petalbird-app.vercel.app/api/health
+          echo "Done."
