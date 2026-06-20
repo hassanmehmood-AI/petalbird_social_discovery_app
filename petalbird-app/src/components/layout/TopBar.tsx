@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -59,7 +59,7 @@ export default function TopBar() {
 
   return (
     <header className={cn(
-      "fixed top-0 right-0 left-0 md:left-52 h-20 z-40 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,122,255,0.05)] flex items-center justify-between px-6 gap-4 transition-transform duration-300 ease-in-out",
+      "fixed top-0 right-0 left-0 md:left-52 h-20 z-40 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(123,127,239,0.05)] flex items-center justify-between px-6 gap-4 transition-transform duration-300 ease-in-out",
       scrollHidden ? "-translate-y-full" : "translate-y-0"
     )}>
 
@@ -74,7 +74,7 @@ export default function TopBar() {
 
         {/* Avatar */}
         <Link href="/profile/me" className="relative flex-shrink-0">
-          <div className="w-10 h-10 rounded-full border-2 border-primary/30 shadow-sm hover:scale-105 transition-transform duration-200 overflow-hidden bg-gradient-to-br from-[#007AFF] to-[#00C6FF] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full border-2 border-primary/30 shadow-sm hover:scale-105 transition-transform duration-200 overflow-hidden bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA] flex items-center justify-center">
             {avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img

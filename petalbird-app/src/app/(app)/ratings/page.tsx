@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -110,14 +110,14 @@ function MiniChart({ history }: { history: DayBar[] }) {
                   className="absolute inset-x-0 top-0 rounded-t-sm z-10"
                   style={{
                     height: 6,
-                    background: "linear-gradient(to right, #70e0ff, #40c8ff)",
-                    boxShadow: "0 -2px 4px rgba(0,198,255,0.4)",
+                    background: "linear-gradient(to right, #C4C6FA, #A78BFA)",
+                    boxShadow: "0 -2px 4px rgba(167,139,250,0.4)",
                   }}
                 />
                 {/* Front face */}
                 <div
                   className="absolute inset-x-0 bottom-0 rounded-t-sm overflow-hidden group-hover:brightness-110 transition-all"
-                  style={{ top: 6, background: "linear-gradient(to bottom, #00C6FF 0%, #007AFF 100%)" }}
+                  style={{ top: 6, background: "linear-gradient(to bottom, #A78BFA 0%, #7B7FEF 100%)" }}
                 >
                   {/* Gloss highlight */}
                   <div
@@ -130,7 +130,7 @@ function MiniChart({ history }: { history: DayBar[] }) {
                   className="absolute top-0 right-0 bottom-0 rounded-r-sm"
                   style={{
                     width: 5,
-                    background: "linear-gradient(to bottom, #0055b3, #003d80)",
+                    background: "linear-gradient(to bottom, #5A5DC0, #3D40A0)",
                     boxShadow: "2px 0 6px rgba(0,61,128,0.35)",
                   }}
                 />
@@ -156,9 +156,9 @@ function MiniChart({ history }: { history: DayBar[] }) {
 /* ─── Score Distribution ─────────────────────────────────────────────────── */
 function ScoreDistribution({ ratings }: { ratings: RatingReceived[] }) {
   const BANDS = [
-    { label: "Excellent (9–10)", min: 9, max: 10, front: "linear-gradient(to right, #007AFF, #00C6FF)", top: "#60d9ff",   side: "#0050b3" },
+    { label: "Excellent (9–10)", min: 9, max: 10, front: "linear-gradient(to right, #7B7FEF, #A78BFA)", top: "#60d9ff",   side: "#5A5DC0" },
     { label: "Good (7–8)",       min: 7, max: 8,  front: "linear-gradient(to right, #8b5cf6, #a78bfa)", top: "#c4b5fd",   side: "#5b21b6" },
-    { label: "Average (5–6)",    min: 5, max: 6,  front: "linear-gradient(to right, #00C6FF, #38d9a9)", top: "#67e8f9",   side: "#0e7490" },
+    { label: "Average (5–6)",    min: 5, max: 6,  front: "linear-gradient(to right, #A78BFA, #38d9a9)", top: "#67e8f9",   side: "#0e7490" },
     { label: "Low (1–4)",        min: 1, max: 4,  front: "linear-gradient(to right, #ff7eb3, #ff6b6b)", top: "#fda4af",   side: "#be185d" },
   ];
   const total = ratings.length;
@@ -232,10 +232,10 @@ function RaterItem({ rating }: { rating: RatingReceived }) {
         {rating.post.imageUrl
           // eslint-disable-next-line @next/next/no-img-element
           ? <img src={rating.post.imageUrl} alt="" className="w-full h-full object-cover" />
-          : <div className="w-full h-full bg-gradient-to-br from-[#adc6ff]/60 to-[#007AFF]/20" />}
+          : <div className="w-full h-full bg-gradient-to-br from-[#C4C6FA]/60 to-[#7B7FEF]/20" />}
       </div>
       {/* Rater avatar */}
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold text-sm shrink-0 border-2 border-white shadow-sm overflow-hidden">
+      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C4C6FA] to-[#7B7FEF]/60 flex items-center justify-center text-white font-bold text-sm shrink-0 border-2 border-white shadow-sm overflow-hidden">
         {rating.rater.avatarUrl
           // eslint-disable-next-line @next/next/no-img-element
           ? <img src={rating.rater.avatarUrl} alt="" className="w-full h-full object-cover" />
@@ -271,7 +271,7 @@ function GivenItem({ rating }: { rating: RatingGiven }) {
         {rating.post.imageUrl
           // eslint-disable-next-line @next/next/no-img-element
           ? <img src={rating.post.imageUrl} alt="" className="w-full h-full object-cover" />
-          : <div className="w-full h-full bg-gradient-to-br from-[#adc6ff]/60 to-[#007AFF]/20" />}
+          : <div className="w-full h-full bg-gradient-to-br from-[#C4C6FA]/60 to-[#7B7FEF]/20" />}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-on-surface truncate">{rating.post.creator.displayName}</p>
@@ -422,11 +422,11 @@ export default function RatingsPage() {
       </div>
 
       {/* Hero score */}
-      <div className="card-glass rounded-2xl p-5 md:p-8 bg-gradient-to-br from-[#007AFF]/10 via-white/60 to-[#00C6FF]/10 relative overflow-hidden">
-        <div className="absolute -top-16 -right-16 w-48 h-48 bg-[#007AFF] opacity-5 rounded-full blur-[60px] pointer-events-none" />
+      <div className="card-glass rounded-2xl p-5 md:p-8 bg-gradient-to-br from-[#7B7FEF]/10 via-white/60 to-[#A78BFA]/10 relative overflow-hidden">
+        <div className="absolute -top-16 -right-16 w-48 h-48 bg-[#7B7FEF] opacity-5 rounded-full blur-[60px] pointer-events-none" />
         <div className="flex flex-row md:flex-row items-center gap-5 md:gap-8">
           <div className="relative shrink-0">
-            <div className="w-24 h-24 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-[#007AFF] to-[#00C6FF] flex items-center justify-center shadow-[0_16px_48px_rgba(0,122,255,0.25)]">
+            <div className="w-24 h-24 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA] flex items-center justify-center shadow-[0_16px_48px_rgba(123,127,239,0.25)]">
               <span className="text-3xl md:text-5xl font-bold text-white">{overallScore || "—"}</span>
             </div>
             <div className="absolute -bottom-1 -right-1 w-8 h-8 md:w-10 md:h-10 rounded-full bg-white border-2 border-white shadow-md flex items-center justify-center">
@@ -455,9 +455,9 @@ export default function RatingsPage() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={Star}       label="This Week"     value={weekAvg > 0 ? String(weekAvg) : "—"}         sub={`${thisWeek.length} ratings`}      iconColor="bg-gradient-to-br from-[#007AFF] to-[#00C6FF]" />
+        <StatCard icon={Star}       label="This Week"     value={weekAvg > 0 ? String(weekAvg) : "—"}         sub={`${thisWeek.length} ratings`}      iconColor="bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA]" />
         <StatCard icon={TrendingUp} label="All-Time High" value={allTimeHigh > 0 ? String(allTimeHigh) : "—"} sub="single rating received"             iconColor="bg-gradient-to-br from-[#8b5cf6] to-[#a78bfa]" />
-        <StatCard icon={Users}      label="Total Raters"  value={String(totalRaters)}                         sub="unique people"                       iconColor="bg-gradient-to-br from-[#00C6FF] to-[#38d9a9]" />
+        <StatCard icon={Users}      label="Total Raters"  value={String(totalRaters)}                         sub="unique people"                       iconColor="bg-gradient-to-br from-[#A78BFA] to-[#38d9a9]" />
         <StatCard icon={BarChart3}  label="Given"         value={String(given.length)}                        sub="posts you've rated"                  iconColor="bg-gradient-to-br from-[#ff7eb3] to-[#ff6b6b]" />
       </div>
 

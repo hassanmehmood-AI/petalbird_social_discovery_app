@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="hidden md:flex h-screen w-52 fixed left-0 top-0 flex-col z-50 bg-white/70 backdrop-blur-xl border-r border-white/40 shadow-[0_20px_40px_rgba(0,122,255,0.08)]">
+    <aside className="hidden md:flex h-screen w-52 fixed left-0 top-0 flex-col z-50 bg-white/70 backdrop-blur-xl border-r border-white/40 shadow-[0_20px_40px_rgba(123,127,239,0.08)]">
       <div className="flex flex-col py-5 px-3 h-full">
 
         {/* Brand */}

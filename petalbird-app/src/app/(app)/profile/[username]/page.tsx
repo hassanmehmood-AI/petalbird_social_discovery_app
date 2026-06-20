@@ -59,7 +59,7 @@ function Avatar({
   textClass?: string;
 }) {
   return (
-    <div className={cn("bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold overflow-hidden", className)}>
+    <div className={cn("bg-gradient-to-br from-[#C4C6FA] to-[#7B7FEF]/60 flex items-center justify-center text-white font-bold overflow-hidden", className)}>
       {avatarUrl
         // eslint-disable-next-line @next/next/no-img-element
         ? <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
@@ -71,11 +71,11 @@ function Avatar({
 /* ─── Appeal Score card ──────────────────────────────────────────────────── */
 function AppealScore({ avgRating, ratingCount }: { avgRating: number; ratingCount: number }) {
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(123,127,239,0.06)]">
       <h2 className="text-sm font-semibold text-on-surface mb-5">Appeal Score</h2>
       <div className="flex items-center gap-4">
         <div className="relative shrink-0">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#007AFF] to-[#00C6FF] flex items-center justify-center shadow-[0_8px_24px_rgba(0,122,255,0.3)]">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA] flex items-center justify-center shadow-[0_8px_24px_rgba(123,127,239,0.3)]">
             <span className="text-xl font-bold text-white">{avgRating > 0 ? avgRating : "—"}</span>
           </div>
           <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border border-white shadow-sm flex items-center justify-center">
@@ -128,7 +128,7 @@ function RecentRaters({ profileId }: { profileId: string }) {
   }, [profileId]);
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(123,127,239,0.06)]">
       <h2 className="text-sm font-semibold text-on-surface mb-4">Recent Raters</h2>
       <div className="space-y-4">
         {raters.length === 0 ? (
@@ -215,7 +215,7 @@ function EditProfileCard({
   }
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(123,127,239,0.06)]">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-sm font-semibold text-on-surface">Edit Profile</h2>
         {editing ? (
@@ -247,7 +247,7 @@ function EditProfileCard({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={coverUrl} alt="" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]" />
+                <div className="w-full h-full bg-gradient-to-br from-[#C4C6FA]/60 via-[#dbe8ff] to-[#e8f0ff]" />
               )}
               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 {uploadingCover ? (
@@ -374,7 +374,7 @@ function PostRatingModal({
           <img src={post.image_url} alt="" className="w-full h-full object-cover" />
           {post.avg_rating > 0 && (
             <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-1.5 border border-white/20">
-              <Star size={12} className="text-[#00C6FF] fill-[#00C6FF]" />
+              <Star size={12} className="text-[#A78BFA] fill-[#A78BFA]" />
               <span className="text-sm font-bold text-white">{post.avg_rating}</span>
               <span className="text-xs text-white/60">avg · {post.rating_count} ratings</span>
             </div>
@@ -402,19 +402,20 @@ function PostRatingModal({
               <div className="relative h-10 flex items-center">
                 <div className="absolute w-full rounded-full" style={{ height: 14, background: "rgba(0,0,0,0.08)", boxShadow: "inset 0 3px 6px rgba(0,0,0,0.18), inset 0 -1px 0 rgba(255,255,255,0.6)" }} />
                 {pct > 0 && (
-                  <div className="absolute left-0 rounded-full overflow-hidden transition-all duration-75" style={{ height: 14, width: `${pct}%`, background: "linear-gradient(to right, #007AFF, #00C6FF)", boxShadow: "2px 3px 8px rgba(0,122,255,0.35)" }}>
+                  <div className="absolute left-0 rounded-full overflow-hidden transition-all duration-75" style={{ height: 14, width: `${pct}%`, background: "linear-gradient(to right, #7B7FEF, #A78BFA)", boxShadow: "2px 3px 8px rgba(123,127,239,0.35)" }}>
                     <div className="absolute inset-x-0 top-0 h-1/2" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.38), transparent)" }} />
                     <div className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "rgba(0,0,0,0.12)" }} />
                   </div>
                 )}
                 <div className="absolute pointer-events-none transition-all duration-75" style={{ left: `calc(${pct}% - 11px)` }}>
-                  <div className="w-[22px] h-[22px] rounded-full flex items-center justify-center" style={{ background: "linear-gradient(145deg, #ffffff, #e0e8ff)", boxShadow: "0 4px 10px rgba(0,122,255,0.45), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
-                    <div className="w-2 h-2 rounded-full" style={{ background: "linear-gradient(135deg, #007AFF, #00C6FF)" }} />
+                  <div className="w-[22px] h-[22px] rounded-full flex items-center justify-center" style={{ background: "linear-gradient(145deg, #ffffff, #E8E9FD)", boxShadow: "0 4px 10px rgba(123,127,239,0.45), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
+                    <div className="w-2 h-2 rounded-full" style={{ background: "linear-gradient(135deg, #7B7FEF, #A78BFA)" }} />
                   </div>
                 </div>
                 <input
                   type="range" min={1} max={10} step={1} value={sliderVal === 0 ? 1 : sliderVal}
-                  onChange={(e) => { setSliderVal(Number(e.target.value)); setConfirmed(false); }}
+                  disabled={confirmed}
+                  onChange={(e) => { setSliderVal(Number(e.target.value)); }}
                   className="absolute w-full h-full opacity-0 cursor-pointer"
                 />
               </div>
@@ -424,9 +425,9 @@ function PostRatingModal({
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
                   <div key={n} className="flex-1 rounded-md flex items-center justify-center text-[10px] font-semibold py-1 relative overflow-hidden"
                     style={n <= sliderVal ? {
-                      background: "linear-gradient(to bottom, #00C6FF, #007AFF)",
+                      background: "linear-gradient(to bottom, #A78BFA, #7B7FEF)",
                       color: "white",
-                      boxShadow: "0 3px 6px rgba(0,122,255,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
+                      boxShadow: "0 3px 6px rgba(123,127,239,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
                     } : {
                       background: "rgba(0,0,0,0.05)",
                       color: "var(--color-outline)",
@@ -441,7 +442,7 @@ function PostRatingModal({
               <button
                 onClick={handleConfirm}
                 disabled={saving || confirmed || sliderVal === 0}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {saving ? "Saving…" : confirmed ? <><Check size={16} /> Rating Confirmed</> : "Submit Rating"}
               </button>
@@ -535,7 +536,7 @@ function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; 
         />
       )}
 
-      <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+      <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(123,127,239,0.06)]">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-sm font-semibold text-on-surface">
             Photos <span className="text-on-surface-variant font-normal ml-1">({posts.length})</span>
@@ -578,7 +579,7 @@ function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; 
               <img src={post.image_url} alt="" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" />
               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2">
                 <div className="flex items-center gap-1 bg-black/50 rounded-lg px-2 py-1">
-                  <Star size={10} className="text-[#00C6FF] fill-[#00C6FF]" />
+                  <Star size={10} className="text-[#A78BFA] fill-[#A78BFA]" />
                   <span className="text-white text-[10px] font-bold">{post.avg_rating}</span>
                 </div>
                 {!isOwn && post.myRating !== null && (
@@ -671,7 +672,7 @@ function CreatePostModal({ currentUserId, onClose, onCreated }: {
         <div className="px-6 pb-6 flex gap-3">
           <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-outline-variant text-sm font-semibold text-on-surface-variant">Cancel</button>
           <button onClick={handleSubmit} disabled={uploading || !file}
-            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold disabled:opacity-50">
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold disabled:opacity-50">
             {uploading ? "Posting…" : "Post"}
           </button>
         </div>
@@ -783,7 +784,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
             // eslint-disable-next-line @next/next/no-img-element
             <img src={profile.coverUrl} alt="" className="w-full h-full object-cover" />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#C4C6FA]/60 via-[#dbe8ff] to-[#e8f0ff]" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent" />
 
@@ -839,7 +840,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
               {isOwn ? (
                 <button
                   onClick={() => setShowCreate(true)}
-                  className="flex-1 md:flex-none bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all"
+                  className="flex-1 md:flex-none bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all"
                 >
                   <PlusCircle size={16} />
                   Create Post
@@ -847,7 +848,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
               ) : (
                 <button
                   onClick={handleMessage}
-                  className="flex-1 md:flex-none bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all"
+                  className="flex-1 md:flex-none bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-5 py-2.5 md:py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all"
                 >
                   <MessageCircle size={16} />
                   Message

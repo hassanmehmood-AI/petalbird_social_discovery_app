@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 /* ─── Section wrapper ────────────────────────────────────────────────────── */
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(0,122,255,0.04)]">
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(123,127,239,0.04)]">
       <div className="px-6 py-4 border-b border-outline-variant/20">
         <h2 className="text-sm font-bold uppercase tracking-wider text-on-surface-variant">{title}</h2>
       </div>
@@ -75,7 +75,7 @@ function ChangePassword() {
               Cancel
             </button>
             <button onClick={save} disabled={saving || !next || !confirm}
-              className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-all">
+              className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-all">
               {saving ? "Saving…" : "Update Password"}
             </button>
           </div>
@@ -130,7 +130,7 @@ function ChangeEmail() {
               Cancel
             </button>
             <button onClick={save} disabled={saving || !email}
-              className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-all">
+              className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold disabled:opacity-50 hover:opacity-90 transition-all">
               {saving ? "Sending…" : "Update Email"}
             </button>
           </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,7 +22,7 @@ export default function MobileNav() {
   }
 
   return (
-    <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white/90 backdrop-blur-xl border-t border-white/40 shadow-[0_-4px_24px_rgba(0,122,255,0.08)]">
+    <nav className="md:hidden fixed bottom-0 w-full z-50 bg-white/90 backdrop-blur-xl border-t border-white/40 shadow-[0_-4px_24px_rgba(123,127,239,0.08)]">
       <div className="flex justify-around items-center h-16 px-2 pb-safe">
         {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
           const active = isActive(href);

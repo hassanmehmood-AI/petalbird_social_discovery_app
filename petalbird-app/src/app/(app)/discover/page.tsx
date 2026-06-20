@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -170,7 +170,7 @@ function CreatePostModal({
           <button
             onClick={handleSubmit}
             disabled={uploading || !file}
-            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {uploading ? "Posting…" : "Post"}
           </button>
@@ -250,7 +250,7 @@ function FeedCard({
   }, [menuOpen]);
 
   const CARD_GRADIENTS = [
-    "from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]",
+    "from-[#C4C6FA]/60 via-[#dbe8ff] to-[#e8f0ff]",
     "from-[#b7f0d4]/60 via-[#d8f0e8] to-[#e8f0ff]",
   ];
 
@@ -379,8 +379,8 @@ function FeedCard({
                     style={{
                       height: 14,
                       width: `${pct}%`,
-                      background: "linear-gradient(to right, #007AFF, #00C6FF)",
-                      boxShadow: "2px 3px 8px rgba(0,122,255,0.35)",
+                      background: "linear-gradient(to right, #7B7FEF, #A78BFA)",
+                      boxShadow: "2px 3px 8px rgba(123,127,239,0.35)",
                     }}
                   >
                     {/* Top gloss */}
@@ -405,13 +405,13 @@ function FeedCard({
                     className="w-[22px] h-[22px] rounded-full flex items-center justify-center"
                     style={{
                       background: "linear-gradient(145deg, #ffffff, #e0e8ff)",
-                      boxShadow: "0 4px 10px rgba(0,122,255,0.45), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9)",
+                      boxShadow: "0 4px 10px rgba(123,127,239,0.45), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9)",
                     }}
                   >
                     {/* Inner dot */}
                     <div
                       className="w-2 h-2 rounded-full"
-                      style={{ background: "linear-gradient(135deg, #007AFF, #00C6FF)" }}
+                      style={{ background: "linear-gradient(135deg, #7B7FEF, #A78BFA)" }}
                     />
                   </div>
                 </div>
@@ -421,7 +421,8 @@ function FeedCard({
                   max={10}
                   step={1}
                   value={sliderVal === 0 ? 1 : sliderVal}
-                  onChange={(e) => { setSliderVal(Number(e.target.value)); setRatingConfirmed(false); }}
+                  disabled={ratingConfirmed}
+                  onChange={(e) => { setSliderVal(Number(e.target.value)); }}
                   className="absolute w-full h-full opacity-0 cursor-pointer"
                 />
               </div>
@@ -433,9 +434,9 @@ function FeedCard({
                     key={n}
                     className="flex-1 rounded-md md:rounded-lg flex items-center justify-center text-[10px] md:text-xs font-semibold py-1 md:py-1.5 transition-all duration-75 relative overflow-hidden"
                     style={n <= sliderVal ? {
-                      background: "linear-gradient(to bottom, #00C6FF, #007AFF)",
+                      background: "linear-gradient(to bottom, #A78BFA, #7B7FEF)",
                       color: "white",
-                      boxShadow: "0 3px 6px rgba(0,122,255,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
+                      boxShadow: "0 3px 6px rgba(123,127,239,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
                     } : {
                       background: "rgba(0,0,0,0.05)",
                       color: "var(--color-outline)",
@@ -464,12 +465,12 @@ function FeedCard({
                   setShowSuccess(true);
                   setTimeout(() => setShowSuccess(false), 3000);
                 }}
-                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {ratingSaving ? "Saving…" : ratingConfirmed ? <><Check size={15} /> Rating Confirmed</> : "Submit Rating"}
               </button>
               {showSuccess && (
-                <p className="text-center text-sm font-medium text-[#007AFF] mt-2 animate-pulse">
+                <p className="text-center text-sm font-medium text-[#7B7FEF] mt-2 animate-pulse">
                   Your rating is submitted
                 </p>
               )}
@@ -480,7 +481,7 @@ function FeedCard({
             {!isOwn && (
               <button
                 onClick={() => onMessage(post.creator.id)}
-                className="flex-1 bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold py-3 rounded-xl shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold py-3 rounded-xl shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all flex items-center justify-center gap-2"
               >
                 <MessageCircle size={16} />
                 Message
@@ -506,7 +507,7 @@ function TopRatedWidget({ items }: { items: { displayName: string; username: str
     <div className="card-glass rounded-2xl p-6 bg-white/60">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-on-surface">Top Rated This Week</h3>
-        <TrendingUp size={16} className="text-[#00C6FF]" />
+        <TrendingUp size={16} className="text-[#A78BFA]" />
       </div>
       <div className="space-y-2">
         {items.length === 0 ? (
@@ -527,7 +528,7 @@ function TopRatedWidget({ items }: { items: { displayName: string; username: str
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={u.imageUrl} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-[#00C6FF]/20 flex items-center justify-center">
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-[#A78BFA]/20 flex items-center justify-center">
                     <span className="text-sm font-bold text-primary">{u.displayName[0]}</span>
                   </div>
                 )}
@@ -744,7 +745,7 @@ export default function DiscoverPage() {
               ))}
               <button
                 onClick={() => setShowCreate(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-xs md:text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-xs md:text-sm font-semibold shadow-[0_4px_14px_rgba(123,127,239,0.3)] hover:opacity-90 transition-all whitespace-nowrap"
               >
                 <PlusCircle size={14} />
                 Post
@@ -759,7 +760,7 @@ export default function DiscoverPage() {
               <p className="text-on-surface-variant">No posts yet. Be the first!</p>
               <button
                 onClick={() => setShowCreate(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold hover:opacity-90 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white text-sm font-semibold hover:opacity-90 transition-all"
               >
                 <PlusCircle size={16} />
                 Create First Post

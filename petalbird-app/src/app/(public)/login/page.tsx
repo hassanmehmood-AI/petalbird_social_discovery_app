@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -32,19 +32,19 @@ export default function LoginPage() {
   return (
     <div className="font-sans text-on-surface min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-surface">
       {/* ── Animated blob background ───────────────────────────────────── */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#007AFF] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob" />
-      <div className="absolute top-[20%] right-[-10%] w-[35%] h-[35%] bg-[#00C6FF] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob animation-delay-2000" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#7B7FEF] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob" />
+      <div className="absolute top-[20%] right-[-10%] w-[35%] h-[35%] bg-[#A78BFA] rounded-full mix-blend-multiply filter blur-[100px] opacity-20 animate-blob animation-delay-2000" />
       <div className="absolute bottom-[-20%] left-[20%] w-[40%] h-[40%] bg-primary-container rounded-full mix-blend-multiply filter blur-[100px] opacity-10 animate-blob animation-delay-4000" />
 
       {/* ── Main card ──────────────────────────────────────────────────── */}
-      <main className="w-full max-w-[1000px] mx-auto z-10 flex flex-col md:flex-row bg-white/70 backdrop-blur-xl border border-white/40 rounded-[24px] overflow-hidden shadow-[0_8px_32px_rgba(0,122,255,0.08)]">
+      <main className="w-full max-w-[1000px] mx-auto z-10 flex flex-col md:flex-row bg-white/70 backdrop-blur-xl border border-white/40 rounded-[24px] overflow-hidden shadow-[0_8px_32px_rgba(123,127,239,0.08)]">
 
         {/* ── Left: Image + branding (desktop only) ──────────────────── */}
         <div
           className="w-full md:w-1/2 relative min-h-[300px] md:min-h-[600px] hidden md:block"
-          style={{ backgroundColor: "#d8e2ff" }}
+          style={{ backgroundColor: "#E8E9FD" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#007AFF]/30 via-[#adc6ff]/40 to-[#e8f0ff]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#7B7FEF]/30 via-[#C4C6FA]/40 to-[#e8f0ff]" />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
           <div className="absolute bottom-0 left-0 p-8 text-white w-full">
             <h1 className="font-heading text-[48px] leading-[56px] tracking-[-0.02em] font-bold mb-2 drop-shadow-md">
@@ -60,7 +60,7 @@ export default function LoginPage() {
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white/60">
           {/* Mobile-only brand */}
           <div className="mb-8 md:hidden">
-            <h1 className="font-heading text-[24px] leading-8 font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-center">
+            <h1 className="font-heading text-[24px] leading-8 font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-center">
               PetalBird
             </h1>
           </div>
@@ -159,7 +159,7 @@ export default function LoginPage() {
               </label>
               <Link
                 href="#"
-                className="text-sm leading-5 font-semibold text-primary hover:text-[#00C6FF] transition-colors"
+                className="text-sm leading-5 font-semibold text-primary hover:text-[#A78BFA] transition-colors"
               >
                 Forgot password?
               </Link>
@@ -167,7 +167,7 @@ export default function LoginPage() {
 
             {/* Submit */}
             <button
-              className="w-full py-3 px-4 bg-gradient-to-r from-[#007AFF] to-[#00C6FF] hover:opacity-90 text-white text-[20px] font-semibold rounded-full shadow-[0_8px_32px_rgba(0,122,255,0.2)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0"
+              className="w-full py-3 px-4 bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] hover:opacity-90 text-white text-[20px] font-semibold rounded-full shadow-[0_8px_32px_rgba(123,127,239,0.2)] hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0"
               type="submit"
               disabled={loading}
             >
@@ -180,7 +180,7 @@ export default function LoginPage() {
             Don&apos;t have an account?{" "}
             <Link
               href="/signup"
-              className="font-semibold text-primary hover:text-[#00C6FF] transition-colors"
+              className="font-semibold text-primary hover:text-[#A78BFA] transition-colors"
             >
               Sign up
             </Link>

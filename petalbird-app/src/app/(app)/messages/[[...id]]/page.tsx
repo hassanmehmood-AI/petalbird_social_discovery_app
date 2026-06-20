@@ -29,7 +29,7 @@ function AvatarCircle({
     "w-10 h-10 text-sm";
 
   return (
-    <div className={cn("rounded-full shrink-0 overflow-hidden border-2 border-white bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold", sz)}>
+    <div className={cn("rounded-full shrink-0 overflow-hidden border-2 border-white bg-gradient-to-br from-[#C4C6FA] to-[#7B7FEF]/60 flex items-center justify-center text-white font-bold", sz)}>
       {avatarUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
@@ -109,7 +109,7 @@ function MsgBubble({
           className={cn(
             "max-w-[70%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed",
             isMine
-              ? "bg-gradient-to-br from-[#007AFF] to-[#0058bc] text-white rounded-br-sm shadow-md"
+              ? "bg-gradient-to-br from-[#7B7FEF] to-[#5A5DC0] text-white rounded-br-sm shadow-md"
               : "bg-white text-on-surface rounded-bl-sm shadow-sm border border-white/60"
           )}
         >
@@ -137,8 +137,19 @@ export default function MessagesPage() {
   const [showList, setShowList] = useState(!urlConvId);
   const [loadingConvs, setLoadingConvs] = useState(true);
   const [sending, setSending] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [menuOpen]);
 
   const activeConv = conversations.find((c) => c.id === activeConvId) ?? null;
 
@@ -306,6 +317,19 @@ export default function MessagesPage() {
     inputRef.current?.focus();
   }
 
+  async function handleDeleteConversation() {
+    if (!activeConvId) return;
+    setMenuOpen(false);
+    const supabase = createClient();
+    await supabase.from("messages").delete().eq("conversation_id", activeConvId);
+    await supabase.from("conversation_participants").delete().eq("conversation_id", activeConvId);
+    await supabase.from("conversations").delete().eq("id", activeConvId);
+    setConversations((prev) => prev.filter((c) => c.id !== activeConvId));
+    setActiveConvId(null);
+    setMessages([]);
+    setShowList(true);
+  }
+
   return (
     <div
       className="-mx-4 md:-mx-6 lg:-mx-8 -my-6 flex overflow-hidden bg-surface messages-container"
@@ -396,9 +420,30 @@ export default function MessagesPage() {
                   <p className="text-xs text-outline">@{activeConv.with.username}</p>
                 </div>
               </div>
-              <button className="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
-                <MoreVertical size={18} />
-              </button>
+              <div className="relative" ref={menuRef}>
+                <button
+                  onClick={() => setMenuOpen((o) => !o)}
+                  className="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors"
+                >
+                  <MoreVertical size={18} />
+                </button>
+                {menuOpen && (
+                  <div className="absolute right-0 top-11 z-30 w-48 bg-white/95 backdrop-blur-xl border border-white/40 rounded-xl shadow-xl overflow-hidden">
+                    <button
+                      onClick={() => { setMenuOpen(false); window.location.href = `/profile/${activeConv.with.username}`; }}
+                      className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors text-left"
+                    >
+                      View Profile
+                    </button>
+                    <button
+                      onClick={handleDeleteConversation}
+                      className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors text-left"
+                    >
+                      Delete Conversation
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Messages area */}

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import {
   BadgeCheck,
@@ -13,12 +13,12 @@ import {
 /* ─── Landing Topnav ───────────────────────────────────────────────────── */
 function LandingNav() {
   return (
-    <nav className="fixed top-0 w-full h-20 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_8px_32px_rgba(0,122,255,0.08)] z-50">
+    <nav className="fixed top-0 w-full h-20 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_8px_32px_rgba(123,127,239,0.08)] z-50">
       <div className="flex justify-between items-center px-6 max-w-7xl mx-auto w-full h-full">
         {/* Brand */}
         <Link
           href="/"
-          className="text-2xl md:text-[32px] font-bold font-heading bg-clip-text text-transparent bg-gradient-to-r from-[#007AFF] to-[#00C6FF] active:scale-95 transition-transform"
+          className="text-2xl md:text-[32px] font-bold font-heading bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] active:scale-95 transition-transform"
         >
           PetalBird
         </Link>
@@ -47,7 +47,7 @@ function LandingNav() {
           </Link>
           <Link
             href="/discover"
-            className="bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-6 py-2 rounded-full text-[20px] font-semibold hover:scale-105 transition-transform duration-200 active:scale-95 shadow-[0_4px_16px_rgba(0,122,255,0.2)]"
+            className="bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-6 py-2 rounded-full text-[20px] font-semibold hover:scale-105 transition-transform duration-200 active:scale-95 shadow-[0_4px_16px_rgba(123,127,239,0.2)]"
           >
             Join Now
           </Link>
@@ -65,7 +65,7 @@ function HeroSection() {
       <div className="flex-1 flex flex-col items-start gap-8 z-10">
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-md border border-white/40 rounded-full shadow-sm">
-          <BadgeCheck size={18} className="text-[#007AFF]" />
+          <BadgeCheck size={18} className="text-[#7B7FEF]" />
           <span className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">
             Premium Social Discovery
           </span>
@@ -75,7 +75,7 @@ function HeroSection() {
         <h1 className="font-heading text-[40px] md:text-[48px] leading-[1.15] md:leading-[56px] tracking-[-0.02em] font-bold text-on-surface">
           Get Ratings On Your{" "}
           <br className="hidden md:block" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#007AFF] to-[#00C6FF]">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA]">
             Appeal
           </span>
         </h1>
@@ -91,7 +91,7 @@ function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
           <Link
             href="/discover"
-            className="w-full sm:w-auto bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white px-8 py-4 rounded-full text-[20px] font-semibold hover:scale-105 transition-transform duration-200 shadow-[0_8px_32px_rgba(0,122,255,0.25)] text-center"
+            className="w-full sm:w-auto bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-8 py-4 rounded-full text-[20px] font-semibold hover:scale-105 transition-transform duration-200 shadow-[0_8px_32px_rgba(123,127,239,0.25)] text-center"
           >
             Join Now
           </Link>
@@ -115,8 +115,8 @@ function HeroSection() {
           />
 
           {/* Floating rating widget */}
-          <div className="absolute bottom-6 right-6 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-4 flex items-center gap-4 shadow-[0_8px_32px_rgba(0,122,255,0.15)]">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#007AFF] to-[#00C6FF] flex items-center justify-center text-white text-[20px] font-semibold">
+          <div className="absolute bottom-6 right-6 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-4 flex items-center gap-4 shadow-[0_8px_32px_rgba(123,127,239,0.15)]">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA] flex items-center justify-center text-white text-[20px] font-semibold">
               9.4
             </div>
             <div className="flex flex-col">
@@ -166,8 +166,8 @@ function FeaturesSection() {
       {/* Bento grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
         {/* Feature 1 – Social Discovery (col-span-8) */}
-        <div className="md:col-span-8 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col md:flex-row gap-8 items-center shadow-[0_8px_32px_rgba(0,122,255,0.06)] hover:shadow-[0_12px_48px_rgba(0,122,255,0.10)] transition-shadow duration-300 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00C6FF] opacity-5 rounded-full blur-[60px] pointer-events-none" />
+        <div className="md:col-span-8 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col md:flex-row gap-8 items-center shadow-[0_8px_32px_rgba(123,127,239,0.06)] hover:shadow-[0_12px_48px_rgba(123,127,239,0.10)] transition-shadow duration-300 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#A78BFA] opacity-5 rounded-full blur-[60px] pointer-events-none" />
           <div className="flex-1 z-10">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
               <Compass size={28} className="text-primary" />
@@ -188,9 +188,9 @@ function FeaturesSection() {
                 ["bg-surface-container-low", 0],
                 ["bg-primary/10", 0.2],
                 ["bg-surface-container-low", 0.4],
-                ["bg-[#007AFF]/10", 0.1],
+                ["bg-[#7B7FEF]/10", 0.1],
                 ["bg-surface-container-low flex items-center justify-center", 0],
-                ["bg-[#00C6FF]/10", 0.3],
+                ["bg-[#A78BFA]/10", 0.3],
               ].map(([cls, delay], i) => (
                 <div
                   key={i}
@@ -205,7 +205,7 @@ function FeaturesSection() {
         </div>
 
         {/* Feature 2 – Analytics (col-span-4) */}
-        <div className="md:col-span-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col shadow-[0_8px_32px_rgba(0,122,255,0.06)] hover:-translate-y-1 transition-transform duration-300">
+        <div className="md:col-span-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col shadow-[0_8px_32px_rgba(123,127,239,0.06)] hover:-translate-y-1 transition-transform duration-300">
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
             <BarChart3 size={28} className="text-primary" />
           </div>
@@ -221,7 +221,7 @@ function FeaturesSection() {
             <div className="w-1/5 bg-surface-container-high h-[40%] rounded-t-sm" />
             <div className="w-1/5 bg-surface-container-high h-[60%] rounded-t-sm" />
             <div className="w-1/5 bg-primary/40 h-[75%] rounded-t-sm" />
-            <div className="w-1/5 bg-gradient-to-t from-[#007AFF] to-[#00C6FF] h-[95%] rounded-t-sm relative">
+            <div className="w-1/5 bg-gradient-to-t from-[#7B7FEF] to-[#A78BFA] h-[95%] rounded-t-sm relative">
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] px-2 py-1 rounded font-bold whitespace-nowrap">
                 Peak
               </div>
@@ -231,7 +231,7 @@ function FeaturesSection() {
         </div>
 
         {/* Feature 3 – Rating Scale (col-span-4) */}
-        <div className="md:col-span-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col shadow-[0_8px_32px_rgba(0,122,255,0.06)] hover:-translate-y-1 transition-transform duration-300">
+        <div className="md:col-span-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 flex flex-col shadow-[0_8px_32px_rgba(123,127,239,0.06)] hover:-translate-y-1 transition-transform duration-300">
           <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
             <Star size={28} className="text-primary" />
           </div>
@@ -245,7 +245,7 @@ function FeaturesSection() {
           {/* Slider visual */}
           <div className="w-full h-12 relative flex items-center mt-auto">
             <div className="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
-              <div className="w-[75%] h-full bg-gradient-to-r from-[#007AFF] to-[#00C6FF]" />
+              <div className="w-[75%] h-full bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA]" />
             </div>
             <div className="absolute left-[75%] -translate-x-1/2 w-6 h-6 bg-white border-2 border-primary rounded-full shadow-md flex items-center justify-center">
               <div className="w-2 h-2 bg-primary rounded-full" />
@@ -314,8 +314,8 @@ export default function LandingPage() {
   return (
     <div className="bg-surface text-on-surface flex flex-col min-h-screen relative overflow-x-hidden">
       {/* Ambient background blobs */}
-      <div className="fixed top-0 left-0 w-[800px] h-[800px] bg-[#007AFF] opacity-5 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0" />
-      <div className="fixed bottom-0 right-0 w-[600px] h-[600px] bg-[#00C6FF] opacity-[0.03] rounded-full blur-[100px] pointer-events-none translate-x-1/3 translate-y-1/3 z-0" />
+      <div className="fixed top-0 left-0 w-[800px] h-[800px] bg-[#7B7FEF] opacity-5 rounded-full blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0" />
+      <div className="fixed bottom-0 right-0 w-[600px] h-[600px] bg-[#A78BFA] opacity-[0.03] rounded-full blur-[100px] pointer-events-none translate-x-1/3 translate-y-1/3 z-0" />
 
       <LandingNav />
 
