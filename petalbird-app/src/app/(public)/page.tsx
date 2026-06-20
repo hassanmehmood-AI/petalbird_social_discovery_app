@@ -16,11 +16,14 @@ function LandingNav() {
     <nav className="fixed top-0 w-full h-20 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_8px_32px_rgba(123,127,239,0.08)] z-50">
       <div className="flex justify-between items-center px-6 max-w-7xl mx-auto w-full h-full">
         {/* Brand */}
-        <Link
-          href="/"
-          className="text-2xl md:text-[32px] font-bold font-heading bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] active:scale-95 transition-transform"
-        >
-          PetalBird
+        <Link href="/" className="active:scale-95 transition-transform">
+          <Image
+            src="/logo.png"
+            alt="PetalBird"
+            width={72}
+            height={72}
+            className="object-contain"
+          />
         </Link>
 
         {/* Nav links – desktop */}
@@ -285,9 +288,9 @@ function FeaturesSection() {
 function Footer() {
   return (
     <footer className="w-full py-12 px-6 bg-surface border-t border-white/40 flex flex-col md:flex-row justify-between items-center gap-5 max-w-7xl mx-auto z-10 relative">
-      <div className="text-[24px] leading-8 font-bold font-heading text-primary">
-        PetalBird
-      </div>
+      <Link href="/">
+        <Image src="/logo.png" alt="PetalBird" width={64} height={64} className="object-contain" />
+      </Link>
       <ul className="flex flex-wrap justify-center gap-6">
         {["Privacy Policy", "Terms of Service", "Help Center", "Contact Us"].map(
           (item) => (

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
@@ -107,10 +108,8 @@ export default function SignUpPage() {
         {/* ── Right: Sign up form ─────────────────────────────────────── */}
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-white/60">
           {/* Mobile-only brand */}
-          <div className="mb-6 md:hidden">
-            <h1 className="font-heading text-[24px] leading-8 font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-center">
-              PetalBird
-            </h1>
+          <div className="mb-6 md:hidden flex justify-center">
+            <Image src="/logo.png" alt="PetalBird" width={72} height={72} className="object-contain" />
           </div>
 
           {/* Heading */}
