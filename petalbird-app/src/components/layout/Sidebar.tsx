@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Compass,
   User,
@@ -9,7 +10,6 @@ import {
   Star,
   Settings,
   LogOut,
-  Leaf,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -43,18 +43,14 @@ export default function Sidebar() {
       <div className="flex flex-col py-5 px-3 h-full">
 
         {/* Brand */}
-        <div className="flex items-center gap-2.5 px-3 mb-7">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-md shadow-primary/30 flex-shrink-0">
-            <Leaf size={15} className="text-white fill-white" />
-          </div>
-          <div className="leading-none">
-            <h1 className="text-base font-bold font-heading text-primary leading-none">
-              PetalBird
-            </h1>
-            <p className="text-[9px] font-bold uppercase tracking-[0.08em] text-on-surface-variant mt-0.5">
-              Premium Social
-            </p>
-          </div>
+        <div className="flex flex-col items-center gap-1 px-3 mb-7">
+          <Image
+            src="/logo.png"
+            alt="PetalBird Logo"
+            width={110}
+            height={110}
+            className="flex-shrink-0"
+          />
         </div>
 
         {/* Nav */}

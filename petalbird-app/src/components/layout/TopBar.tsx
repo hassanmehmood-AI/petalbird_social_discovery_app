@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Bell, Leaf } from "lucide-react";
+
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -62,21 +63,14 @@ export default function TopBar() {
       scrollHidden ? "-translate-y-full" : "translate-y-0"
     )}>
 
-      {/* ── Mobile: gradient brand logo (left) ── */}
+      {/* ── Mobile: brand logo (left) ── */}
       <div className="flex items-center gap-2 md:hidden">
-        <Leaf size={22} className="text-primary fill-primary" />
-        <span className="text-2xl font-bold font-heading bg-clip-text text-transparent bg-gradient-to-r from-[#007AFF] to-[#00C6FF]">
-          PetalBird
-        </span>
+        <Image src="/logo.png" alt="PetalBird Logo" width={52} height={52} />
       </div>
 
       {/* ── Trailing actions ── */}
       <div className="flex items-center gap-3 ml-auto">
-        {/* Notifications */}
-        <button className="relative flex w-10 h-10 rounded-full items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
-          <Bell size={20} strokeWidth={1.8} />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-error rounded-full" />
-        </button>
+
 
         {/* Avatar */}
         <Link href="/profile/me" className="relative flex-shrink-0">

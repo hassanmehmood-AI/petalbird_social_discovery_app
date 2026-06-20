@@ -11,6 +11,7 @@ import {
   X,
   ImageIcon,
   MessageCircle,
+  Check,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -227,10 +228,26 @@ function FeedCard({
   onRate: (postId: string, score: number) => void;
   onMessage: (creatorId: string) => void;
 }) {
-  const [sliderVal, setSliderVal] = useState<number>(post.myRating ?? 5);
+  const [sliderVal, setSliderVal] = useState<number>(post.myRating ?? 0);
   const [lightbox, setLightbox] = useState(false);
+  const [ratingConfirmed, setRatingConfirmed] = useState(!!post.myRating);
+  const [ratingSaving, setRatingSaving] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const isOwn = post.creator.id === currentUserId;
-  const pct = ((sliderVal - 1) / 9) * 100;
+  const pct = sliderVal === 0 ? 0 : ((sliderVal - 1) / 9) * 100;
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [menuOpen]);
 
   const CARD_GRADIENTS = [
     "from-[#adc6ff]/60 via-[#dbe8ff] to-[#e8f0ff]",
@@ -258,12 +275,7 @@ function FeedCard({
         ) : (
           <div className={cn("absolute inset-0 bg-gradient-to-br", CARD_GRADIENTS[index % CARD_GRADIENTS.length])} />
         )}
-        {/* Rating badge */}
-        {post.avgRating > 0 && (
-          <div className="absolute bottom-4 right-4 bg-[#111111]/70 backdrop-blur-md px-4 py-2 rounded-xl flex items-center gap-2 border border-white/20">
-            <span className="text-sm font-semibold text-white">{post.avgRating}</span>
-          </div>
-        )}
+
       </div>
 
       {/* Content section */}
@@ -275,9 +287,39 @@ function FeedCard({
                 {post.creator.displayName}
               </h3>
             </div>
-            <button className="w-10 h-10 rounded-full bg-white/60 hover:bg-white flex items-center justify-center text-on-surface-variant transition-colors border border-white/40 shadow-sm">
-              <MoreHorizontal size={20} />
-            </button>
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen((o) => !o)}
+                className="w-10 h-10 rounded-full bg-white/60 hover:bg-white flex items-center justify-center text-on-surface-variant transition-colors border border-white/40 shadow-sm"
+              >
+                <MoreHorizontal size={20} />
+              </button>
+              {menuOpen && (
+                <div className="absolute right-0 top-12 z-30 w-44 bg-white/95 backdrop-blur-xl border border-white/40 rounded-xl shadow-xl overflow-hidden">
+                  <Link
+                    href={`/profile/${post.creator.username}`}
+                    className="flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    View Profile
+                  </Link>
+                  {isOwn && (
+                    <button
+                      onClick={async () => {
+                        setMenuOpen(false);
+                        const supabase = (await import("@/lib/supabase/client")).createClient();
+                        await supabase.from("posts").delete().eq("id", post.id);
+                        window.location.reload();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                      <X size={15} />
+                      Delete Post
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Caption or bio */}
@@ -378,16 +420,14 @@ function FeedCard({
                   min={1}
                   max={10}
                   step={1}
-                  value={sliderVal}
-                  onChange={(e) => setSliderVal(Number(e.target.value))}
-                  onMouseUp={() => onRate(post.id, sliderVal)}
-                  onTouchEnd={() => onRate(post.id, sliderVal)}
+                  value={sliderVal === 0 ? 1 : sliderVal}
+                  onChange={(e) => { setSliderVal(Number(e.target.value)); setRatingConfirmed(false); }}
                   className="absolute w-full h-full opacity-0 cursor-pointer"
                 />
               </div>
 
               {/* Rating pills — 3D */}
-              <div className="flex gap-0.5 md:gap-1">
+              <div className="flex gap-0.5 md:gap-1 mb-4">
                 {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
                   <div
                     key={n}
@@ -412,6 +452,27 @@ function FeedCard({
                   </div>
                 ))}
               </div>
+
+              {/* Confirm Rating button */}
+              <button
+                disabled={ratingSaving || ratingConfirmed || sliderVal === 0}
+                onClick={async () => {
+                  setRatingSaving(true);
+                  await onRate(post.id, sliderVal);
+                  setRatingSaving(false);
+                  setRatingConfirmed(true);
+                  setShowSuccess(true);
+                  setTimeout(() => setShowSuccess(false), 3000);
+                }}
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {ratingSaving ? "Saving…" : ratingConfirmed ? <><Check size={15} /> Rating Confirmed</> : "Submit Rating"}
+              </button>
+              {showSuccess && (
+                <p className="text-center text-sm font-medium text-[#007AFF] mt-2 animate-pulse">
+                  Your rating is submitted
+                </p>
+              )}
             </div>
           )}
 
@@ -536,14 +597,20 @@ export default function DiscoverPage() {
 
       const orderCol = filter === "top" ? "avg_rating" : "created_at";
 
-      const { data: postsData } = await supabase
+      let feedQuery = supabase
         .from("posts")
         .select(`
           id, image_url, caption, avg_rating, rating_count, created_at,
           profiles:user_id ( id, username, display_name, avatar_url, bio )
         `)
         .order(orderCol, { ascending: false })
-        .limit(20);
+        .limit(50);
+
+      if (filter === "top") {
+        feedQuery = feedQuery.gte("avg_rating", 8).neq("user_id", user.id);
+      }
+
+      const { data: postsData } = await feedQuery;
 
       if (postsData && postsData.length > 0) {
         const postIds = postsData.map((p: any) => p.id);
@@ -578,9 +645,13 @@ export default function DiscoverPage() {
         setPosts([]);
       }
 
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
       const { data: topData } = await supabase
         .from("posts")
         .select("id, image_url, avg_rating, profiles:user_id ( display_name, username )")
+        .gte("avg_rating", 8)
+        .gte("created_at", weekAgo)
+        .neq("user_id", user.id)
         .order("avg_rating", { ascending: false })
         .limit(5);
 
@@ -593,10 +664,14 @@ export default function DiscoverPage() {
         })));
       }
 
-      // Trending: highest rated, ties broken by most recent date
+      // Trending: last 2 days posts with high ratings, newest first as tiebreaker
+      const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString();
       const { data: trendingData } = await supabase
         .from("posts")
         .select("id, image_url, avg_rating, created_at, profiles:user_id ( username )")
+        .gte("avg_rating", 6)
+        .gte("created_at", twoDaysAgo)
+        .neq("user_id", user.id)
         .order("avg_rating", { ascending: false })
         .order("created_at", { ascending: false })
         .limit(6);

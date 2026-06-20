@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, use } from "react";
 import {
   Star, MessageCircle, ImagePlus, PlusCircle,
-  X, ImageIcon, Edit2, Check, Award, Camera,
+  X, ImageIcon, Edit2, Check, Award, Camera, Trash2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -324,11 +324,141 @@ function EditProfileCard({
   );
 }
 
+/* ─── Post Rating Modal ──────────────────────────────────────────────────── */
+type GalleryPost = { id: string; image_url: string; caption: string | null; avg_rating: number; rating_count: number; myRating: number | null };
+
+function PostRatingModal({
+  post,
+  isOwn,
+  onClose,
+  onRate,
+}: {
+  post: GalleryPost;
+  isOwn: boolean;
+  onClose: () => void;
+  onRate: (postId: string, score: number) => Promise<void>;
+}) {
+  const [sliderVal, setSliderVal] = useState<number>(post.myRating ?? 0);
+  const [saving, setSaving] = useState(false);
+  const [confirmed, setConfirmed] = useState(!!post.myRating);
+  const pct = sliderVal === 0 ? 0 : ((sliderVal - 1) / 9) * 100;
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) { if (e.key === "Escape") onClose(); }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  async function handleConfirm() {
+    setSaving(true);
+    await onRate(post.id, sliderVal);
+    setSaving(false);
+    setConfirmed(true);
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={onClose}>
+      <div className="w-full max-w-md bg-white/95 backdrop-blur-xl border border-white/40 rounded-2xl shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant/30">
+          <h2 className="font-heading text-base font-semibold text-on-surface">
+            {isOwn ? "Your Post" : "Rate this Post"}
+          </h2>
+          <button onClick={onClose} className="p-1 text-on-surface-variant hover:text-on-surface transition-colors">
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* Image */}
+        <div className="relative aspect-[4/3] bg-surface-container-low overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={post.image_url} alt="" className="w-full h-full object-cover" />
+          {post.avg_rating > 0 && (
+            <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-1.5 border border-white/20">
+              <Star size={12} className="text-[#00C6FF] fill-[#00C6FF]" />
+              <span className="text-sm font-bold text-white">{post.avg_rating}</span>
+              <span className="text-xs text-white/60">avg · {post.rating_count} ratings</span>
+            </div>
+          )}
+        </div>
+
+        <div className="p-5 space-y-4">
+          {post.caption && (
+            <p className="text-sm text-on-surface-variant">{post.caption}</p>
+          )}
+
+          {isOwn ? (
+            <p className="text-sm text-center text-on-surface-variant py-2">You cannot rate your own post.</p>
+          ) : (
+            <>
+              <div className="flex items-center justify-between">
+                <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-on-surface-variant">Your Rating</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-bold text-primary">{sliderVal}</span>
+                  <span className="text-sm text-on-surface-variant">/10</span>
+                </div>
+              </div>
+
+              {/* 3D Slider */}
+              <div className="relative h-10 flex items-center">
+                <div className="absolute w-full rounded-full" style={{ height: 14, background: "rgba(0,0,0,0.08)", boxShadow: "inset 0 3px 6px rgba(0,0,0,0.18), inset 0 -1px 0 rgba(255,255,255,0.6)" }} />
+                {pct > 0 && (
+                  <div className="absolute left-0 rounded-full overflow-hidden transition-all duration-75" style={{ height: 14, width: `${pct}%`, background: "linear-gradient(to right, #007AFF, #00C6FF)", boxShadow: "2px 3px 8px rgba(0,122,255,0.35)" }}>
+                    <div className="absolute inset-x-0 top-0 h-1/2" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.38), transparent)" }} />
+                    <div className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "rgba(0,0,0,0.12)" }} />
+                  </div>
+                )}
+                <div className="absolute pointer-events-none transition-all duration-75" style={{ left: `calc(${pct}% - 11px)` }}>
+                  <div className="w-[22px] h-[22px] rounded-full flex items-center justify-center" style={{ background: "linear-gradient(145deg, #ffffff, #e0e8ff)", boxShadow: "0 4px 10px rgba(0,122,255,0.45), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
+                    <div className="w-2 h-2 rounded-full" style={{ background: "linear-gradient(135deg, #007AFF, #00C6FF)" }} />
+                  </div>
+                </div>
+                <input
+                  type="range" min={1} max={10} step={1} value={sliderVal === 0 ? 1 : sliderVal}
+                  onChange={(e) => { setSliderVal(Number(e.target.value)); setConfirmed(false); }}
+                  className="absolute w-full h-full opacity-0 cursor-pointer"
+                />
+              </div>
+
+              {/* Rating pills */}
+              <div className="flex gap-0.5">
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                  <div key={n} className="flex-1 rounded-md flex items-center justify-center text-[10px] font-semibold py-1 relative overflow-hidden"
+                    style={n <= sliderVal ? {
+                      background: "linear-gradient(to bottom, #00C6FF, #007AFF)",
+                      color: "white",
+                      boxShadow: "0 3px 6px rgba(0,122,255,0.35), inset 0 1px 0 rgba(255,255,255,0.3)",
+                    } : {
+                      background: "rgba(0,0,0,0.05)",
+                      color: "var(--color-outline)",
+                      boxShadow: "inset 0 2px 4px rgba(0,0,0,0.1)",
+                    }}>
+                    {n <= sliderVal && <div className="absolute inset-x-0 top-0 h-1/2 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.28), transparent)" }} />}
+                    <span className="relative z-10">{n}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handleConfirm}
+                disabled={saving || confirmed || sliderVal === 0}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C6FF] text-white text-sm font-semibold shadow-[0_4px_14px_rgba(0,122,255,0.3)] hover:opacity-90 transition-all disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {saving ? "Saving…" : confirmed ? <><Check size={16} /> Rating Confirmed</> : "Submit Rating"}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Photo Gallery ──────────────────────────────────────────────────────── */
 function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; isOwn: boolean; currentUserId: string | null }) {
-  const [posts, setPosts] = useState<{ id: string; image_url: string; avg_rating: number }[]>([]);
+  const [posts, setPosts] = useState<GalleryPost[]>([]);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [selectedPost, setSelectedPost] = useState<GalleryPost | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -336,11 +466,24 @@ function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; 
     const supabase = createClient();
     supabase
       .from("posts")
-      .select("id, image_url, avg_rating")
+      .select("id, image_url, caption, avg_rating, rating_count")
       .eq("user_id", profileId)
       .order("created_at", { ascending: false })
-      .then(({ data }) => { if (data) setPosts(data); });
-  }, [profileId]);
+      .then(async ({ data }) => {
+        if (!data) return;
+        let myRatingsMap: Record<string, number> = {};
+        if (currentUserId && data.length > 0) {
+          const postIds = data.map((p: any) => p.id);
+          const { data: myRatings } = await supabase
+            .from("ratings")
+            .select("post_id, score")
+            .eq("rater_id", currentUserId)
+            .in("post_id", postIds);
+          myRatings?.forEach((r: any) => { myRatingsMap[r.post_id] = r.score; });
+        }
+        setPosts(data.map((p: any) => ({ ...p, caption: p.caption ?? null, myRating: myRatingsMap[p.id] ?? null })));
+      });
+  }, [profileId, currentUserId]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -358,68 +501,111 @@ function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; 
     const { data: post } = await supabase
       .from("posts")
       .insert({ user_id: currentUserId, image_url: publicUrl })
-      .select("id, image_url, avg_rating")
+      .select("id, image_url, caption, avg_rating, rating_count")
       .single();
 
-    if (post) setPosts((prev) => [post, ...prev]);
+    if (post) setPosts((prev) => [{ ...post, caption: null, myRating: null }, ...prev]);
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
   }
 
+  async function handleRate(postId: string, score: number) {
+    if (!currentUserId) return;
+    const supabase = createClient();
+    await supabase.from("ratings").upsert({ rater_id: currentUserId, post_id: postId, score }, { onConflict: "post_id,rater_id" });
+    setPosts((prev) => prev.map((p) => p.id === postId ? { ...p, myRating: score } : p));
+    setSelectedPost((prev) => prev?.id === postId ? { ...prev, myRating: score } : prev);
+  }
+
+  async function handleDelete(postId: string) {
+    const supabase = createClient();
+    await supabase.from("posts").delete().eq("id", postId);
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
+    setSelectedPost((prev) => prev?.id === postId ? null : prev);
+  }
+
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-sm font-semibold text-on-surface">
-          Photos <span className="text-on-surface-variant font-normal ml-1">({posts.length})</span>
-        </h2>
-      </div>
+    <>
+      {selectedPost && (
+        <PostRatingModal
+          post={selectedPost}
+          isOwn={isOwn}
+          onClose={() => setSelectedPost(null)}
+          onRate={handleRate}
+        />
+      )}
 
-      {uploadError && <p className="text-xs text-red-600 mb-4 px-3 py-2 bg-red-50 rounded-lg">{uploadError}</p>}
-      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+      <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_24px_rgba(0,122,255,0.06)]">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-sm font-semibold text-on-surface">
+            Photos <span className="text-on-surface-variant font-normal ml-1">({posts.length})</span>
+          </h2>
+        </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-        {isOwn && (
-          <div
-            onClick={() => !uploading && fileRef.current?.click()}
-            className={cn(
-              "aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-on-surface-variant transition-all group",
-              uploading ? "opacity-60 cursor-wait" : "hover:bg-surface-container-low hover:border-primary cursor-pointer"
-            )}
-          >
-            {uploading ? (
-              <>
-                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mb-2" />
-                <span className="text-xs font-semibold">Uploading…</span>
-              </>
-            ) : (
-              <>
-                <ImagePlus size={24} className="mb-2 group-hover:text-primary transition-colors" />
-                <span className="text-xs font-semibold group-hover:text-primary transition-colors">Add Photo</span>
-              </>
-            )}
-          </div>
-        )}
+        {uploadError && <p className="text-xs text-red-600 mb-4 px-3 py-2 bg-red-50 rounded-lg">{uploadError}</p>}
+        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
-        {posts.map((post) => (
-          <div key={post.id} className="aspect-square rounded-xl overflow-hidden cursor-pointer group relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.image_url} alt="" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" />
-            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
-              <div className="flex items-center gap-1 bg-black/50 rounded-lg px-2 py-1">
-                <Star size={10} className="text-[#00C6FF] fill-[#00C6FF]" />
-                <span className="text-white text-[10px] font-bold">{post.avg_rating}</span>
-              </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {isOwn && (
+            <div
+              onClick={() => !uploading && fileRef.current?.click()}
+              className={cn(
+                "aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-on-surface-variant transition-all group",
+                uploading ? "opacity-60 cursor-wait" : "hover:bg-surface-container-low hover:border-primary cursor-pointer"
+              )}
+            >
+              {uploading ? (
+                <>
+                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mb-2" />
+                  <span className="text-xs font-semibold">Uploading…</span>
+                </>
+              ) : (
+                <>
+                  <ImagePlus size={24} className="mb-2 group-hover:text-primary transition-colors" />
+                  <span className="text-xs font-semibold group-hover:text-primary transition-colors">Add Photo</span>
+                </>
+              )}
             </div>
-          </div>
-        ))}
+          )}
 
-        {posts.length === 0 && !isOwn && (
-          <div className="col-span-3 py-8 text-center text-sm text-on-surface-variant">
-            No posts yet.
-          </div>
-        )}
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="aspect-square rounded-xl overflow-hidden cursor-pointer group relative"
+              onClick={() => setSelectedPost(post)}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={post.image_url} alt="" className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2">
+                <div className="flex items-center gap-1 bg-black/50 rounded-lg px-2 py-1">
+                  <Star size={10} className="text-[#00C6FF] fill-[#00C6FF]" />
+                  <span className="text-white text-[10px] font-bold">{post.avg_rating}</span>
+                </div>
+                {!isOwn && post.myRating !== null && (
+                  <div className="flex items-center gap-1 bg-primary/80 rounded-lg px-2 py-1">
+                    <span className="text-white text-[10px] font-bold">You: {post.myRating}</span>
+                  </div>
+                )}
+              </div>
+              {isOwn && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleDelete(post.id); }}
+                  className="absolute top-2 right-2 w-7 h-7 bg-black/60 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+                >
+                  <Trash2 size={13} className="text-white" />
+                </button>
+              )}
+            </div>
+          ))}
+
+          {posts.length === 0 && !isOwn && (
+            <div className="col-span-3 py-8 text-center text-sm text-on-surface-variant">
+              No posts yet.
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

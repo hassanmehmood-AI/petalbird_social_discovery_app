@@ -12,6 +12,7 @@ interface RatingReceived {
   id: string;
   score: number;
   createdAt: string;
+  post: { id: string; imageUrl: string | null };
   rater: { id: string; username: string; displayName: string; avatarUrl: string | null };
 }
 
@@ -226,7 +227,15 @@ function RaterItem({ rating }: { rating: RatingReceived }) {
   const initials = rating.rater.displayName.slice(0, 2).toUpperCase();
   return (
     <div className="flex items-center gap-3 p-4 rounded-xl hover:bg-white/80 transition-colors border border-transparent hover:border-white/40">
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold text-sm shrink-0 border-2 border-white shadow-sm overflow-hidden">
+      {/* Post thumbnail */}
+      <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-white/60 shadow-sm">
+        {rating.post.imageUrl
+          // eslint-disable-next-line @next/next/no-img-element
+          ? <img src={rating.post.imageUrl} alt="" className="w-full h-full object-cover" />
+          : <div className="w-full h-full bg-gradient-to-br from-[#adc6ff]/60 to-[#007AFF]/20" />}
+      </div>
+      {/* Rater avatar */}
+      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#adc6ff] to-[#007AFF]/60 flex items-center justify-center text-white font-bold text-sm shrink-0 border-2 border-white shadow-sm overflow-hidden">
         {rating.rater.avatarUrl
           // eslint-disable-next-line @next/next/no-img-element
           ? <img src={rating.rater.avatarUrl} alt="" className="w-full h-full object-cover" />
@@ -242,7 +251,7 @@ function RaterItem({ rating }: { rating: RatingReceived }) {
         rating.score < 6    ? "bg-red-50 text-red-500" :
         "bg-surface-container-high text-on-surface-variant"
       )}>
-        {rating.score}
+        {rating.score}/10
       </div>
       {trend === "up"   && <TrendingUp   size={12} className="text-green-500 shrink-0" />}
       {trend === "down" && <TrendingDown size={12} className="text-red-400  shrink-0" />}
@@ -314,7 +323,7 @@ export default function RatingsPage() {
         const postIds = myPosts.map((p: any) => p.id);
         const { data: rData } = await supabase
           .from("ratings")
-          .select("id, score, created_at, rater:rater_id ( id, username, display_name, avatar_url )")
+          .select("id, score, created_at, post:post_id ( id, image_url ), rater:rater_id ( id, username, display_name, avatar_url )")
           .in("post_id", postIds)
           .order("created_at", { ascending: false });
 
@@ -323,6 +332,7 @@ export default function RatingsPage() {
             id: r.id,
             score: r.score,
             createdAt: r.created_at,
+            post: { id: r.post.id, imageUrl: r.post.image_url ?? null },
             rater: {
               id: r.rater.id,
               username: r.rater.username,

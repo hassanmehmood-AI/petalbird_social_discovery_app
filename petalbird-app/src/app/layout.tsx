@@ -19,6 +19,11 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "PetalBird — Premium Social Discovery",
   description: "Discover, rate, and connect with the most inspiring creators.",
+  icons: {
+    icon: "/favicon.jpg",
+    shortcut: "/favicon.jpg",
+    apple: "/favicon.jpg",
+  },
 };
 
 export default function RootLayout({
