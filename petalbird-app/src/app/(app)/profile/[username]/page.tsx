@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, use } from "react";
 import {
   Star, MessageCircle, ImagePlus, PlusCircle,
-  X, ImageIcon, Edit2, Check, Award, Camera, Trash2,
+  X, ImageIcon, Edit2, Check, Award, Camera, Trash2, Music,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -16,6 +16,7 @@ interface ProfileData {
   avatarUrl: string | null;
   coverUrl: string | null;
   bio: string | null;
+  audioUrl: string | null;
   avgRating: number;
   ratingCount: number;
   postCount: number;
@@ -610,6 +611,295 @@ function PhotoGallery({ profileId, isOwn, currentUserId }: { profileId: string; 
   );
 }
 
+/* ─── Profile Music Card ─────────────────────────────────────────────────── */
+function ProfileMusicCard({
+  profileId,
+  isOwn,
+  audioUrl: initialAudioUrl,
+  onUpdated,
+}: {
+  profileId: string;
+  isOwn: boolean;
+  audioUrl: string | null;
+  onUpdated: (url: string | null) => void;
+}) {
+  const [audioUrl, setAudioUrl] = useState(initialAudioUrl);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const audioElRef = useRef<HTMLAudioElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const audio = audioElRef.current;
+    if (!audio || !audioUrl) return;
+
+    setProgress(0); setCurrentTime(0); setDuration(0);
+
+    const onTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+      if (audio.duration) setProgress((audio.currentTime / audio.duration) * 100);
+    };
+    const onDurationChange = () => setDuration(audio.duration || 0);
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onEnded = () => { setIsPlaying(false); setProgress(0); setCurrentTime(0); };
+
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("durationchange", onDurationChange);
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+
+    audio.load();
+    audio.play().catch(() => {});
+
+    return () => {
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("durationchange", onDurationChange);
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+      audio.pause();
+    };
+  }, [audioUrl]);
+
+  function togglePlay() {
+    const audio = audioElRef.current;
+    if (!audio) return;
+    isPlaying ? audio.pause() : audio.play().catch(() => {});
+  }
+
+  function handleSeek(e: React.MouseEvent<HTMLDivElement>) {
+    const audio = audioElRef.current;
+    if (!audio || !audio.duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  }
+
+  function fmt(s: number) {
+    if (!s || isNaN(s)) return "0:00";
+    return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  }
+
+  async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError(null);
+    setUploading(true);
+    audioElRef.current?.pause();
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const path = `profiles/${profileId}.${ext}`;
+    const { error: uploadErr } = await supabase.storage
+      .from("post-audio")
+      .upload(path, file, { upsert: true });
+    if (uploadErr) {
+      setError("Upload failed: " + uploadErr.message);
+      setUploading(false);
+      return;
+    }
+    const { data: { publicUrl } } = supabase.storage.from("post-audio").getPublicUrl(path);
+    await supabase.from("profiles").update({ audio_url: publicUrl }).eq("id", profileId);
+    setAudioUrl(publicUrl);
+    onUpdated(publicUrl);
+    setUploading(false);
+    if (fileRef.current) fileRef.current.value = "";
+  }
+
+  async function handleRemove() {
+    audioElRef.current?.pause();
+    const supabase = createClient();
+    await supabase.from("profiles").update({ audio_url: null }).eq("id", profileId);
+    setAudioUrl(null);
+    setIsPlaying(false);
+    setProgress(0);
+    onUpdated(null);
+  }
+
+  if (!isOwn && !audioUrl) return null;
+
+  const BAR_HEIGHTS = [35, 70, 100, 50, 85, 45, 90, 60];
+
+  return (
+    <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl overflow-hidden shadow-[0_4px_24px_rgba(123,127,239,0.08)]">
+      <style>{`
+        @keyframes eq { 0%,100%{transform:scaleY(0.25)} 50%{transform:scaleY(1)} }
+        @keyframes disc-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+      `}</style>
+
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 pt-5 pb-3">
+        <div className="flex items-center gap-2">
+          <Music size={14} className="text-primary" />
+          <h2 className="text-sm font-semibold text-on-surface">Profile Music</h2>
+        </div>
+        {isOwn && audioUrl && (
+          <button onClick={handleRemove} className="text-[11px] text-on-surface-variant hover:text-red-500 transition-colors">
+            Remove
+          </button>
+        )}
+      </div>
+
+      {audioUrl ? (
+        <div className="px-5 pb-5 space-y-4">
+          <audio ref={audioElRef} src={audioUrl} preload="metadata" />
+
+          {/* Visual player area */}
+          <div
+            className="relative rounded-2xl p-4 flex items-center gap-4 overflow-hidden"
+            style={{ background: "linear-gradient(135deg, rgba(123,127,239,0.10), rgba(167,139,250,0.18))" }}
+          >
+            {/* Background glow when playing */}
+            {isPlaying && (
+              <div
+                className="absolute inset-0 opacity-30 pointer-events-none"
+                style={{ background: "radial-gradient(ellipse at 30% 50%, #7B7FEF55 0%, transparent 70%)" }}
+              />
+            )}
+
+            {/* Spinning vinyl disc */}
+            <div
+              className="relative w-14 h-14 rounded-full shrink-0 flex items-center justify-center shadow-[0_6px_20px_rgba(123,127,239,0.40)]"
+              style={{
+                background: "linear-gradient(135deg, #7B7FEF, #A78BFA)",
+                animation: isPlaying ? "disc-spin 5s linear infinite" : "none",
+              }}
+            >
+              {/* Vinyl grooves */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: "repeating-radial-gradient(circle at center, transparent 0, transparent 3px, rgba(0,0,0,0.10) 3px, rgba(0,0,0,0.10) 4px)",
+                }}
+              />
+              {/* Center hole */}
+              <div className="w-5 h-5 rounded-full bg-white/90 shadow-inner flex items-center justify-center z-10">
+                <div className="w-[7px] h-[7px] rounded-full" style={{ background: "linear-gradient(135deg, #7B7FEF, #A78BFA)" }} />
+              </div>
+              {/* Gloss */}
+              <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 55%)" }} />
+            </div>
+
+            {/* Equalizer bars */}
+            <div className="flex items-end gap-[3px] h-10 shrink-0">
+              {BAR_HEIGHTS.map((h, i) => (
+                <div
+                  key={i}
+                  className="w-[3px] rounded-full origin-bottom"
+                  style={{
+                    height: `${h}%`,
+                    background: "linear-gradient(to top, #7B7FEF, #A78BFA)",
+                    opacity: isPlaying ? 0.9 : 0.25,
+                    animation: isPlaying
+                      ? `eq ${0.45 + i * 0.07}s ease-in-out ${i * 0.04}s infinite`
+                      : "none",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Track info */}
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.12em] mb-0.5"
+                style={{ color: isPlaying ? "#7B7FEF" : "var(--color-on-surface-variant)" }}>
+                {isPlaying ? "Now Playing" : "Paused"}
+              </p>
+              <p className="text-sm font-semibold text-on-surface truncate">Profile Track</p>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div
+            className="relative h-1.5 rounded-full cursor-pointer group"
+            style={{ background: "rgba(0,0,0,0.07)" }}
+            onClick={handleSeek}
+          >
+            <div
+              className="h-full rounded-full transition-all duration-75"
+              style={{
+                width: `${progress}%`,
+                background: "linear-gradient(to right, #7B7FEF, #A78BFA)",
+                boxShadow: progress > 0 ? "0 0 8px rgba(123,127,239,0.5)" : "none",
+              }}
+            />
+            <div
+              className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#7B7FEF] shadow-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+              style={{ left: `calc(${progress}% - 7px)` }}
+            />
+          </div>
+
+          {/* Time + play/pause */}
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-on-surface-variant tabular-nums w-8">{fmt(currentTime)}</span>
+            <button
+              onClick={togglePlay}
+              className="w-11 h-11 rounded-full flex items-center justify-center text-white hover:opacity-90 active:scale-95 transition-all"
+              style={{
+                background: "linear-gradient(135deg, #7B7FEF, #A78BFA)",
+                boxShadow: "0 4px_18px rgba(123,127,239,0.45)",
+              }}
+            >
+              {isPlaying ? (
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="white">
+                  <rect x="1.5" y="0.5" width="3.5" height="12" rx="1.5" />
+                  <rect x="8" y="0.5" width="3.5" height="12" rx="1.5" />
+                </svg>
+              ) : (
+                <svg width="13" height="14" viewBox="0 0 13 14" fill="white" style={{ marginLeft: 2 }}>
+                  <path d="M1.5 1.5L12 7L1.5 12.5V1.5Z" />
+                </svg>
+              )}
+            </button>
+            <span className="text-xs text-on-surface-variant tabular-nums w-8 text-right">{fmt(duration)}</span>
+          </div>
+
+          {/* Change music */}
+          {isOwn && (
+            <>
+              <input ref={fileRef} type="file" accept="audio/*" className="hidden" onChange={handleFileSelect} />
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                disabled={uploading}
+                className="w-full py-2 rounded-xl border border-dashed border-outline-variant text-xs font-semibold text-on-surface-variant hover:border-primary hover:text-primary hover:bg-primary/5 transition-all disabled:opacity-50"
+              >
+                {uploading ? "Uploading…" : "Change Music"}
+              </button>
+            </>
+          )}
+        </div>
+      ) : isOwn ? (
+        <div className="px-5 pb-5">
+          <input ref={fileRef} type="file" accept="audio/*" className="hidden" onChange={handleFileSelect} />
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            disabled={uploading}
+            className="flex flex-col items-center gap-3 w-full py-7 rounded-xl border-2 border-dashed border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary hover:bg-primary/5 transition-all disabled:opacity-50 group"
+          >
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center transition-all group-hover:scale-110"
+              style={{ background: "linear-gradient(135deg, rgba(123,127,239,0.12), rgba(167,139,250,0.18))" }}
+            >
+              <Music size={22} className="text-primary" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-semibold">{uploading ? "Uploading…" : "Add Music to Profile"}</p>
+              <p className="text-xs mt-0.5 opacity-60">MP3 · M4A · WAV supported</p>
+            </div>
+          </button>
+        </div>
+      ) : null}
+
+      {error && <p className="text-xs text-red-600 mx-5 mb-4 px-3 py-2 bg-red-50 rounded-lg">{error}</p>}
+    </div>
+  );
+}
+
 /* ─── Create Post Modal ──────────────────────────────────────────────────── */
 function CreatePostModal({ currentUserId, onClose, onCreated }: {
   currentUserId: string; onClose: () => void; onCreated: () => void;
@@ -725,6 +1015,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         avatarUrl: profileData.avatar_url ?? null,
         coverUrl: profileData.cover_url ?? null,
         bio: profileData.bio ?? null,
+        audioUrl: profileData.audio_url ?? null,
         avgRating,
         ratingCount,
         postCount: posts?.length ?? 0,
@@ -870,6 +1161,12 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
               ) : (
                 <AppealScore avgRating={profile.avgRating} ratingCount={profile.ratingCount} />
               )}
+              <ProfileMusicCard
+                profileId={profile.id}
+                isOwn={isOwn}
+                audioUrl={profile.audioUrl}
+                onUpdated={(url) => setProfile((prev) => prev ? { ...prev, audioUrl: url } : prev)}
+              />
               <RecentRaters profileId={profile.id} />
             </div>
             <div className="lg:col-span-8">
