@@ -36,6 +36,22 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${montserrat.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-VX64MM4XN0"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-VX64MM4XN0');
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full bg-surface text-on-surface font-sans">
         {children}
       </body>
