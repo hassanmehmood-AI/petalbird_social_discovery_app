@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -17,6 +17,19 @@ export default function SignUpPage() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [signupsAllowed, setSignupsAllowed] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("site_settings")
+      .select("allow_signups")
+      .eq("id", 1)
+      .single()
+      .then(({ data }) => {
+        if (data && data.allow_signups === false) setSignupsAllowed(false);
+      });
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -27,6 +40,17 @@ export default function SignUpPage() {
     }
     setLoading(true);
     const supabase = createClient();
+    const { data: settings } = await supabase
+      .from("site_settings")
+      .select("allow_signups")
+      .eq("id", 1)
+      .single();
+    if (settings && settings.allow_signups === false) {
+      setSignupsAllowed(false);
+      setLoading(false);
+      setError("Signups are currently closed.");
+      return;
+    }
     const username = email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g, "_");
     const { data, error: authError } = await supabase.auth.signUp({
       email,
@@ -129,7 +153,18 @@ export default function SignUpPage() {
             </div>
           )}
 
-          {/* Form */}
+          {!signupsAllowed ? (
+            <div className="px-4 py-6 bg-surface-container-low border border-outline-variant/30 rounded-xl text-center">
+              <p className="text-sm font-semibold text-on-surface mb-1">Signups are currently closed</p>
+              <p className="text-sm text-on-surface-variant">
+                Please check back later, or{" "}
+                <Link href="/login" className="text-primary font-semibold hover:text-[#A78BFA] transition-colors">
+                  sign in
+                </Link>{" "}
+                if you already have an account.
+              </p>
+            </div>
+          ) : (
           <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Full name */}
             <div>
@@ -256,6 +291,7 @@ export default function SignUpPage() {
               {loading ? "Creating account…" : "Create Account"}
             </button>
           </form>
+          )}
 
           {/* Sign in link */}
           <p className="mt-6 text-center text-sm text-on-surface-variant">

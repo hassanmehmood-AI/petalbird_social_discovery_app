@@ -103,7 +103,7 @@ export default function TermsOfServicePage() {
         <div className="w-full px-6 max-w-4xl mx-auto pt-16 pb-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-md border border-white/40 rounded-full shadow-sm mb-6">
             <FileText size={16} className="text-[#7B7FEF]" />
-            <span className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">Effective: November 14, 2024</span>
+            <span className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">Effective: March 14, 2026</span>
           </div>
           <h1 className="font-heading text-[36px] md:text-[48px] font-bold text-on-surface leading-tight mb-4">
             Terms of <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA]">Service</span>

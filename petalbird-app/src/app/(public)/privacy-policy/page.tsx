@@ -51,7 +51,7 @@ const sections = [
       "All data is encrypted at rest using AES-256 and in transit using TLS 1.3.",
       "We use role-based access controls so only authorised engineers can access production data, and all access is logged and audited.",
       "Photos uploaded to PetalBird are stored in geo-redundant, SOC 2 Type II certified cloud infrastructure.",
-      "We conduct regular third-party security audits and penetration tests. Our last external audit was completed in October 2024.",
+      "We conduct regular third-party security audits and penetration tests. Our last external audit was completed in October 2026.",
     ],
   },
   {
@@ -100,7 +100,7 @@ export default function PrivacyPolicyPage() {
         <div className="w-full px-6 max-w-4xl mx-auto pt-16 pb-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur-md border border-white/40 rounded-full shadow-sm mb-6">
             <Shield size={16} className="text-[#7B7FEF]" />
-            <span className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">Last updated: November 14, 2024</span>
+            <span className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">Last updated: March 14, 2026</span>
           </div>
           <h1 className="font-heading text-[36px] md:text-[48px] font-bold text-on-surface leading-tight mb-4">
             Privacy <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA]">Policy</span>

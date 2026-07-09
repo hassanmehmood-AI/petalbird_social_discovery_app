@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { Mail, X, Globe, Clock, CheckCircle2, Send, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Mail, Clock, CheckCircle2, Send } from "lucide-react";
 import LandingFooter from "@/components/layout/LandingFooter";
+import { createClient } from "@/lib/supabase/client";
 
 function LandingNav() {
   return (
@@ -24,48 +25,40 @@ function LandingNav() {
   );
 }
 
-const contactChannels = [
-  {
-    icon: Mail,
-    label: "General Support",
-    value: "support@petalbird.app",
-    description: "Account issues, bugs, and general questions",
-    href: "mailto:support@petalbird.app",
-  },
-  {
-    icon: Mail,
-    label: "Safety & Reports",
-    value: "safety@petalbird.app",
-    description: "Harassment, impersonation, and policy violations",
-    href: "mailto:safety@petalbird.app",
-  },
-  {
-    icon: Mail,
-    label: "Press & Partnerships",
-    value: "press@petalbird.app",
-    description: "Media enquiries and brand collaborations",
-    href: "mailto:press@petalbird.app",
-  },
-];
-
-const topics = [
-  "Account & Login",
-  "Ratings & Style Score",
-  "Messaging",
-  "Premium & Billing",
-  "Privacy & Safety",
-  "Bug Report",
-  "Feature Request",
-  "Press / Partnership",
-  "Other",
-];
-
 export default function ContactUsPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", topic: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [formEnabled, setFormEnabled] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  useEffect(() => {
+    const supabase = createClient();
+    supabase
+      .from("site_settings")
+      .select("contact_form_enabled")
+      .eq("id", 1)
+      .single()
+      .then(({ data }) => {
+        if (data && data.contact_form_enabled === false) setFormEnabled(false);
+      });
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    const supabase = createClient();
+    const { error: insertError } = await supabase.from("contact_requests").insert({
+      name: form.name,
+      email: form.email,
+      message: form.message,
+    });
+    setSubmitting(false);
+    if (insertError) {
+      setError("Something went wrong sending your message. Please try again.");
+      return;
+    }
     setSubmitted(true);
   }
 
@@ -91,59 +84,19 @@ export default function ContactUsPage() {
           </p>
         </div>
 
-        <div className="w-full px-6 max-w-5xl mx-auto pb-20 grid grid-cols-1 lg:grid-cols-5 gap-8">
-
-          {/* Left: info */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            {/* Contact channels */}
-            {contactChannels.map(({ icon: Icon, label, value, description, href }) => (
-              <a key={label} href={href} className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_16px_rgba(123,127,239,0.05)] flex gap-4 hover:shadow-[0_8px_32px_rgba(123,127,239,0.10)] transition-all group">
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <Icon size={18} className="text-[#7B7FEF]" />
+        <div className="w-full px-4 sm:px-6 max-w-2xl mx-auto pb-20">
+          <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-5 sm:p-8 shadow-[0_8px_32px_rgba(123,127,239,0.06)]">
+              {!formEnabled ? (
+                <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center">
+                    <Mail size={28} className="text-on-surface-variant" />
+                  </div>
+                  <h3 className="font-heading text-[22px] font-semibold text-on-surface">Contact form temporarily unavailable</h3>
+                  <p className="text-sm text-on-surface-variant max-w-sm">
+                    Please email us at support@petalbird.app instead.
+                  </p>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-on-surface">{label}</p>
-                  <p className="text-sm text-[#7B7FEF] font-medium">{value}</p>
-                  <p className="text-xs text-on-surface-variant mt-1">{description}</p>
-                </div>
-              </a>
-            ))}
-
-            {/* Social */}
-            <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_16px_rgba(123,127,239,0.05)]">
-              <p className="text-sm font-semibold text-on-surface mb-4">Follow us</p>
-              <div className="flex gap-3">
-                <a href="#" className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group">
-                  <X size={16} className="text-[#7B7FEF]" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors group">
-                  <Globe size={16} className="text-[#7B7FEF]" />
-                </a>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-3">@petalbird on X & the web</p>
-            </div>
-
-            {/* Office */}
-            <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-6 shadow-[0_4px_16px_rgba(123,127,239,0.05)]">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin size={16} className="text-[#7B7FEF]" />
-                </div>
-                <p className="text-sm font-semibold text-on-surface">Headquarters</p>
-              </div>
-              <p className="text-sm text-on-surface-variant leading-6">
-                PetalBird Inc.<br />
-                340 Pine Street, Suite 800<br />
-                San Francisco, CA 94104<br />
-                United States
-              </p>
-            </div>
-          </div>
-
-          {/* Right: form */}
-          <div className="lg:col-span-3">
-            <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-xl p-8 shadow-[0_8px_32px_rgba(123,127,239,0.06)]">
-              {submitted ? (
+              ) : submitted ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#7B7FEF] to-[#A78BFA] flex items-center justify-center">
                     <CheckCircle2 size={32} className="text-white" />
@@ -152,13 +105,18 @@ export default function ContactUsPage() {
                   <p className="text-sm text-on-surface-variant max-w-sm">
                     Thanks for reaching out, {form.name || "there"}. We&apos;ll get back to you at <span className="text-[#7B7FEF]">{form.email || "your email"}</span> within a few hours.
                   </p>
-                  <button onClick={() => { setSubmitted(false); setForm({ name: "", email: "", topic: "", message: "" }); }} className="mt-4 text-sm text-[#7B7FEF] font-semibold hover:underline">
+                  <button onClick={() => { setSubmitted(false); setForm({ name: "", email: "", message: "" }); }} className="mt-4 text-sm text-[#7B7FEF] font-semibold hover:underline">
                     Send another message
                   </button>
                 </div>
               ) : (
                 <>
                   <h2 className="font-heading text-[22px] font-semibold text-on-surface mb-6">Send us a message</h2>
+                  {error && (
+                    <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
                   <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
@@ -186,19 +144,6 @@ export default function ContactUsPage() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-[0.06em] mb-2">Topic</label>
-                      <select
-                        required
-                        value={form.topic}
-                        onChange={e => setForm(f => ({ ...f, topic: e.target.value }))}
-                        className="w-full px-4 py-3 rounded-xl border border-white/60 bg-surface text-on-surface text-sm focus:outline-none focus:border-[#7B7FEF]/50 focus:ring-2 focus:ring-[#7B7FEF]/10 transition-all appearance-none"
-                      >
-                        <option value="">Select a topic…</option>
-                        {topics.map(t => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                    </div>
-
-                    <div>
                       <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-[0.06em] mb-2">Message</label>
                       <textarea
                         required
@@ -212,20 +157,20 @@ export default function ContactUsPage() {
 
                     <button
                       type="submit"
-                      className="bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:scale-[1.02] transition-transform duration-200 shadow-[0_8px_32px_rgba(123,127,239,0.25)] flex items-center justify-center gap-2 self-start"
+                      disabled={submitting}
+                      className="bg-gradient-to-r from-[#7B7FEF] to-[#A78BFA] text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:scale-[1.02] transition-transform duration-200 shadow-[0_8px_32px_rgba(123,127,239,0.25)] flex items-center justify-center gap-2 self-start disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       <Send size={16} />
-                      Send Message
+                      {submitting ? "Sending…" : "Send Message"}
                     </button>
                   </form>
                 </>
               )}
-            </div>
           </div>
         </div>
       </main>
 
-      <LandingFooter />
+      <LandingFooter compact />
     </div>
   );
 }

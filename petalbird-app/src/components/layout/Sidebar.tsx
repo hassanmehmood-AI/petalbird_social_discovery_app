@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -10,6 +11,8 @@ import {
   Star,
   Settings,
   LogOut,
+  ShieldCheck,
+  Mail,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -20,11 +23,32 @@ const NAV_ITEMS = [
   { href: "/messages",      icon: MessageSquare,label: "Messages", badge: true },
   { href: "/ratings",       icon: Star,         label: "Ratings"    },
   { href: "/settings",      icon: Settings,     label: "Settings"   },
+  { href: "/contact-us",    icon: Mail,         label: "Contact Us" },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("id", user.id)
+        .single()
+        .then(({ data }) => {
+          if (!cancelled && data?.is_admin) setIsAdmin(true);
+        });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -37,6 +61,14 @@ export default function Sidebar() {
     if (href === "/discover") return pathname.startsWith("/discover") || pathname === "/";
     return pathname.startsWith(href.replace("/me", ""));
   }
+
+  const navItems = isAdmin
+    ? [
+        ...NAV_ITEMS.slice(0, 4),
+        { href: "/admin", icon: ShieldCheck, label: "Admin Console" },
+        ...NAV_ITEMS.slice(4),
+      ]
+    : NAV_ITEMS;
 
   return (
     <aside className="hidden md:flex h-screen w-52 fixed left-0 top-0 flex-col z-50 bg-white/70 backdrop-blur-xl border-r border-white/40 shadow-[0_20px_40px_rgba(123,127,239,0.08)]">
@@ -55,7 +87,7 @@ export default function Sidebar() {
 
         {/* Nav */}
         <nav className="flex-1 space-y-0.5">
-          {NAV_ITEMS.map(({ href, icon: Icon, label, badge }) => {
+          {navItems.map(({ href, icon: Icon, label, badge }) => {
             const active = isActive(href);
             return (
               <Link

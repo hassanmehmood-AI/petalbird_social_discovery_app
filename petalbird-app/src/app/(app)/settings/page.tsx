@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, LogOut, Shield, Bell, ChevronRight, Check, Eye, EyeOff } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Switch } from "@/components/ui/switch";
 
 /* ─── Section wrapper ────────────────────────────────────────────────────── */
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -141,10 +142,9 @@ function ChangeEmail() {
 }
 
 /* ─── Toggle row ─────────────────────────────────────────────────────────── */
-function ToggleRow({ icon: Icon, label, description, defaultOn = false }: {
-  icon: React.ElementType; label: string; description: string; defaultOn?: boolean;
+function ToggleRow({ icon: Icon, label, description, checked, onToggle }: {
+  icon: React.ElementType; label: string; description: string; checked: boolean; onToggle: (next: boolean) => void;
 }) {
-  const [on, setOn] = useState(defaultOn);
   return (
     <div className="flex items-center gap-4 px-6 py-4">
       <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
@@ -154,10 +154,7 @@ function ToggleRow({ icon: Icon, label, description, defaultOn = false }: {
         <p className="text-sm font-semibold text-on-surface">{label}</p>
         <p className="text-xs text-on-surface-variant mt-0.5">{description}</p>
       </div>
-      <button onClick={() => setOn(!on)}
-        className={`w-11 h-6 rounded-full transition-colors duration-200 relative shrink-0 ${on ? "bg-primary" : "bg-outline/40"}`}>
-        <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ${on ? "translate-x-5" : "translate-x-0.5"}`} />
-      </button>
+      <Switch checked={checked} onCheckedChange={onToggle} />
     </div>
   );
 }
