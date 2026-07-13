@@ -17,6 +17,7 @@ interface ProfileData {
   coverUrl: string | null;
   bio: string | null;
   audioUrl: string | null;
+  audioTitle: string | null;
   avgRating: number;
   ratingCount: number;
   postCount: number;
@@ -616,14 +617,17 @@ function ProfileMusicCard({
   profileId,
   isOwn,
   audioUrl: initialAudioUrl,
+  audioTitle: initialAudioTitle,
   onUpdated,
 }: {
   profileId: string;
   isOwn: boolean;
   audioUrl: string | null;
-  onUpdated: (url: string | null) => void;
+  audioTitle: string | null;
+  onUpdated: (url: string | null, title: string | null) => void;
 }) {
   const [audioUrl, setAudioUrl] = useState(initialAudioUrl);
+  const [audioTitle, setAudioTitle] = useState(initialAudioTitle);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -703,9 +707,11 @@ function ProfileMusicCard({
       return;
     }
     const { data: { publicUrl } } = supabase.storage.from("post-audio").getPublicUrl(path);
-    await supabase.from("profiles").update({ audio_url: publicUrl }).eq("id", profileId);
+    const title = file.name.replace(/\.[^/.]+$/, "");
+    await supabase.from("profiles").update({ audio_url: publicUrl, audio_title: title }).eq("id", profileId);
     setAudioUrl(publicUrl);
-    onUpdated(publicUrl);
+    setAudioTitle(title);
+    onUpdated(publicUrl, title);
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
   }
@@ -713,11 +719,12 @@ function ProfileMusicCard({
   async function handleRemove() {
     audioElRef.current?.pause();
     const supabase = createClient();
-    await supabase.from("profiles").update({ audio_url: null }).eq("id", profileId);
+    await supabase.from("profiles").update({ audio_url: null, audio_title: null }).eq("id", profileId);
     setAudioUrl(null);
+    setAudioTitle(null);
     setIsPlaying(false);
     setProgress(0);
-    onUpdated(null);
+    onUpdated(null, null);
   }
 
   if (!isOwn && !audioUrl) return null;
@@ -808,7 +815,7 @@ function ProfileMusicCard({
                 style={{ color: isPlaying ? "#7B7FEF" : "var(--color-on-surface-variant)" }}>
                 {isPlaying ? "Now Playing" : "Paused"}
               </p>
-              <p className="text-sm font-semibold text-on-surface truncate">Profile Track</p>
+              <p className="text-sm font-semibold text-on-surface truncate">{audioTitle || "Profile Track"}</p>
             </div>
           </div>
 
@@ -1016,6 +1023,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         coverUrl: profileData.cover_url ?? null,
         bio: profileData.bio ?? null,
         audioUrl: profileData.audio_url ?? null,
+        audioTitle: profileData.audio_title ?? null,
         avgRating,
         ratingCount,
         postCount: posts?.length ?? 0,
@@ -1165,7 +1173,8 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
                 profileId={profile.id}
                 isOwn={isOwn}
                 audioUrl={profile.audioUrl}
-                onUpdated={(url) => setProfile((prev) => prev ? { ...prev, audioUrl: url } : prev)}
+                audioTitle={profile.audioTitle}
+                onUpdated={(url, title) => setProfile((prev) => prev ? { ...prev, audioUrl: url, audioTitle: title } : prev)}
               />
               <RecentRaters profileId={profile.id} />
             </div>
