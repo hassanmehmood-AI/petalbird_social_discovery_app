@@ -273,23 +273,29 @@ export default function MessagesPage() {
         },
         (payload) => {
           const m = payload.new as any;
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: m.id,
-              conversationId: m.conversation_id,
-              senderId: m.sender_id,
-              content: m.content,
-              createdAt: m.created_at,
-            },
-          ]);
+          setMessages((prev) =>
+            prev.some((msg) => msg.id === m.id)
+              ? prev
+              : [
+                  ...prev,
+                  {
+                    id: m.id,
+                    conversationId: m.conversation_id,
+                    senderId: m.sender_id,
+                    content: m.content,
+                    createdAt: m.created_at,
+                  },
+                ]
+          );
           // Keep sidebar last-message in sync without needing a DB trigger policy
           setConversations((prev) =>
-            prev.map((c) =>
-              c.id === activeConvId
-                ? { ...c, lastMessage: m.content, updatedAt: m.created_at }
-                : c
-            )
+            prev
+              .map((c) =>
+                c.id === activeConvId
+                  ? { ...c, lastMessage: m.content, updatedAt: m.created_at }
+                  : c
+              )
+              .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
           );
         }
       )
@@ -310,9 +316,34 @@ export default function MessagesPage() {
     setSending(true);
     setMessageInput("");
     const supabase = createClient();
-    await supabase
+    const { data } = await supabase
       .from("messages")
-      .insert({ conversation_id: activeConvId, sender_id: currentUserId, content });
+      .insert({ conversation_id: activeConvId, sender_id: currentUserId, content })
+      .select("id, conversation_id, sender_id, content, created_at")
+      .single();
+
+    // Update local state immediately instead of waiting on the realtime
+    // round-trip, which can lag or occasionally miss the echo of our own insert.
+    if (data) {
+      const newMsg: Message = {
+        id: data.id,
+        conversationId: data.conversation_id,
+        senderId: data.sender_id,
+        content: data.content,
+        createdAt: data.created_at,
+      };
+      setMessages((prev) => (prev.some((m) => m.id === newMsg.id) ? prev : [...prev, newMsg]));
+      setConversations((prev) =>
+        prev
+          .map((c) =>
+            c.id === activeConvId
+              ? { ...c, lastMessage: newMsg.content, updatedAt: newMsg.createdAt }
+              : c
+          )
+          .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+      );
+    }
+
     setSending(false);
     inputRef.current?.focus();
   }
