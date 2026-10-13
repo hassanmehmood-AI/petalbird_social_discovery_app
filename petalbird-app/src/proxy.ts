@@ -2,6 +2,11 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function proxy(request: NextRequest) {
+  // The database probe does not use a user session. Its route handles cron auth.
+  if (request.nextUrl.pathname === '/api/health') {
+    return NextResponse.next({ request })
+  }
+
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -25,7 +30,7 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  const appPaths = ['/discover', '/profile', '/messages', '/ratings']
+  const appPaths = ['/discover', '/profile', '/messages', '/ratings', '/settings']
   const adminPaths = ['/admin']
   const isAppRoute = appPaths.some(p => request.nextUrl.pathname.startsWith(p))
   const isAdminRoute = adminPaths.some(p => request.nextUrl.pathname.startsWith(p))
