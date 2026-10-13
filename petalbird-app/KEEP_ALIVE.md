@@ -1,5 +1,8 @@
 # Supabase keep-alive verification
 
+The default Vercel schedule is now daily: `0 9 * * *` (09:00 UTC / 14:00 Pakistan
+time). On Hobby, execution can occur between 14:00 and 14:59 Pakistan time.
+
 The `/api/health` route reads one profile ID using the anon key and reports database
 connectivity. It does not return profile data. A successful request does not prove
 that every application RLS policy is correct. Free-plan keep-alive traffic also
@@ -49,13 +52,13 @@ If paused, first resume the project from Supabase Dashboard.
 
 ## Three-minute testing on Vercel Hobby
 
-This repository retains the three-day Vercel schedule for the Hobby deployment.
+This repository retains the daily Vercel schedule while the temporary test runs.
 
 For a bounded test without creating an external account, open a terminal in
 `petalbird-app` and run:
 
 ```powershell
-node scripts/probe-deployment.mjs https://petalbird-app.vercel.app
+node scripts/probe-deployment.mjs https://petalbird-social-discovery-app.vercel.app
 ```
 
 Use your actual production domain if different. The script makes three requests:
@@ -67,7 +70,7 @@ typing the secret into shell history:
 ```powershell
 $enteredSecret = Read-Host 'CRON_SECRET' -AsSecureString
 $env:CRON_SECRET = [System.Net.NetworkCredential]::new('', $enteredSecret).Password
-node scripts/probe-deployment.mjs https://petalbird-app.vercel.app
+node scripts/probe-deployment.mjs https://petalbird-social-discovery-app.vercel.app
 Remove-Item Env:CRON_SECRET
 ```
 
@@ -80,9 +83,10 @@ This verifies external scheduling and the deployed function; it does not verify
 Vercel's own automatic schedule. Verify that separately with its manual Run and
 next permitted scheduled invocation. Stop the temporary external job after testing.
 
-## Restore the requested three-day schedule
+## Schedule options after testing
 
-After successful testing, run:
+The temporary test does not change Vercel's daily schedule, so no rollback is
+needed. If you explicitly want the older three-day schedule instead, run:
 
 ```powershell
 node scripts/cron-schedule.mjs production
