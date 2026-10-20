@@ -1,4 +1,5 @@
 ﻿import Link from "next/link";
+import { SUPPORT_EMAIL } from "@/lib/site";
 import Image from "next/image";
 import { FileText, Users, Star, AlertTriangle, Gavel, RefreshCw } from "lucide-react";
 import LandingFooter from "@/components/layout/LandingFooter";
@@ -74,7 +75,7 @@ const sections = [
       "PetalBird and its logos, design system, and proprietary algorithms are the intellectual property of PetalBird Inc.",
       "By uploading content to PetalBird, you grant PetalBird a non-exclusive, worldwide, royalty-free licence to display and distribute your content on the platform.",
       "You retain full ownership of all content you upload. We will never sell your photos to third parties.",
-      "If you believe any content on PetalBird infringes your copyright, please contact legal@petalbird.app with a DMCA takedown notice.",
+      "If you believe any content on PetalBird infringes your copyright, please contact " + SUPPORT_EMAIL + " with a DMCA takedown notice.",
     ],
   },
   {
@@ -85,7 +86,7 @@ const sections = [
       "PetalBird is provided 'as is.' We make no warranties regarding uptime, accuracy of Style Scores, or fitness for a particular purpose.",
       "To the maximum extent permitted by law, PetalBird's liability is limited to the amount you paid us in the 12 months preceding any claim.",
       "These Terms are governed by the laws of the State of Delaware, USA. Any disputes shall be resolved through binding arbitration.",
-      "For account disputes or appeals, contact support@petalbird.app. We aim to respond within 2 business days.",
+      "For account disputes or appeals, contact " + SUPPORT_EMAIL + ". We aim to respond within 2 business days.",
     ],
   },
 ];
@@ -153,7 +154,7 @@ export default function TermsOfServicePage() {
 
           <div className="bg-gradient-to-r from-[#7B7FEF]/10 to-[#A78BFA]/10 border border-[#7B7FEF]/20 rounded-xl p-8 text-center">
             <p className="text-sm text-on-surface-variant mb-2">Legal inquiries?</p>
-            <a href="mailto:legal@petalbird.app" className="text-[#7B7FEF] font-semibold hover:underline">legal@petalbird.app</a>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#7B7FEF] font-semibold hover:underline">{SUPPORT_EMAIL}</a>
           </div>
         </div>
       </main>
