@@ -1,4 +1,3 @@
-import { SUPPORT_EMAIL } from "@/lib/site";
 import Link from "next/link";
 import Image from "next/image";
 import { Shield, Eye, Lock, Database, Bell, Trash2 } from "lucide-react";
@@ -83,7 +82,7 @@ const sections = [
       "**Correction:** Update your profile information directly from your profile page at any time.",
       "**Deletion:** Delete your account permanently from Settings → Account → Delete Account. All personal data is purged within 30 days.",
       "**Portability:** Download your ratings history, analytics, and profile data in JSON or CSV format.",
-      "If you are in the EEA or UK, you have additional rights under GDPR. Contact " + SUPPORT_EMAIL + " to exercise them.",
+      "If you are in the EEA or UK, you have additional rights under GDPR. Contact privacy@petalbird.app to exercise them.",
     ],
   },
 ];
@@ -135,7 +134,7 @@ export default function PrivacyPolicyPage() {
           {/* Contact note */}
           <div className="bg-gradient-to-r from-[#7B7FEF]/10 to-[#A78BFA]/10 border border-[#7B7FEF]/20 rounded-xl p-8 text-center">
             <p className="text-sm text-on-surface-variant mb-2">Questions about this policy?</p>
-            <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#7B7FEF] font-semibold hover:underline">{SUPPORT_EMAIL}</a>
+            <a href="mailto:privacy@petalbird.app" className="text-[#7B7FEF] font-semibold hover:underline">privacy@petalbird.app</a>
           </div>
         </div>
       </main>

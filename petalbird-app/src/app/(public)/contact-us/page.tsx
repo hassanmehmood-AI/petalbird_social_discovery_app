@@ -1,6 +1,5 @@
 ﻿"use client";
 
-import { SUPPORT_EMAIL } from "@/lib/site";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -60,12 +59,6 @@ export default function ContactUsPage() {
       setError("Something went wrong sending your message. Please try again.");
       return;
     }
-    // Notify the support inbox; the message is already saved, so a failure here is ignored.
-    fetch("/api/contact-notify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    }).catch(() => {});
     setSubmitted(true);
   }
 
@@ -100,7 +93,7 @@ export default function ContactUsPage() {
                   </div>
                   <h3 className="font-heading text-[22px] font-semibold text-on-surface">Contact form temporarily unavailable</h3>
                   <p className="text-sm text-on-surface-variant max-w-sm">
-                    Please email us at {SUPPORT_EMAIL} instead.
+                    Please email us at support@petalbird.app instead.
                   </p>
                 </div>
               ) : submitted ? (
